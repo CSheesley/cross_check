@@ -1,0 +1,86 @@
+Project: Cross-Check
+
+Group Member Names: Corey, Chi, Carrie
+
+Team Name: Triple Champs
+
+Goals and Expectations for the Project (What does each group member hope to get out of this project? What do we want to achieve as a team? How will we know that we're successful?):
+- Inheritance and modules
+- Practice refactoring
+- Style - SRP focus
+- REALLY do TDD
+- Prioritize learning over completion - all teammembers can explain the code - everyone has growth
+- Being able to work on different things at the same time - GIT FLOW
+
+
+Team strengths & collaboration styles (consider discussing your Pairin qualities here):
+- communicate well
+- Corey - planner/worrier, committed
+- Chi - demands! accountability, testing (edge specifically)
+- Carrie - teacher, visualizer
+
+
+How we can use our strengths to overcome obstacles:
+- we plan so we can make sure we are prepared for issues
+- organization skills mitigate lack of coding skills in a group environment
+- visualization and TDD to keep us directed
+- communication - allows us to make sure we're on the right track instead of building things up for a few days
+
+
+Schedule Expectations (When are we available to work together and individually? What constraints do we have?):
+- Carrie & Chi - mornings
+- Corey - evenings
+- Can be available on weekends
+- Create spreadsheet for work/workflow or put on readme
+- Daily check-in in person (either during project worktime or at lunch)
+
+
+Communication Expectations (How and often will we communicate? How do we keep lines of communication open? How will we make decisions as a team?):
+- COMMUNICATE
+- slack each other if someone is going to be late
+- Cutoff at 9pm - it's good to sleep
+
+
+Abilities & Growth Expectations (Technical strengths and areas for desired improvement):
+- Chi - feeling uncomfortable in later iterations - goal is to feel comfortable
+- Corey - struggles solving harder methods - practice conceptualizing, researching help instead of asking for it
+- Carrie - git workflow can be messy - BETTER!
+
+
+Workload Expectations (What features do we each want to work on?):
+- Together - Iteration 1
+- Chi - hashes, stats
+- Corey - hashes, rakefile
+- Carrie - csv stuff
+
+
+Workflow Expectations (Git workflow/Tools/Code Review/Reviewing Pull Requests/Debugging and Problem-solving Techniques):
+- NO WORKING ON THE MASTER
+- naming branches well! ex. 2_method_name, 3_method_name (number is iteration)
+- only PR when feature is done (can refactor later)
+- lots of commits
+- good commit messages
+- positive PR feedback!
+
+
+Expectations for giving and receiving feedback:
+- positivity!
+- "feedback is the breakfast of champions"
+- bring up typos immediately
+- feedback after an iteration
+- no false confidence; guideance is not personal
+
+
+Project management tools we will use:
+- spreadsheet
+- Slack
+- README
+- save Waffle for later
+
+
+Day 1 Agenda:
+- create README
+- Iteration 1 - setup the project well and make sure it is solid so we can move through Iterations 2-5.
+
+
+Additional Notes:
