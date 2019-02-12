@@ -14,7 +14,7 @@ class GameTeam
     :giveaways,
     :takeaways
 
-  def initialize(info)
+  def initialize(info, parent)
     @game_id = info[:game_id].to_i
     @team_id = info[:team_id].to_i
     @home_or_away = info[:home_or_away]
@@ -30,6 +30,8 @@ class GameTeam
     @face_off_win_percentage = info[:face_off_win_percentage]
     @giveaways = info[:giveaways]
     @takeaways = info[:takeaways]
+
+    @parent = parent
   end
 
   def won?
