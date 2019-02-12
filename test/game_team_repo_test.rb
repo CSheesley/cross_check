@@ -21,7 +21,6 @@ class GameTeamRepoTest < MiniTest::Test
   end
 
   def test_it_knows_who_its_parent_is
-    binding.pry
     assert_equal StatTracker, @st.game_teams.parent.class
   end
 end
