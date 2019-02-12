@@ -1,18 +1,18 @@
 class GameTeam
   attr_reader :game_id,
-              :team_id,
-              :home_or_away,
-              :settled_in,
-              :head_coach,
-              :goals,
-              :shots,
-              :hits,
-              :pim,
-              :power_play_chances,
-              :power_play_goals,
-              :face_off_win_percentage,
-              :giveaways,
-              :takeaways
+    :team_id,
+    :home_or_away,
+    :settled_in,
+    :head_coach,
+    :goals,
+    :shots,
+    :hits,
+    :pim,
+    :power_play_chances,
+    :power_play_goals,
+    :face_off_win_percentage,
+    :giveaways,
+    :takeaways
 
   def initialize(info)
     @game_id = info[:game_id].to_i
@@ -35,5 +35,4 @@ class GameTeam
   def won?
     @won
   end
-
 end
