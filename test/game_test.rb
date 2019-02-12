@@ -13,7 +13,7 @@ class GameTest < Minitest::Test
 
 
   def test_game_has_game_id
-    assert_equal 2012030167.game_id
+    assert_equal 2012030167, @game.game_id
   end
 
 
