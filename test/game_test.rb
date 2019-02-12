@@ -17,6 +17,17 @@ class GameTest < Minitest::Test
   end
 
 
+  def test_game_knows_who_grandparent_is
+    assert_equal StatTracker, @st.games.parent
+  end
+
+
+  def test_game_knows_who_uncle_is
+    skip
+    assert_equal TeamRepo, @st.games.repo.first.parent.teams.class
+  end
+
+
   def test_game_exists
     assert_instance_of Game, @st.games.repo.first
   end
