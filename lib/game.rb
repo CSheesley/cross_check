@@ -6,7 +6,7 @@ class Game < GameRepo
     @game_id = info[:game_id].to_i
     @season = info[:season].to_i
     @type = info[:type]
-    @date_time = info[:date_time].to_i
+    @date_time = info[:date_time]
     @away_team_id = info[:away_team_id].to_i
     @home_team_id = info[:home_team_id].to_i
     @away_goals = info[:away_goals].to_i
