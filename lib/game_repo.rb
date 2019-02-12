@@ -1,6 +1,6 @@
 class GameRepo < StatTracker
-  attr_reader :games
-  def initialize(parent)
+  attr_reader :repo
+  def initialize
     @repo = []
     contents = CSV.open './data/game_fixture.csv', headers: true, header_converters: :symbol
     contents.each do |row|
