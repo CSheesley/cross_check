@@ -6,3 +6,4 @@ require "minitest/pride"
 require "pry"
 
 require "./lib/stat_tracker"
+require "./lib/game_team"
