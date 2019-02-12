@@ -3,7 +3,22 @@ require "./test/test_helper"
 class GameTest < Minitest::Test
 
   def setup
-    @game = Game.new(game_id: 2012030167,season: 20122013, type: "P",date_time: 2013-05-13,away_team_id: 17, home_team_id: 24, away_goals: 3, home_goals: 2, outcome: "away win REG", home_rink_side_start: "left", venue: "Honda Center", venue_link: "/api/v1/venues/null", venue_time_zone_id: "America/Los_Angeles", venue_time_zone_offset: -7, venue_time_zone_tz: "PDT")
+    game_data = {game_id: 2012030167,
+      season: 20122013,
+      type: "P",
+      date_time: 2013-05-13,
+      away_team_id: 17,
+      home_team_id: 24,
+      away_goals: 3,
+      home_goals: 2,
+      outcome: "away win REG",
+      home_rink_side_start: "left",
+      venue: "Honda Center",
+      venue_link: "/api/v1/venues/null",
+      venue_time_zone_id: "America/Los_Angeles",
+      venue_time_zone_offset: -7,
+      venue_time_zone_tz: "PDT"}
+    @game = Game.new(game_data)
   end
 
 
