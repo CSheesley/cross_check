@@ -8,8 +8,8 @@ class Game
     @date_time = info[:date_time].to_i
     @away_team_id = info[:away_team_id].to_i
     @home_team_id = info[:home_team_id].to_i
-    @away_goals = info[:away_goals]
-    @home_goals = info[:home_goals]
+    @away_goals = info[:away_goals].to_i
+    @home_goals = info[:home_goals].to_i
     @outcome = info[:outcome]
     @home_rink_side_start = info[:home_rink_side_start]
     @venue = info[:venue]
