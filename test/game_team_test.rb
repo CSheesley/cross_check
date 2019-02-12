@@ -7,7 +7,7 @@ class GameTeamTest < Minitest::Test
       game_id: "2012030221",
       team_id: "3",
       home_or_away: "away",
-      won: FALSE,
+      won: "FALSE",
       settled_in: "OT",
       head_coach: "John Tortorella",
       goals: 2,

@@ -33,6 +33,10 @@ class GameTeam
   end
 
   def won?
-    @won
+    if @won == "TRUE"
+      return true
+    else
+      return false
+    end
   end
 end
