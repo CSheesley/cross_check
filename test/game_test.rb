@@ -13,8 +13,7 @@ class GameTest < Minitest::Test
   end
 
   def test_game_knows_who_parent_is
-    skip
-    assert_equal GameRepo, @st.games.repo.first.parent
+    assert_equal GameRepo, @st.games.repo.first.parent.class
   end
 
 
