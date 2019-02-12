@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/league_stats'
+require "./test/test_helper"
 
 class LeagueStats < Minitest::Test
   # def setup
