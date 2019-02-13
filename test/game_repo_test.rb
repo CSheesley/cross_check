@@ -1,6 +1,4 @@
 require "./test/test_helper"
-require "./lib/game_repo"
-require "csv"
 
 class GameRepoTest < MiniTest::Test
   def setup
@@ -22,5 +20,10 @@ class GameRepoTest < MiniTest::Test
   def test_game_repo_has_games
     assert_equal 30, @st.games.repo.count
     assert_equal 3, @st.games.repo.first.away_goals
+  end
+
+
+  def test_game_repo_knows_parent
+    assert_equal StatTracker, @st.games.parent
   end
 end
