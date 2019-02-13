@@ -1,5 +1,8 @@
+require "./lib/league_stats"
+
 
 class StatTracker
+  include LeagueStats
   attr_accessor :games, :game_teams, :teams
 
   def self.from_csv(locations)
@@ -10,5 +13,3 @@ class StatTracker
     st
   end
 end
-
-

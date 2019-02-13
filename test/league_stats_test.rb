@@ -10,41 +10,38 @@ class LeagueStatsTest < Minitest::Test
                   game_teams: @game_teams_path}
     @st = StatTracker.from_csv(@locations)
   end
-  #
-  def test_league_stats_exists
-    assert_instance_of StatTracker, @st
-  end
+
   #
   def test_league_stats_has_teams_and_can_count_teams
-    assert_equal 33, @st.count
+    assert_equal 33, @st.count_of_teams
   end
   #
-  # def test_league_stats_can_return_best_and_worst_offenses
-  #   assert_equal expected, @st.best_offense
-  #   assert_equal expected, @st.worst_offense
-  # end
+  def test_league_stats_can_return_best_and_worst_offenses
+    assert_equal "Bruins", @st.best_offense
+    assert_equal "Penguins", @st.worst_offense
+  end
   #
-  # def test_league_stats_can_return_best_and_worst_defenses
-  #   assert_equal expected, @st.best_defense
-  #   assert_equal expected, @st.worst_defense
-  # end
+  def test_league_stats_can_return_best_and_worst_defenses
+    assert_equal "Red Wings", @st.best_defense
+    assert_equal "Islanders", @st.worst_defense
+  end
   #
-  # def test_league_stats_can_return_lowest_and_highest_scoring_visitor_teams
-  #   assert_equal expected, @st.lowest_scoring_visitor
-  #   assert_equal expected, @st.highest_scoring_visitor
-  # end
+  def test_league_stats_can_return_lowest_and_highest_scoring_visitor_teams
+    assert_equal "Islanders", @st.lowest_scoring_visitor #double
+    assert_equal "Penguins", @st.highest_scoring_visitor
+  end
   #
-  # def test_league_stats_can_return_lowest_and_highest_scoring_home_teams
-  #   assert_equal expected, @st.lowest_scoring_home_team
-  #   assert_equal expected, @st.highest_scoring_home_team
-  # end
+  def test_league_stats_can_return_lowest_and_highest_scoring_home_teams
+    assert_equal "Capitals", @st.lowest_scoring_home_team
+    assert_equal "Islanders", @st.highest_scoring_home_team
+  end
   #
-  # def test_league_stats_can_return_winningest_team
-  #   assert_equal expected, @st.winningest_team
-  # end
+  def test_league_stats_can_return_winningest_team
+    assert_equal "Bruins", @st.winningest_team
+  end
   #
-  # def test_league_stats_can_return_worst_and_best_team_fans
-  #   assert_equal expected, @st.worst_fans
-  #   assert_equal expected, @st.best_fans
-  # end
+  def test_league_stats_can_return_worst_and_best_team_fans
+    assert_equal "Bruins", @st.best_fans
+    assert_equal [], @st.worst_fans
+  end
 end

@@ -1,27 +1,33 @@
 module LeagueStats
 
+  def make_team_id_hash
+    hash = {}
+
+  end
+
   def count_of_teams
-    @teams.count
+    @teams.repo.count
   #   total number of teams - should be module
   #   returns an integer
   end
 
   #
-  # def best_offense
+  def best_offense
+
   #   highest avg goals/game all seasons
   #   highest average_goals_per_game  inherit!
   #
   #   returns string of team name
-  # end
+  end
   #
-  # def worst_offense
+  def worst_offense
   #   lowest avg goals/game all seasons
   #   lowest average_goals_per_game inherit!
   #
   #   returns string of team name
-  # end
+  end
   #
-  # def best_defense
+  def best_defense
   #   lowest average_goals_per_game against
   #
   #   lowest avg goals/game *allowed* all seasons
@@ -31,9 +37,9 @@ module LeagueStats
   #     total += home_goals
   #
   #   returns string of team name
-  # end
+  end
   #
-  # def worst_defense
+  def worst_defense
   #   highest average_goals_per_game against
   #
   #   highest avg goals/game *allowed* all seasons
@@ -43,58 +49,58 @@ module LeagueStats
   #     total += home_goals
   #
   #   returns string of team name
-  # end
+  end
   #
   #
-  # def highest_scoring_visitor
+  def highest_scoring_visitor
   #   highest average away score all seasons
   #
   #   if team == away
   #     average goals
   #
   #   returns string of team name
-  # end
+  end
   #
-  # def highest_scoring_home_team
+  def highest_scoring_home_team
   #   highest average home score all seasons
   #
   #   if team == home
   #     average goals
   #   returns string of team name
-  # end
+  end
   #
-  # def lowest_scoring_visitor
+  def lowest_scoring_visitor
   #   lowest average away score all seasons
   #
   #   if team == away
   #     average goals
   #
   #   returns string of team name
-  # end
+  end
   #
-  # def lowest_scoring_home_team
+  def lowest_scoring_home_team
   #   lowest average home score all seasons
   #
   #   if team == home
   #     average goals
   #
   #   returns string of team name
-  # end
+  end
   #
-  # def winningest_team
+  def winningest_team
   #   highest win percentage all seasons
   #   (wins away + wins home) / total games
   #   returns string of team name
-  # end
+  end
   #
-  # def best_fans
-  #   largest (home win perc. - away win perc.) all seasons
+  def best_fans
+    # largest (home win perc. - away win perc.) all seasons
   #   (home_wins / total_games) - (away_wins / total_games)
   #   returns string of team name
-  # end
+  end
   #
-  # def worst_fans
+  def worst_fans
   #   away win perc. > home win perc.
   #   returns array of team names(strings)
-  # end
+  end
 end
