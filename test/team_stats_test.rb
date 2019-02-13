@@ -1,83 +1,67 @@
 require "./test/test_helper"
 
 class TeamStatsTest < Minitest::Test
-  #
+
   # def test_team_info_with_all_attributes_is_shown
   #   expected = Hash
   #
-  #   assert_equal expected, team_stats.team_info
+  #   assert_equal expected, team_stats.team_info(team_id)
   # end
   #
-  # def test_teams_best_season_based_on_win_percentage_can_be_shown
+  # def test_teams_best_and_worst_season_based_on_win_percentage_can_be_shown
   #   expected = Integer
   #
-  #   assert_equal expected, team_stats.best_season
-  # end
-  #
-  # def test_teams_worst_season_based_on_win_percentage_is_shown
-  #   expected = Integer
-  #
-  #   assert_equal expected, team_stats.worst_season
+  #   assert_equal expected, team_stats.best_season(team_id)
+  #   assert_equal expected, team_stats.worst_season(team_id)
   # end
   #
   # def test_teams_average_win_percentage_of_all_games_is_shown
   #   expected = Float
   #
-  #   assert_equal expected, team_stats.average_win_percentage
+  #   assert_equal expected, team_stats.average_win_percentage(team_id)
   # end
   #
-  # def test_teams_highest_number_of_goals_in_a_single_game_is_shown
+  # def test_teams_highest_and_lowest_number_of_goals_in_a_single_game_is_shown
   #   expected = Integer
   #
-  #   assert_equal expected, team_stats.most_goals_scored
-  # end
-  #
-  # def test_teams_lowest_number_of_goals_in_a_single_game_is_shown
-  #   expected = Integer
-  #
-  #   assert_equal expected, team_stats.fewest_goals_scored
+  #   assert_equal expected, team_stats.most_goals_scored(team_id)
+  #   assert_equal expected, team_stats.fewest_goals_scored(team_id)
   # end
   #
   # def test_teams_favorite_opponents_name_is_shown
   #   expected = String
   #
-  #   assert_equal expected, team_stats.favorite_opponent
+  #   assert_equal expected, team_stats.favorite_opponent(team_id)
   # end
   #
   # def test_teams_rivals_name_is_shown
   #   expected = String
   #
-  #   assert_equal expected, team_stats.rival
+  #   assert_equal expected, team_stats.rival(team_id)
   # end
   #
-  # def test_teams_biggest_blowout_win_by_goal_differential_is_shown
+  # def test_teams_biggest_blowout_win__and_worst_loss_by_goal_differential_is_shown
   #   expected = Integer
   #
-  #   assert_equal expected, team_stats.biggest_team_blowout
-  # end
-  #
-  # def test_teams_worst_loss_by_goal_differential_is_shown
-  #   expected = Integer
-  #
-  #   assert_equal expected, team_stats.worst_loss
+  #   assert_equal expected, team_stats.biggest_team_blowout(team_id)
+  #   assert_equal expected, team_stats.worst_loss(team_id)
   # end
   #
   # def test_teams_head_to_head_record_is_shown_versus_a_specific_opponent
   #   expected = Hash
   #
-  #   assert_equal expected, team_stats.head_to_head(opponent)
+  #   assert_equal expected, team_stats.head_to_head(team_id)
   #   #head_to_head method not shown with an argument
   #   #but may be a good idea if we specify by opponent
   # end
   #
   # def test_teams_seasonal_summary_is_shown_for_each_season_it_has_played
-  #   skip
   #   # each season, a hash with two keys (:preseason, :regular_season)
   #   # each key points to a hash with following keys => :win_percentage,
   #   #:total_goals_scored, :total_goals_against, :average_goals_scored, :average_goals_against
   #   expected = Hash
   #
-  #   assert_equal expected, team_stats.seasonal_summary
+  #   assert_equal expected, team_stats.seasonal_summary(team_id)
   # end
 
 end
