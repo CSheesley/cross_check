@@ -1,4 +1,4 @@
-class GameRepo < StatTracker
+class GameRepo
   attr_reader :repo, :parent
 
   def initialize(filename, parent)
