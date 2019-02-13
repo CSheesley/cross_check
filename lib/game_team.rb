@@ -12,7 +12,8 @@ class GameTeam
     :power_play_goals,
     :face_off_win_percentage,
     :giveaways,
-    :takeaways
+    :takeaways,
+    :parent
 
   def initialize(info, parent)
     @game_id = info[:game_id].to_i
