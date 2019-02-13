@@ -2,7 +2,7 @@ require "./test/test_helper"
 
 class TeamTest < Minitest::Test
   def setup
-    
+
     team_info = {team_id: "6", 
       franchise_id: "6", 
       short_name: "Boston", 
