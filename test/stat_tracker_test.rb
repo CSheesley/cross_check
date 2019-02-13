@@ -7,10 +7,14 @@ class StatTrackerTest < Minitest::Test
     @team_path = './data/team_info.csv'
     @game_teams_path = './data/game_team_stats_fixture.csv'
     @locations = {games: @game_path,
-                  teams: @team_path,
-                  game_teams: @game_teams_path}
-  end
+      teams: @team_path,
+      game_teams: @game_teams_path}
 
+    game_1_info = ("2012030167","20122013","P",2013-05-13,"17","24",3,2,"away win REG","left","Honda Center","/api/v1/venues/null","America/Los_Angeles",-7,"PDT")
+    game_2_info = ("2012030111","20122013","P",2013-05-01,"2","5",0,5,"home win REG","left","CONSOL Energy Center","/api/v1/venues/null","America/New_York",-4,"EDT")
+    game_3_info = ("2012030112","20122013","P",2013-05-03,"2","5",4,3,"away win REG","left","CONSOL Energy Center","/api/v1/venues/null","America/New_York",-4,"EDT")
+    game_1 = Game.new()
+  end
 
   def test_stat_tracker_exists
     stat_tracker = StatTracker.new
@@ -30,41 +34,5 @@ class StatTrackerTest < Minitest::Test
     assert_equal 3, @st.games.repo.first.away_goals
   end
 
-  # def test_stat_tracker_can_return_lowest_and_highest_total_scores
-  #   skip
-  #   Expected = integer
-  #   assert_equal Expected, @stat_tracker.lowest_total_score
-  #   assert_equal Expected, @stat_tracker.highest_total_score
-  # end
-
-  # def test_stat_tracker_can_return_biggest_blowout
-  #   skip
-  #   Expected = integer
-  #   assert_equal Expected, @stat_tracker.biggest_blowout
-  # end
-
-  # def test_stat_tracker_can_return_home_and_visitor_team_percentage_wins
-  #   skip
-  #   Expected = float, round(2) # to the nearest one hundredth
-  #   assert_equal Expected, @stat_tracker.percentage_home_wins
-  #   assert_equal Expected, @stat_tracker.percentage_visitor_wins
-  # end
-
-  # def test_stat_tracker_can_return_count_of_games_by_season
-  #   skip
-  #   Expected = hash
-  #   assert_equal Expected, @stat_tracker.count_of_games_by_season
-  # end
-
-  # def test_stat_tracker_can_return_average_goals_per_game
-  #   skip
-  #   Expected = Float, round(2)
-  #   assert_equal Expected, @stat_tracker.average_goals_per_game
-  # end
-
-  # def test_stat_tracker_can_return_average_goals_by_season
-  #   skip
-  #   Expected = hash
-  #   assert_equal Expected, @stat_tracker.average_goals_by_season
-  # end
-end
+end 
+  
