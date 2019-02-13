@@ -15,6 +15,7 @@ class GameTeam
     :takeaways
 
   def initialize(info, parent)
+    binding.pry
     @game_id = info[:game_id].to_i
     @team_id = info[:team_id].to_i
     @home_or_away = info[:hoa]
