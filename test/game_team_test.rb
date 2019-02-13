@@ -1,22 +1,31 @@
 require "./test/test_helper"
-
 class GameTeamTest < Minitest::Test
 
   def setup
-    @game_path = './data/game_fixture.csv'
-    @team_path = './data/team_info.csv'
-    @game_teams_path = './data/game_team_stats_fixture.csv'
-    @locations = {games: @game_path,
-                  teams: @team_path,
-                  game_teams: @game_teams_path}
-    @st = StatTracker.from_csv(@locations)
+    @game_team = GameTeam.new({
+      game_id: "2012030221",
+      team_id: "3",
+      home_or_away: "away",
+      won: "FALSE",
+      settled_in: "OT",
+      head_coach: "John Tortorella",
+      goals: "2",
+      shots: "35",
+      hits: "44",
+      pim: "8",
+      power_play_chances: "3",
+      power_play_goals: "0",
+      face_off_win_percentage: 44.8,
+      giveaways: "17",
+      takeaways: "7"
+      })
   end
 
   def test_game_team_exists
-    assert_instance_of GameTeam, @st.game_teams
+    assert_instance_of GameTeam, @game_team
   end
 
-  def test_game_team_has_a_game_id_and_a_team_id
+  def test_game_team_has_a_game_id_and_team_id
     assert_equal 2012030221, @game_team.game_id
     assert_equal 3, @game_team.team_id
   end
@@ -65,8 +74,9 @@ class GameTeamTest < Minitest::Test
     assert_equal 44.8, @game_team.face_off_win_percentage
   end
 
-  def test_number_of_game_team_giveways_and_takeaways_are_shown
+  def test_number_of_game_team_giveways_and_takeaways_is_shown
     assert_equal 17, @game_team.giveaways
     assert_equal 7, @game_team.takeaways
   end
+
 end
