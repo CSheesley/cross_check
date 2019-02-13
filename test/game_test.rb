@@ -3,107 +3,105 @@ require "./test/test_helper"
 class GameTest < Minitest::Test
 
   def setup
-    @game_path = './data/game_fixture.csv'
-    @team_path = './data/team_info.csv'
-    @game_teams_path = './data/game_team_stats_fixture.csv'
-    @locations = {games: @game_path,
-                  teams: @team_path,
-                  game_teams: @game_teams_path}
-    @st = StatTracker.from_csv(@locations)
+    @game = Game.new({game_id: "2012030167",
+        season: "20122013",
+        type: "P",
+        date_time: "2013-05-13",
+        away_team_id: "17",
+        home_team_id: "24",
+        away_goals: "3",
+        home_goals: "2",
+        outcome: "away win REG",
+        home_rink_side_start: "left",
+        venue: "Honda Center",
+        venue_link: "/api/v1/venues/null",
+        venue_time_zone_id: "America/Los_Angeles",
+        venue_time_zone_offset: "-7",
+        venue_time_zone_tz: "PDT"},
+        "GameRepo")
   end
 
   def test_game_knows_who_parent_is
-    assert_equal GameRepo, @st.games.repo.first.parent.class
-  end
-
-
-  def test_game_knows_who_grandparent_is
-    assert_equal StatTracker, @st.games.parent
-  end
-
-
-  def test_game_knows_who_uncle_is
-    skip
-    assert_equal TeamRepo, @st.games.repo.first.parent.teams.class
+    assert_equal "GameRepo", @game.parent
   end
 
 
   def test_game_exists
-    assert_instance_of Game, @st.games.repo.first
+    assert_instance_of Game, @game
   end
 
 
   def test_game_has_game_id
-    assert_equal 2012030167, @st.games.repo.first.game_id
+    assert_equal 2012030167, @game.game_id
   end
 
 
   def test_game_has_season
-    assert_equal 20122013, @st.games.repo.first.season
+    assert_equal 20122013, @game.season
   end
 
 
   def test_game_has_type
-    assert_equal "P", @st.games.repo.first.type
+    assert_equal "P", @game.type
   end
 
 
   def test_game_has_date_time
-    assert_equal "2013-05-13", @st.games.repo.first.date_time
+    assert_equal "2013-05-13", @game.date_time
   end
 
 
   def test_game_has_away_team_id
-    assert_equal 17, @st.games.repo.first.away_team_id
+    assert_equal 17, @game.away_team_id
   end
 
 
   def test_game_has_home_team_id
-    assert_equal 24, @st.games.repo.first.home_team_id
+    assert_equal 24, @game.home_team_id
   end
 
 
   def test_game_has_away_goals
-    assert_equal 3, @st.games.repo.first.away_goals
+    assert_equal 3, @game.away_goals
   end
 
 
   def test_game_has_home_goals
-    assert_equal 2, @st.games.repo.first.home_goals
+    assert_equal 2, @game.home_goals
   end
 
 
   def test_game_has_outcome
-    assert_equal "away win REG", @st.games.repo.first.outcome
+    assert_equal "away win REG", @game.outcome
   end
 
 
   def test_game_has_home_rink_side_start
-    assert_equal "left", @st.games.repo.first.home_rink_side_start
+    assert_equal "left", @game.home_rink_side_start
   end
 
 
   def test_game_has_venue
-    assert_equal "Honda Center", @st.games.repo.first.venue
+    assert_equal "Honda Center", @game.venue
   end
 
 
   def test_game_has_venue_link
-    assert_equal "/api/v1/venues/null", @st.games.repo.first.venue_link
+    assert_equal "/api/v1/venues/null", @game.venue_link
   end
 
 
   def test_game_has_venue_time_zone_id
-    assert_equal "America/Los_Angeles", @st.games.repo.first.venue_time_zone_id
+    assert_equal "America/Los_Angeles", @game.venue_time_zone_id
   end
 
 
   def test_game_has_venue_time_zone_offset
-    assert_equal -7, @st.games.repo.first.venue_time_zone_offset
+    assert_equal -7, @game.venue_time_zone_offset
   end
 
 
   def test_game_has_venue_time_zone_tz
-    assert_equal "PDT", @st.games.repo.first.venue_time_zone_tz
+    assert_equal "PDT", @game.venue_time_zone_tz
   end
 end
