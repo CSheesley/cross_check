@@ -5,7 +5,7 @@ class StatTrackerTest < Minitest::Test
   def setup
     @game_path = './data/game_fixture.csv'
     @team_path = './data/team_info.csv'
-    @game_teams_path = './data/game_teams_stats_fixture.csv'
+    @game_teams_path = './data/game_team_stats_fixture.csv'
     @locations = {games: @game_path,
                   teams: @team_path,
                   game_teams: @game_teams_path}

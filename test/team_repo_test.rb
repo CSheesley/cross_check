@@ -1,5 +1,4 @@
 require "./test/test_helper"
-require "csv"
 
 class TeamRepoTest < MiniTest::Test
   def setup
@@ -17,10 +16,10 @@ class TeamRepoTest < MiniTest::Test
   end
 
   def test_team_repo_has_teams
-    assert_equal 30, @st.teams.repo.count
+    assert_equal 33, @st.teams.repo.count
   end
 
   def test_team_repo_knows_parent
-    assert_equal StatTracker, @st.teams.parent.class
-  end 
+    assert_equal StatTracker, @st.teams.parent
+  end
 end

@@ -1,12 +1,13 @@
 
 class StatTracker
-  attr_accessor :games, :game_teams
+  attr_accessor :games, :game_teams, :teams
 
   def self.from_csv(locations)
     st            = StatTracker.new
     st.games      = GameRepo.new(locations[:games], self)
     st.game_teams = GameTeamRepo.new(locations[:game_teams], self)
     st.teams      = TeamRepo.new(locations[:teams], self)
+    st
   end
 end
 
@@ -18,30 +19,30 @@ end
 #   assert_equal 3, @stat_tracker.games.repo.first.away_goals
 # end
 
-#for games across all time 
-#use games.csv/repo 
+#for games across all time
+#use games.csv/repo
 
 def highest_total_score
-  #max_by(each game(@home_score + @away_score)) 
+  #max_by(each game(@home_score + @away_score))
   #total goals per game
   #module or instance method: total_score = sum(home + away)
   #@games.map {|game| sum(h + a)}
   #integer
-end 
+end
 
 def lowest_total_score
   #min_by(each game(@home_score + @away_score))
   #integer
-end 
+end
 
 def biggest_blowout
   #max_buy(each game(@home_score - @away_score))
   #integer
-end 
+end
 
-def percentage_home_wins 
+def percentage_home_wins
   #total_home_wins = games where home_goals > away_goals
-  #total_home_wins/total_games 
+  #total_home_wins/total_games
   #float, round(2)
 end
 
@@ -50,18 +51,18 @@ def percentage_visitor_wins
   #float, round(2)
 end
 
-def count_of_games_by_season(season) #to to go module? 
-  #hash of season_names (20122013) as keys, #count_of_games as values 
-end 
+def count_of_games_by_season(season) #to to go module?
+  #hash of season_names (20122013) as keys, #count_of_games as values
+end
 
-def average_goals_per_game 
+def average_goals_per_game
   #(total_goals_all_seasons)/total_games_all_seasons
   #float, round(2)
-end 
+end
 
 def average_goals_by_season(season)
-  #season.total_goals/season.total_games 
+  #season.total_goals/season.total_games
   #hash with season_names as keys and a float.round(2) representing average number of goals in a game for that season as a value (spec says key? double check with Amy/Brian)
-end 
+end
 
-#module: count of games, team, wins and losses, games each team, home vs away, games per season, 
+#module: count of games, team, wins and losses, games each team, home vs away, games per season,
