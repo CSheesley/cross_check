@@ -1,4 +1,4 @@
-class TeamRepo < StatTracker
+class TeamRepo 
   attr_reader :repo, :parent
 
   def initialize(filename, parent)
