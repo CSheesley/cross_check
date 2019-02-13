@@ -1,9 +1,11 @@
-class LeagueStats
+module LeagueStats
 
-  # def count_of_teams
+  def count_of_teams
+    @teams.count
   #   total number of teams - should be module
   #   returns an integer
-  # end
+  end
+
   #
   # def best_offense
   #   highest avg goals/game all seasons
