@@ -117,14 +117,14 @@ module List
 
 
 
-  def win_percentage(team,game_array)
-    games = game_array
+  def win_percentage(team,game_team_array)
+    games = game_team_array
     wins = won_games(team)
     pct = (wins.count.to_f * 100 / games.count).round(2)
   end
 
-  def loss_percentage(team,game_array)
-    games = game_array
+  def loss_percentage(team,game_team_array)
+    games = game_team_array
     loss = lost_games(team)
     pct = (loss.count.to_f * 100 / games.count).round(2)
   end
