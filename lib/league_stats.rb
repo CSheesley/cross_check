@@ -11,19 +11,10 @@ module LeagueStats
     hash
   end
 
-  def team_id_swap(input)
-    if input.class == Integer
-      output = @teams.repo.find do |team|
-        team.team_id == input
-      end
-      return output.team_name
-    else
-      input.capitalize!
-      output = @teams.repo.find do |team|
-        team.team_name == input
-      end
-      return output.team_id
-    end
+  def count_of_teams
+    list = array_of_teams
+    list.count
+    # @teams.repo.count
   end
 
   def array_of_teams
@@ -40,12 +31,19 @@ module LeagueStats
     list.uniq!
   end
 
-  def count_of_teams
-    list = array_of_teams
-    list.count
-    # @teams.repo.count
-  #   total number of teams - should be module
-  #   returns an integer
+  def team_id_swap(input)
+    if input.class == Integer
+      output = @teams.repo.find do |team|
+        team.team_id == input
+      end
+      return output.team_name
+    else
+      input.capitalize!
+      output = @teams.repo.find do |team|
+        team.team_name == input
+      end
+      return output.team_id
+    end
   end
 
   def get_all_game_teams_for_team(team)
@@ -70,7 +68,6 @@ module LeagueStats
       game_team.team_id == team_id_swap(team)
     end
   end
-  #
 
   def total_points_for_team(team)
     id = team_id_swap(team)
@@ -93,6 +90,35 @@ module LeagueStats
     total.to_f
   end
 
+  def get_team_home_games(team)
+    games = get_all_game_teams_for_team(team)
+    home = games.reject do |game|
+      game.home_or_away == "away"
+    end
+  end
+
+  def get_team_away_games(team)
+    games = get_all_game_teams_for_team(team)
+    home = games.reject do |game|
+      game.home_or_away == "home"
+    end
+  end
+
+  def won_games(team)
+    games = get_all_game_teams_for_team(team)
+    won = games.reject do |game|
+      game.won? == false
+    end
+  end
+
+
+  def lost_games(team)
+    games = get_all_game_teams_for_team(team)
+    lost = games.reject do |game|
+      game.won? == true
+    end
+  end
+
   def best_offense
     list = array_of_teams
     team = list.max_by do |team_name| #for each team_name in hash
@@ -105,12 +131,8 @@ module LeagueStats
       highest_avg
     end
     team
-  #   highest avg goals/game all seasons
-  #   highest average_goals_per_game  inherit!
-  #
-  #   returns string of team name
   end
-  #
+
   def worst_offense
     list = array_of_teams
     team = list.min_by do |team_name|
@@ -123,12 +145,8 @@ module LeagueStats
       highest_avg
     end
     team
-  #   lowest avg goals/game all seasons
-  #   lowest average_goals_per_game inherit!
-  #
-  #   returns string of team name
   end
-  #
+
   def best_defense
     list = array_of_teams
     team = list.min_by do |team_name|
@@ -141,18 +159,8 @@ module LeagueStats
       lowest_avg
     end
     team
-    # get_all_opponents_game_team_data
-  #   lowest average_goals_per_game against
-  #
-  #   lowest avg goals/game *allowed* all seasons
-  #   teamgame.each do |game| #when home
-  #     total += away_goals
-  #   teamgame.each do |game| #when away
-  #     total += home_goals
-  #
-  #   returns string of team name
   end
-  #
+
   def worst_defense
     list = array_of_teams
     team = list.max_by do |team_name|
@@ -165,18 +173,8 @@ module LeagueStats
       highest_avg
     end
     team
-  #   highest average_goals_per_game against
-  #
-  #   highest avg goals/game *allowed* all seasons
-  #   teamgame.each do |game| #when home
-  #     total += away_goals
-  #   teamgame.each do |game| #when away
-  #     total += home_goals
-  #
-  #   returns string of team name
   end
-  #
-  #
+
   def highest_scoring_visitor
     list = array_of_teams
     team = list.max_by do |team_name|
@@ -190,15 +188,8 @@ module LeagueStats
       total_away_goals
     end
     team
-
-  #   highest average away score all seasons
-  #
-  #   if team == away
-  #     average goals
-  #
-  #   returns string of team name
   end
-  #
+
   def lowest_scoring_visitor
     list = array_of_teams
     team = list.min_by do |team_name|
@@ -212,14 +203,8 @@ module LeagueStats
       total_away_goals
     end
     team
-    #   lowest average away score all seasons
-    #
-    #   if team == away
-    #     average goals
-    #
-    #   returns string of team name
   end
-  #
+
   def highest_scoring_home_team
     list = array_of_teams
     team = list.max_by do |team_name|
@@ -232,13 +217,8 @@ module LeagueStats
       end
       total_home_goals
     end
-  #   highest average home score all seasons
-  #
-  #   if team == home
-  #     average goals
-  #   returns string of team name
   end
-  #
+
   def lowest_scoring_home_team
     list = array_of_teams
     team = list.min_by do |team_name|
@@ -251,28 +231,43 @@ module LeagueStats
       end
       total_home_goals
     end
-  #   lowest average home score all seasons
-  #
-  #   if team == home
-  #     average goals
-  #
-  #   returns string of team name
   end
-  #
+
+  def win_percentage(team)
+    games = get_all_game_teams_for_team(team)
+    wins = won_games(team)
+    pct = (wins.count.to_f * 100/ games.count).round(2)
+  end
+
+
+  def loss_percentage(team)
+    games = get_all_game_teams_for_team(team)
+    loss = lost_games(team)
+    pct = (loss.count.to_f * 100/ games.count).round(2)
+  end
+
   def winningest_team
-  #   highest win percentage all seasons
-  #   (wins away + wins home) / total games
-  #   returns string of team name
+    list = array_of_teams
+    list.max_by do |team_name|
+      win_percentage(team_name)
+    end
   end
-  #
+
   def best_fans
-    # largest (home win perc. - away win perc.) all seasons
-  #   (home_wins / total_games) - (away_wins / total_games)
-  #   returns string of team name
+    list = array_of_teams
+    best = list.max_by do |team|
+        home_wins = get_team_home_games(team) & won_games(team)
+      away_wins = get_team_away_games(team) & won_games(team)
+      home_wins.count - away_wins.count
+    end
   end
-  #
+
   def worst_fans
-  #   away win perc. > home win perc.
-  #   returns array of team names(strings)
+    list = array_of_teams
+    worst = list.find_all do |team|
+      home_wins = (get_team_home_games(team) & won_games(team)).count.to_f * 100 / get_team_home_games(team).count
+      away_wins = (get_team_home_games(team) & won_games(team)).count.to_f * 100 / get_team_home_games(team).count
+      home_wins < away_wins
+    end
   end
 end

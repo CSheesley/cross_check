@@ -46,10 +46,18 @@ class LeagueStatsTest < Minitest::Test
       53  => "Coyotes",
       54  => "Golden Knights"}), @st.make_team_id_hash
   end
-  #
+
   def test_league_stats_has_teams_and_can_count_teams
     assert_equal 5, @st.count_of_teams
     #with fixture file version of method
+  end
+
+  def test_league_stats_can_make_list_of_teams
+    assert_equal ["Rangers", "Bruins", "Penguins", "Red Wings", "Blackhawks"], @st.array_of_teams
+  end
+
+  def test_league_stats_can_make_list_of_team_ids
+    assert_equal [3, 6, 5, 17, 16], @st.array_of_team_ids
   end
 
   def test_league_stats_can_swap_team_and_team_id
@@ -67,50 +75,69 @@ class LeagueStatsTest < Minitest::Test
     assert_equal 9, @st.get_all_opponents_game_team_data("Bruins").count
     assert_equal 2012030221, @st.get_all_opponents_game_team_data("Bruins").first.game_id
   end
-  #
-  def test_league_stats_can_find_total_goals_for_team
+
+  def test_league_stats_can_find_total_points_for_team
     assert_equal 28, @st.total_points_for_team("Bruins")
   end
 
-  def test_league_stats_can_find_total_goals_against
+  def test_league_stats_can_find_total_points_against
     assert_equal 12, @st.total_points_against("Bruins")
   end
 
-  def test_league_stats_can_make_list_of_teams
-    assert_equal ["Rangers", "Bruins", "Penguins", "Red Wings", "Blackhawks"], @st.array_of_teams
+  def test_league_stats_can_get_all_home_games
+    assert_equal 2, @st.get_team_home_games("Rangers").count
+    assert_equal 2012030223, @st.get_team_home_games("Rangers").first.game_id
   end
 
-  def test_league_stats_can_make_list_of_team_ids
-    assert_equal [3, 6, 5, 17, 16], @st.array_of_team_ids
+  def test_league_stats_can_get_all_away_games
+    assert_equal 3, @st.get_team_away_games("Rangers").count
+    assert_equal 2012030221, @st.get_team_away_games("Rangers").first.game_id
+  end
+
+  def test_league_stats_can_list_won_games_for_team
+    assert_equal 8, @st.won_games("Bruins").count
+    assert_equal 2012030221, @st.won_games("Bruins").first.game_id
+  end
+
+  def test_league_stats_can_list_lost_games_for_team
+    assert_equal 1, @st.lost_games("Bruins").count
+    assert_equal 2012030224, @st.lost_games("Bruins").first.game_id
   end
 
   def test_league_stats_can_return_best_and_worst_offenses
     assert_equal "Bruins", @st.best_offense
     assert_equal "Penguins", @st.worst_offense
   end
-  #
+
   def test_league_stats_can_return_best_and_worst_defenses
     assert_equal "Bruins", @st.best_defense
     assert_equal "Rangers", @st.worst_defense
   end
-  #
+
   def test_league_stats_can_return_lowest_and_highest_scoring_visitor_teams
     assert_equal "Bruins", @st.highest_scoring_visitor
     assert_equal "Penguins", @st.lowest_scoring_visitor
   end
-  #
+
   def test_league_stats_can_return_lowest_and_highest_scoring_home_teams
     assert_equal "Penguins", @st.lowest_scoring_home_team
     assert_equal "Bruins", @st.highest_scoring_home_team
   end
-  #
+
+
+  def test_league_stats_can_calculate_win_percentage
+    assert_equal 20.0, @st.win_percentage("Rangers")
+  end
+
+  def test_league_stats_can_calculate_loss_percentage
+    assert_equal 80.0, @st.loss_percentage("Rangers")
+  end
+
   def test_league_stats_can_return_winningest_team
-    skip
     assert_equal "Bruins", @st.winningest_team
   end
-  #
+
   def test_league_stats_can_return_worst_and_best_team_fans
-    skip
     assert_equal "Bruins", @st.best_fans
     assert_equal [], @st.worst_fans
   end
