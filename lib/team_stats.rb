@@ -1,25 +1,45 @@
 # Each of the methods below take a team id as an argument. Using that team id,
 # your instance of StatTracker will provide statistics for a specific team.
 
-class TeamStats
+module TeamStats
 
-  # def team_info(team_id)
-  #   team_info should be a hash output with 6 key value pairs
-  #   is an attr_reader applicable
-  # end
+  def team_info(team_id) # probably a module
+    @teams.repo.group_by do |team|
+      if team.team_id == team_id
+        return team
+      end
+      team
+    end
+    # team_info should be a hash output with 6 key value pairs
+  end
 
 #GAME_TEAM_CSV
-#     def all_games_played(team_id) #helper
-#       find_all team_id
-#       return all game_team instances associated with team_id
-#         this will be used later
-#     end
-#
-#     def seasons(team_id) #helper
-#       all_games_payed(team_id)
-#       parse game_id's into separeate years (first 4 characters of string)
-#       store as an array.uniq (for easy counting)
-#     end
+    def all_games_played(team_id) #helper
+      list = []
+      @game_teams.repo.find_all do |game_team|
+        if game_team.team_id == team_id
+          list << game_team
+        end
+      end
+      return list
+    end
+
+    def all_game_ids_by_team(team_id)
+      all_game_ids = []
+      all_games_played(team_id).find_all do |game_team|
+        all_game_ids << game_team.game_id
+      end
+      all_game_ids
+    end
+
+    def seasons(team_id) #helper
+      #use Carrie's array of all game id's for given team? (remove helper method above)
+      all_game_ids_by_team(team_id)
+      years = all_game_ids_by_team(team_id).map do |game_id|
+        game_id.to_s.slice(0,4).to_i
+      end
+      years.uniq
+    end
 #
 #     def wins_per_year(team_id) #helper
 #       use seasons(team_id)
@@ -102,8 +122,8 @@ class TeamStats
 #     reference list in GAME CSV to find greatest difference between home and
 #     away goals.
 #
-#     If home then home - away
-#     else away - home
+#     If home == team_id then home goals - away goals
+#     else away goals - home goals
 #
 #     find max
 #   end
