@@ -23,11 +23,11 @@ class TeamStatsTest < Minitest::Test
   #   assert_instance_of Hash, @stat_tracker.team_info(17)
   # end
 
-  # def test_all_games_played_can_be_gathered #helper
-  #   #6 is the correct count of game_team objects in the array
-  #   #wasnt sure how to fill an array with these objects for testing
-  #   assert_equal 6, @stat_tracker.all_games_played(17).count
-  # end
+  def test_all_games_played_can_be_gathered #helper
+    #6 is the correct count of game_team objects in the array
+    #wasnt sure how to fill an array with these objects for testing
+    assert_equal 6, @stat_tracker.all_games_played(17).count
+  end
 
   def test_all_seasons_played_by_a_team_can_be_added_to_a_list
 
@@ -60,15 +60,20 @@ class TeamStatsTest < Minitest::Test
   #   expected = String
   #   assert_equal "Blackhawks", @stat_tracker.rival(17)
   # end
-  #
+
+  def test_all_wins_and_losse_for_a_team_can_be_shown
+    # array of 3 game_team objects for each (team happens to be 3-3)
+    assert_equal 3, @stat_tracker.all_wins_by_team(17).count
+    assert_equal 3, @stat_tracker.all_losses_by_team(17).count
+  end
+
   # def test_teams_biggest_blowout_win__and_worst_loss_by_goal_differential_is_shown
-  #   expected = Integer
-  #   for testing, assertion values depend on if we use game_team_csv or game_csv
-  #
+  #   # expected = Integer
+  #   # for testing, assertion values depend on if we use game_team_csv or game_csv
   #   assert_equal 3, @stat_tracker.biggest_team_blowout(17) #using game_team_stats_fixture.csv
   #   assert_equal 3, @stat_tracker.worst_loss(17) #using game_team_stats_fixture.csv
   # end
-  #
+
   # def test_teams_head_to_head_record_is_shown_versus_a_specific_opponent
   #   # expected = Hash
   #
