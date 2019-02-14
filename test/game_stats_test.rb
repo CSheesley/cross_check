@@ -49,7 +49,7 @@ class StatTracker < Minitest::Test
 
   def test_stat_tracker_can_return_count_of_games_by_season
     skip
-    expected = { 20014 => 6 }
+    expected = { 20142015 => 6 }
     assert_equal expected, @stat_tracker.count_of_games_by_season(20142015)
   end
 
@@ -65,7 +65,7 @@ class StatTracker < Minitest::Test
 
   def test_stat_tracker_can_return_average_goals_by_season
     skip
-    Expected = hash
-    assert_equal Expected, @stat_tracker.average_goals_by_season
+    expected = { 20162017 => 5.75 }
+    assert_equal expected, @stat_tracker.average_goals_by_season(20162017)
   end
 end
