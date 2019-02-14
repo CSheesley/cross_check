@@ -42,7 +42,8 @@ module TeamStats
     end
 #
 #     def wins_per_year(team_id) #helper
-#       use seasons(team_id)
+#       use method alredy all_wins_by_team(17)
+#       rethink below
 #       wins = {}
 #       wins = find all "TRUE" responses to won? Count
 #       store as a hash?
@@ -113,20 +114,22 @@ module TeamStats
 #
 # #GAME_CSV
 #
-#   def biggest_team_blowout(team_id)
-#     #GAME_TEAM CSV
-#     list = all_games_played.find_all do |game|
-#       game.won? = "TRUE"
-#
-#     new list = []
-#     reference list in GAME CSV to find greatest difference between home and
-#     away goals.
-#
-#     If home == team_id then home goals - away goals
-#     else away goals - home goals
-#
-#     find max
-#   end
+  def biggest_team_blowout(team_id)
+    blow_out_total = []
+
+
+    list = all_games_played.find_all do |game|
+      game.won? = "TRUE"
+
+    new list = []
+    reference list in GAME CSV to find greatest difference between home and
+    away goals.
+
+    If home == team_id then home goals - away goals
+    else away goals - home goals
+
+    find max
+  end
 #
 #   def worst_loss(team_id)
 #     #GAME_TEAM CSV
@@ -143,6 +146,26 @@ module TeamStats
 #     find max
 #   end
 #
+def all_wins_by_team(team_id) #helper
+  all_wins = []
+  all_games_played(team_id).each do |game_team|
+    if game_team.won?
+      all_wins << game_team
+    end
+  end
+  all_wins
+end
+
+def all_losses_by_team(team_id) #helper
+  all_losses = []
+  all_games_played(team_id).each do |game_team|
+    if game_team.won? == false
+      all_losses << game_team
+    end
+  end
+  all_losses
+end
+
 #   def head_to_head(team_id)
 #     may need to take in an additional team_id argument?
 #     find all games between these two teams
