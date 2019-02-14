@@ -125,7 +125,7 @@ module LeagueStats
   def winningest_team
     list = array_of_teams
     list.max_by do |team_name|
-      win_percentage(team_name)
+      win_percentage(team_name,get_all_game_teams_for_team(team_name))
     end
   end
 

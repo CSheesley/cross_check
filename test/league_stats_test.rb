@@ -126,11 +126,11 @@ class LeagueStatsTest < Minitest::Test
 
 
   def test_league_stats_can_calculate_win_percentage
-    assert_equal 20.0, @st.win_percentage("Rangers")
+    assert_equal 20.0, @st.win_percentage("Rangers",@st.get_all_game_teams_for_team("Rangers"))
   end
 
   def test_league_stats_can_calculate_loss_percentage
-    assert_equal 80.0, @st.loss_percentage("Rangers")
+    assert_equal 80.0, @st.loss_percentage("Rangers", @st.get_all_game_teams_for_team("Rangers"))
   end
 
   def test_league_stats_can_return_winningest_team
