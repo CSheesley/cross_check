@@ -1,0 +1,11 @@
+game_id,season,type,date_time,away_team_id,home_team_id,away_goals,home_goals,outcome,home_rink_side_start,venue,venue_link,venue_time_zone_id,venue_time_zone_offset,venue_time_zone_tz
+2012030221,20122013,P,2013-05-13,3,2,2,3,home win REG,left,Honda Center,/api/v1/venues/null,America/Los_Angeles,-7,PDT
+2012030221,20122013,P,2013-05-09,3,2,4,0,away win REG,left,CONSOL Energy Center,/api/v1/venues/null,America/New_York,-4,EDT
+2012030222,20122013,P,2013-05-03,2,3,4,3,away win REG,left,CONSOL Energy Center,/api/v1/venues/null,America/New_York,-4,EDT
+2012030222,20122013,P,2013-06-09,2,3,4,3,away win REG,right,United Center,/api/v1/venues/null,America/Chicago,-5,CDT
+2012030223,20122013,P,2013-05-01,2,3,0,5,home win REG,left,CONSOL Energy Center,/api/v1/venues/null,America/New_York,-4,EDT
+2012030223,20122013,R,2018-03-26,3,2,2,4,home win REG,right,Madison Square Garden,/api/v1/venues/null,America/New_York,-4,EDT
+2012030224,20122013,R,2016-12-29,3,2,2,1,away win REG,right,Rogers Arena,/api/v1/venues/null,America/Vancouver,-7,PDT
+2012030224,20122013,R,2015-11-11,2,3,4,2,away win REG,left,SAP Center at San Jose,/api/v1/venues/null,America/Los_Angeles,-7,PDT
+2012030225,20122013,R,2017-01-08,2,3,3,6,home win REG,left,SAP Center at San Jose,/api/v1/venues/null,America/Los_Angeles,-7,PDT
+2012030225,20122013,R,2018-03-07,2,3,0,2,home win REG,left,Bridgestone Arena,/api/v1/venues/null,America/Chicago,-5,CDT

@@ -27,7 +27,7 @@ class GameTeam
     @hits = info[:hits].to_i
     @pim = info[:pim].to_i
     @power_play_chances = info[:powerplayopportunities].to_i
-    @power_play_goals = info[:power_play_goals].to_i
+    @power_play_goals = info[:powerplaygoals].to_i
     @face_off_win_percentage = info[:faceoffwinpercentage].to_f.round(2)
     @giveaways = info[:giveaways].to_i
     @takeaways = info[:takeaways].to_i

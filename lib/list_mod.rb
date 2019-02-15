@@ -43,7 +43,7 @@ module List
   end
 
   def get_all_game_teams_for_team(team)
-    id = team_id_swap(team)
+    team.class == String ? id = team_id_swap(team) : id = team
     list = @game_teams.repo.find_all do |game_team|
       game_team.team_id == id
     end
@@ -117,15 +117,15 @@ module List
 
 
 
-  def win_percentage(team)
-    games = get_all_game_teams_for_team(team)
+  def win_percentage(team,game_team_array)
+    games = game_team_array
     wins = won_games(team)
-    pct = (wins.count.to_f * 100/ games.count).round(2)
+    pct = (wins.count.to_f * 100 / games.count).round(2)
   end
 
-  def loss_percentage(team)
-    games = get_all_game_teams_for_team(team)
+  def loss_percentage(team,game_team_array)
+    games = game_team_array
     loss = lost_games(team)
-    pct = (loss.count.to_f * 100/ games.count).round(2)
+    pct = (loss.count.to_f * 100 / games.count).round(2)
   end
 end
