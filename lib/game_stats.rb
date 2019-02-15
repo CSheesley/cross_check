@@ -25,25 +25,34 @@ module GameStats
     end
   end 
 
-  def percentage_home_wins
-    #total_home_wins = games where home_goals > away_goals
-    #total_home_wins/total_games
-    #float, round(2)
-  end
+  # def percentage_home_wins
+    
+  # end
+
+  # def percentage_visitor_wins
+  #   #(100 - percentage_home_wins)
+  #   #float, round(2)
+  # end
+
 
   def total_games
-    #@games.map.sum 
+    @games.repo.map do |game|
+      game.game_id
+    end.length
   end 
 
-  def percentage_visitor_wins
-    #(100 - percentage_home_wins)
-    #float, round(2)
-  end
+  # def total_home_wins
+    
+    
+  # end 
 
   def count_of_games_by_season(season) #to go module?
-    #seaon_names_array
-    #use collect?
-    #hash of season_names (20122013) as keys, #count_of_games as values
+    games_for_season = @games.repo.select do |game|
+      game.season == season
+    end
+    season_games_count = {}
+    season_games_count[season] = games_for_season.size
+    season_games_count
   end
 
   def average_goals_per_game
