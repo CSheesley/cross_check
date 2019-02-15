@@ -5,7 +5,7 @@ class TeamStatsTest < Minitest::Test
   def setup #required different setup, using custom CSV fixture
     @game_path = './data/game_fixture.csv'
     @team_path = './data/team_info.csv'
-    @game_teams_path = './data/game_team_stats_fixture.csv'
+    @game_teams_path = './data/game_team_stats_fixture_corey.csv'
     @locations = {games: @game_path,
       teams: @team_path,
       game_teams: @game_teams_path}
@@ -33,17 +33,14 @@ class TeamStatsTest < Minitest::Test
 
   def test_teams_best_and_worst_season_based_on_win_percentage_can_be_shown
     #expected = Integer
-    # binding.pry
-    assert_equal 2011, @stat_tracker.best_season(17) #50%
-    assert_equal 2011, @stat_tracker.worst_season(17) #50%
+    assert_equal 2012, @stat_tracker.best_season(17) #50%
+    assert_equal 2011, @stat_tracker.worst_season(17) #0%
   end
 
-  # def test_teams_average_win_percentage_of_all_games_is_shown
-  #  Use Carrie's helper
-  #   expected = Float
-  #   assert_equal 50.0, @stat_tracker.average_win_percentage(17)
-  # end
-  #
+  def test_teams_average_win_percentage_of_all_games_is_shown
+    assert_equal 25.0, @stat_tracker.average_win_percentage(17)
+  end
+
   # def test_teams_highest_and_lowest_number_of_goals_in_a_single_game_is_shown
   #   # expected = Integer
   #   assert_equal 4, @stat_tracker.most_goals_scored(17)
@@ -62,14 +59,14 @@ class TeamStatsTest < Minitest::Test
 
   def test_all_wins_and_losses_for_a_team_can_be_shown
     # array of 3 game_team objects for each (team happens to be 3-3)
-    assert_equal 3, @stat_tracker.all_wins_by_team(17).count #2
-    assert_equal 3, @stat_tracker.all_losses_by_team(17).count #4
+    assert_equal 2, @stat_tracker.all_wins_by_team(17).count #2
+    assert_equal 4, @stat_tracker.all_losses_by_team(17).count #4
   end
 
   def test_teams_biggest_blowout_win__and_worst_loss_by_goal_differential_is_shown
     @game_path = './data/game_fixture_manually_built.csv'
     @team_path = './data/team_info.csv'
-    @game_teams_path = './data/game_team_stats_fixture.csv'
+    @game_teams_path = './data/game_team_stats_fixture_corey.csv'
     @locations = {games: @game_path,
       teams: @team_path,
       game_teams: @game_teams_path}
@@ -77,7 +74,7 @@ class TeamStatsTest < Minitest::Test
     @st = StatTracker.from_csv(@locations)
 
     assert_equal 3, @st.biggest_team_blowout(17) #using game_team_stats_fixture.csv
-    assert_equal 3, @st.worst_loss(17) #using game_team_stats_fixture.csv
+    assert_equal 5, @st.worst_loss(17) #using game_team_stats_fixture.csv
   end
 
   # def test_teams_head_to_head_record_is_shown_versus_a_specific_opponent
