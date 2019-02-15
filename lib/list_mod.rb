@@ -43,7 +43,7 @@ module List
   end
 
   def get_all_game_teams_for_team(team)
-    id = team_id_swap(team)
+    team.class == String ? id = team_id_swap(team) : id = team
     list = @game_teams.repo.find_all do |game_team|
       game_team.team_id == id
     end

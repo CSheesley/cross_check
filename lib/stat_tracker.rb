@@ -1,10 +1,12 @@
 require "./lib/league_stats"
 require './lib/team_stats'
+require './lib/season_stats'
 require "./lib/list_mod"
 
 class StatTracker
   # include TeamStats
   include LeagueStats
+  include SeasonStats
   include List
 
   attr_accessor :games, :game_teams, :teams

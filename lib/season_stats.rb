@@ -1,4 +1,4 @@
-class SeasonStats
+module SeasonStats
 
   def biggest_bust
     # max (preseason win %) - (regular win %) => decrease
@@ -52,8 +52,22 @@ class SeasonStats
     #string of team name
   end
 
+  def game_id_to_season(game_id)
+    game = @games.repo.find do |game|
+      game.game_id == game_id
+    end
+    # binding.pry
+    game.season
+  end
 
-  def power_play_goal_percentage
+  def power_play_goal_percentage(season)
+    list = @game_teams.repo.find_all do |game_team|
+      game_id_to_season(game_team.game_id) == season
+    end
+    pp_goals = list.reduce(0) do |sum, game_team|
+      sum += game_team.power_play_goals
+    end
+    pp_goals
     # 100 * power_play_goals / total goals round(2) for ALL TEAMS
     #IN GIVEN SEASON
     #float of percentage
