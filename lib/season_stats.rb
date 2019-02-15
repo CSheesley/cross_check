@@ -56,7 +56,6 @@ module SeasonStats
     game = @games.repo.find do |game|
       game.game_id == game_id
     end
-    # binding.pry
     game.season
   end
 
@@ -67,10 +66,11 @@ module SeasonStats
     pp_goals = list.reduce(0) do |sum, game_team|
       sum += game_team.power_play_goals
     end
-    pp_goals
-    # 100 * power_play_goals / total goals round(2) for ALL TEAMS
-    #IN GIVEN SEASON
-    #float of percentage
+    pp_goals = pp_goals.to_f
+    total_goals = list.reduce(0) do |sum, game_team|
+      sum += (game_team.goals)
+    end
+    (100 * pp_goals / total_goals).round(2)
   end
 
 end

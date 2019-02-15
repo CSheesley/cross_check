@@ -57,6 +57,6 @@ class SeasonStatsTest < Minitest::Test
                   game_teams: game_teams_path}
     st2 = StatTracker.from_csv(locations)
 
-    assert_equal 17.19, st2.power_play_goal_percentage(20122013)
+    assert_equal 23.08, st2.power_play_goal_percentage(20122013)
   end
 end
