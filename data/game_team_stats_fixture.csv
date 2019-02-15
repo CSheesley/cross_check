@@ -21,8 +21,8 @@
 "2011030231","16","home",TRUE,"REG","Joel Quenneville",4,42,24,10,3,1,47.5,2,11
 "2012030232","17","away",TRUE,"REG","Mike Babcock",4,30,26,6,4,0,55.4,6,6
 "2012030232","16","home",FALSE,"REG","Joel Quenneville",1,20,36,10,2,0,44.6,7,9
-"2011030233","16","away",TRUE,"REG","Joel Quenneville",5,40,22,22,4,0,43.9,5,6
-"2011030233","17","home",FALSE,"REG","Mike Babcock",0,30,28,10,5,0,56.1,9,3
+"2011030233","16","away",FALSE,"REG","Joel Quenneville",1,40,22,22,4,0,43.9,5,6
+"2011030233","17","home",TRUE,"REG","Mike Babcock",3,30,28,10,5,0,56.1,9,3
 "2012030234","16","away",FALSE,"REG","Joel Quenneville",0,28,22,10,3,0,48.3,8,4
 "2012030234","17","home",TRUE,"REG","Mike Babcock",2,27,30,10,3,1,51.7,10,8
 "2012030235","17","away",FALSE,"REG","Mike Babcock",1,26,25,10,4,0,50.8,5,3
