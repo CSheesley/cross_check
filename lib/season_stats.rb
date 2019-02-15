@@ -53,10 +53,10 @@ module SeasonStats
   end
 
   def game_id_to_season(game_id)
-    game = @games.repo.find do |game|
+    game_team = @games.repo.find do |game|
       game.game_id == game_id
     end
-    game.season
+    game_team.season
   end
 
   def power_play_goal_percentage(season)

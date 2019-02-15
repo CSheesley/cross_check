@@ -1,7 +1,7 @@
 module List
   def make_team_id_hash
     hash = {}
-    ordered = @teams.repo.sort_by do |team|
+    @teams.repo.sort_by do |team|
       team.team_id
     end
     @teams.repo.each do |team|
@@ -60,7 +60,7 @@ module List
         end
       end
     end
-    opponents = list.reject do |game_team|
+    list.reject do |game_team|
       game_team.team_id == team_id_swap(team)
     end
   end
@@ -77,7 +77,7 @@ module List
   end
 
   def total_points_against(team)
-    id = team_id_swap(team)
+    team_id_swap(team)
     game_teams = get_all_opponents_game_team_data(team)
     total = 0
     game_teams.each do |game_team|
@@ -88,28 +88,28 @@ module List
 
   def get_team_home_games(team)
     games = get_all_game_teams_for_team(team)
-    home = games.reject do |game|
+    games.reject do |game|
       game.home_or_away == "away"
     end
   end
 
   def get_team_away_games(team)
     games = get_all_game_teams_for_team(team)
-    home = games.reject do |game|
+    games.reject do |game|
       game.home_or_away == "home"
     end
   end
 
   def won_games(team)
     games = get_all_game_teams_for_team(team)
-    won = games.reject do |game|
+    games.reject do |game|
       game.won? == false
     end
   end
 
   def lost_games(team)
     games = get_all_game_teams_for_team(team)
-    lost = games.reject do |game|
+    games.reject do |game|
       game.won? == true
     end
   end
@@ -120,12 +120,12 @@ module List
   def win_percentage(team,game_team_array)
     games = game_team_array
     wins = won_games(team)
-    pct = (wins.count.to_f * 100 / games.count).round(2)
+    (wins.count.to_f * 100 / games.count).round(2)
   end
 
   def loss_percentage(team,game_team_array)
     games = game_team_array
     loss = lost_games(team)
-    pct = (loss.count.to_f * 100 / games.count).round(2)
+    (loss.count.to_f * 100 / games.count).round(2)
   end
 end
