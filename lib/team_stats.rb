@@ -65,7 +65,7 @@ module TeamStats
   end
 
   #trouble incorporating
-  # def game_id_to_year
+  # def game_id_to_year #helper
   #   game_id.to_s.slice(0,4)
   # end
 
@@ -78,7 +78,7 @@ module TeamStats
   end
 
   # #trouble incorporating
-  # def annual_win_percentage(team_id)
+  # def annual_win_percentage(team_id) #helper
   #   (win_count_per_year(team_id)[year]/game_count_per_year(team_id)[year])
   # end
 #
@@ -96,14 +96,14 @@ module TeamStats
     end.first
   end
 
-#   def average_win_percentage(team_id)
-#     placeholder = win_percentage_by_season(team_id).values
-#     placeholder.sum do |element|
-#       element
-#     end
-#     (placeholder / placeholder.count).to_f
-#   end
-#
+  def average_win_percentage(team_id)
+    percentages = []
+    win_percentage_by_season(team_id).each do |year, percent|
+      percentages << percent
+    end
+      percentages.inject(0.0) {|sum, percentage| sum + percentage} / percentages.count
+  end
+
 #   def most_goals_scored(team_id)
 #     all_games_payed(team_id).max do |game|
 #       game.goals
@@ -153,23 +153,15 @@ def worst_loss(team_id)
 end
 
 def all_wins_by_team(team_id) #helper
-  all_wins = []
-  all_games_played(team_id).each do |game_team|
-    if game_team.won?
-      all_wins << game_team
+  all_games_played(team_id).find_all do |game_team|
+    game_team.won?
     end
-  end
-  all_wins
 end
 
 def all_losses_by_team(team_id) #helper
-  all_losses = []
-  all_games_played(team_id).each do |game_team|
-    if game_team.won? == false
-      all_losses << game_team
+  all_games_played(team_id).find_all do |game_team|
+    game_team.won? == false
     end
-  end
-  all_losses
 end
 
 #   def head_to_head(team_id)
