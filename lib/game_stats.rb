@@ -1,29 +1,28 @@
+require 'pry'
+
 module GameStats
   def highest_total_score
-    @games.max_by |
-    #max_by(each game(@home_score + @away_score))
-    #total goals per game
-    #module or instance method: total_score = sum(home + away)
-    #@games.map {|game| sum(h + a)}
-    #integer
-    #remove duplicates 
+    total_scores.max 
   end
 
   def lowest_total_score
-    #min_by(each game(@home_score + @away_score))
-    #integer
+    total_scores.min
   end
 
-  def total_score(game_id)
-
+  def total_scores
+    @games.repo.map do |game|
+      game.away_goals + game.home_goals
+    end 
   end 
 
   def biggest_blowout
-    #max_buy(each game(@home_score - @away_score)) abs diff 
-    #integer
+    absolute_diff_teams_score.max
   end
 
-  def absolute_diff? #may not need 
+  def absolute_diff_teams_score
+    diff = @games.repo.map do |game|
+      (game.away_goals - game.home_goals).abs
+    end
   end 
 
   def percentage_home_wins
@@ -33,7 +32,7 @@ module GameStats
   end
 
   def total_games
-    @games.map.sum 
+    #@games.map.sum 
   end 
 
   def percentage_visitor_wins
@@ -59,17 +58,5 @@ module GameStats
   def average_goals_by_season(season)
     #season.total_goals/season.total_games
     #hash with season_names as keys and a float.round(2) representing average number of goals in a game for that season as a value (spec says key? double check with Amy/Brian)
-  end
-end 
-
-class StatTracker
-  attr_accessor :games, :game_teams, :teams
-
-  def self.from_csv(locations)
-    st            = StatTracker.new
-    st.games      = GameRepo.new(locations[:games], self)
-    st.game_teams = GameTeamRepo.new(locations[:game_teams], self)
-    st.teams      = TeamRepo.new(locations[:teams], self)
-    st
   end
 end

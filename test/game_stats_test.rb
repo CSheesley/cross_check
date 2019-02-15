@@ -33,16 +33,19 @@ class GameStatsTest < Minitest::Test
   def test_stat_tracker_can_return_total_scores
     #helper method, possibly to module 
     expected = [5, 5, 7, 9, 10, 4, 7, 4, 1, 7, 7, 3, 1, 5, 3, 6, 4, 5, 7, 5, 5, 9, 4, 3, 7, 5, 3, 3, 2, 7]
+
     assert_equal expected, @st.total_scores
   end 
 
-  def test_stat_tracker_can_return_scores_absolute_diff
+  def test_stat_tracker_can_return_away_home_teams_score_abolute_difference   
+    #helper method for biggest_blowout 
+    expected = [1, 5, 1, 1, 2, 4, 1, 2, 1, 1, 1, 1, 1, 5, 1, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 3]
+   
+    assert_equal expected, @st.absolute_diff_teams_score
   end 
 
   def test_stat_tracker_can_return_biggest_blowout
-    skip
-    # this one also has mult teams with 5 pt diff, array? 
-    assert_equal 5, @stat_tracker.biggest_blowout
+    assert_equal 5, @st.biggest_blowout
   end
 
   def test_stat_tracker_can_return_home_and_visitor_team_percentage_wins
