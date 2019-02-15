@@ -1,12 +1,12 @@
 module GameStats
   def highest_total_score
-    @games.max_by |
+    # @games.max_by |
     #max_by(each game(@home_score + @away_score))
     #total goals per game
     #module or instance method: total_score = sum(home + away)
     #@games.map {|game| sum(h + a)}
     #integer
-    #remove duplicates 
+    #remove duplicates
   end
 
   def lowest_total_score
@@ -16,15 +16,15 @@ module GameStats
 
   def total_score(game_id)
 
-  end 
+  end
 
   def biggest_blowout
-    #max_buy(each game(@home_score - @away_score)) abs diff 
+    #max_buy(each game(@home_score - @away_score)) abs diff
     #integer
   end
 
-  def absolute_diff? #may not need 
-  end 
+  def absolute_diff? #may not need
+  end
 
   def percentage_home_wins
     #total_home_wins = games where home_goals > away_goals
@@ -33,8 +33,8 @@ module GameStats
   end
 
   def total_games
-    @games.map.sum 
-  end 
+    @games.map.sum
+  end
 
   def percentage_visitor_wins
     #(100 - percentage_home_wins)
@@ -53,14 +53,14 @@ module GameStats
   end
 
   def total_goals_all_seasons
-    #(all home team goals + all away team goals) / total games 
-  end 
+    #(all home team goals + all away team goals) / total games
+  end
 
   def average_goals_by_season(season)
     #season.total_goals/season.total_games
     #hash with season_names as keys and a float.round(2) representing average number of goals in a game for that season as a value (spec says key? double check with Amy/Brian)
   end
-end 
+end
 
 class StatTracker
   attr_accessor :games, :game_teams, :teams
