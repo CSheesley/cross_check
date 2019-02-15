@@ -2,7 +2,7 @@ require "./test/test_helper"
 
 class TeamStatsTest < Minitest::Test
 
-  def setup
+  def setup #required different setup, using custom CSV fixture
     @game_path = './data/game_fixture.csv'
     @team_path = './data/team_info.csv'
     @game_teams_path = './data/game_team_stats_fixture.csv'
@@ -24,24 +24,23 @@ class TeamStatsTest < Minitest::Test
   # end
 
   def test_all_games_played_can_be_gathered #helper
-    #6 is the correct count of game_team objects in the array
-    #wasnt sure how to fill an array with these objects for testing
     assert_equal 6, @stat_tracker.all_games_played(17).count
   end
 
   def test_all_seasons_played_by_a_team_can_be_added_to_a_list
-
-    assert_equal [2011, 2012], @stat_tracker.seasons(17)
+    assert_equal [2011, 2012], @stat_tracker.all_seasons(17)
   end
 
-  # def test_teams_best_and_worst_season_based_on_win_percentage_can_be_shown
-  #   #expected = Integer
-  #   assert_equal 2011, @stat_tracker.best_season(17) #50%
-  #   assert_equal 2012, @stat_tracker.worst_season(17) #33%
-  # end
+  def test_teams_best_and_worst_season_based_on_win_percentage_can_be_shown
+    #expected = Integer
+    # binding.pry
+    assert_equal 2011, @stat_tracker.best_season(17) #50%
+    assert_equal 2011, @stat_tracker.worst_season(17) #50%
+  end
 
   # def test_teams_average_win_percentage_of_all_games_is_shown
-  #   # expected = Float
+  #  Use Carrie's helper
+  #   expected = Float
   #   assert_equal 50.0, @stat_tracker.average_win_percentage(17)
   # end
   #
@@ -61,23 +60,30 @@ class TeamStatsTest < Minitest::Test
   #   assert_equal "Blackhawks", @stat_tracker.rival(17)
   # end
 
-  def test_all_wins_and_losse_for_a_team_can_be_shown
+  def test_all_wins_and_losses_for_a_team_can_be_shown
     # array of 3 game_team objects for each (team happens to be 3-3)
-    assert_equal 3, @stat_tracker.all_wins_by_team(17).count
-    assert_equal 3, @stat_tracker.all_losses_by_team(17).count
+    assert_equal 3, @stat_tracker.all_wins_by_team(17).count #2
+    assert_equal 3, @stat_tracker.all_losses_by_team(17).count #4
   end
 
-  # def test_teams_biggest_blowout_win__and_worst_loss_by_goal_differential_is_shown
-  #   # expected = Integer
-  #   # for testing, assertion values depend on if we use game_team_csv or game_csv
-  #   assert_equal 3, @stat_tracker.biggest_team_blowout(17) #using game_team_stats_fixture.csv
-  #   assert_equal 3, @stat_tracker.worst_loss(17) #using game_team_stats_fixture.csv
-  # end
+  def test_teams_biggest_blowout_win__and_worst_loss_by_goal_differential_is_shown
+    @game_path = './data/game_fixture_manually_built.csv'
+    @team_path = './data/team_info.csv'
+    @game_teams_path = './data/game_team_stats_fixture.csv'
+    @locations = {games: @game_path,
+      teams: @team_path,
+      game_teams: @game_teams_path}
+
+    @st = StatTracker.from_csv(@locations)
+
+    assert_equal 3, @st.biggest_team_blowout(17) #using game_team_stats_fixture.csv
+    assert_equal 3, @st.worst_loss(17) #using game_team_stats_fixture.csv
+  end
 
   # def test_teams_head_to_head_record_is_shown_versus_a_specific_opponent
   #   # expected = Hash
   #
-  #   assert_equal ({wins: 3, loses: 3}), @stat_tacker.head_to_head(17, 16) #two arguments
+  #   assert_equal (team_id => ), @stat_tacker.head_to_head(17, 16) #two arguments
   #   #head_to_head method not shown with an argument
   #   #but may be a good idea if we specify by opponent
   # end
