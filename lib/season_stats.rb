@@ -1,6 +1,20 @@
 module SeasonStats
 
   def biggest_bust(season)
+    list = find_games_by_season(season)
+    teams = []
+    list.each do |game|
+      teams << game.away_team_id
+      teams << game.home_team_id
+    end
+    teams.uniq!
+    bust = teams.min_by do |team|
+      # binding.pry
+      reg = (won_games(team) & regular_games(team)).count / regular_games(team).count.to_f * 100
+      post = (won_games(team) & postseason_games(team)).count / postseason_games(team).count.to_f * 100
+      post - reg
+    end
+    team_id_swap(bust)
     # max (preseason win %) - (regular win %) => decrease
     #FOR GIVEN SEASON
     #string of team name
@@ -17,10 +31,11 @@ module SeasonStats
     teams.uniq!
     surprise = teams.max_by do |team|
       # binding.pry
-      # win_pct =
+      reg = (won_games(team) & regular_games(team)).count / regular_games(team).count.to_f * 100
+      post = (won_games(team) & postseason_games(team)).count / postseason_games(team).count.to_f * 100
+      post - reg
     end
-    surprise
-
+    team_id_swap(surprise)
     #max (regular win %) - (preseason win %) => increase
     #FOR GIVEN SEASON
     #string of team name

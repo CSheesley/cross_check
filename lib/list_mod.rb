@@ -127,7 +127,7 @@ module List
 
   def won_game_teams(team)
     games = get_all_game_teams_for_team(team)
-    x = games.reject do |game|
+    games.reject do |game|
       game.won? == false
     end
   end

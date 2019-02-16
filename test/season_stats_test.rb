@@ -13,8 +13,8 @@ class SeasonStatsTest < Minitest::Test
   end
 
   def test_biggest_bust_and_suprise_of_season_is_shown
-    assert_equal "Islanders", @st.biggest_suprise(20122013)
-    assert_equal "Rangers", @st.biggest_bust(20122013)
+    assert_equal "Rangers", @st.biggest_suprise(20122013)
+    assert_equal "Bruins", @st.biggest_bust(20122013)
   end
   #
   def test_best_and_worst_coach_by_win_percentage_for_season_are_shown
