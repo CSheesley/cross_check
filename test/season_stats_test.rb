@@ -13,19 +13,16 @@ class SeasonStatsTest < Minitest::Test
   end
 
   def test_biggest_bust_and_suprise_of_season_is_shown
-    skip
-    assert_equal "Rangers", @st.biggest_bust(20122013)
     assert_equal "Islanders", @st.biggest_suprise(20122013)
+    assert_equal "Rangers", @st.biggest_bust(20122013)
   end
   #
   def test_best_and_worst_coach_by_win_percentage_for_season_are_shown
-    skip
     assert_equal "Claude Julien", @st.winningest_coach(20122013)
-    assert_equal "Dan Bylsma", @st.worst_coach(20122013)
+    assert_equal "John Tortorella", @st.worst_coach(20122013)
   end
   #
   def test_most_and_least_accurate_teams_of_season_are_shown
-    skip
     assert_equal "Rangers", @st.most_accurate_team(20122013)
     assert_equal "Bruins", @st.least_accurate_team(20122013)
   end

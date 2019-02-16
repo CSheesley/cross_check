@@ -42,6 +42,7 @@ module List
     end
   end
 
+
   def get_all_game_teams_for_team(team)
     team.class == String ? id = team_id_swap(team) : id = team
     list = @game_teams.repo.find_all do |game_team|
@@ -65,6 +66,29 @@ module List
     end
   end
 
+  def find_game_teams_by_season(season)
+    @game_teams.repo.find_all do |game_team|
+      game_id_to_season(game_team.game_id) == season
+    end
+  end
+
+  def find_games_by_season(season)
+    @games.repo.find_all do |game|
+      game.season == season
+    end
+  end
+
+  def get_all_games(team)
+    if team.class == String
+      team = team_id_swap(team)
+      # binding.pry
+    end
+    @games.repo.find_all do |game|
+      game.away_team_id == team || game.home_team_id == team
+    end
+  end
+
+
   def total_points_for_team(team)
     id = team_id_swap(team)
     total = 0
@@ -86,6 +110,7 @@ module List
     total.to_f
   end
 
+
   def get_team_home_games(team)
     games = get_all_game_teams_for_team(team)
     games.reject do |game|
@@ -100,32 +125,65 @@ module List
     end
   end
 
-  def won_games(team)
+
+  def won_game_teams(team)
     games = get_all_game_teams_for_team(team)
     games.reject do |game|
       game.won? == false
     end
   end
 
-  def lost_games(team)
+  def lost_game_teams(team)
     games = get_all_game_teams_for_team(team)
+    won = won_game_teams(team)
+    lost = games - won
+  end
+
+
+  def won_games(team)
+    won_game_teams = won_game_teams(team)
+    game_ids = won_game_teams.map do |game_team|
+      game_team.game_id
+    end
+    all_games = get_all_games(team)
+
+    all_games.find_all do |game|
+      game_ids.include?(game.game_id)
+    end
+    # binding.pry
+  end
+
+  def lost_games(team)
+    games = get_all_games(team)
+    won = won_games(team)
+    lost = games - won
+  end
+
+
+  def regular_games(team)
+    games = get_all_games(team)
     games.reject do |game|
-      game.won? == true
+      game.type == "P"
+    end
+  end
+
+  def postseason_games(team)
+    games = get_all_games(team)
+    games.reject do |game|
+      game.type == "R"
     end
   end
 
 
-
-
   def win_percentage(team,game_team_array)
     games = game_team_array
-    wins = won_games(team)
+    wins = won_game_teams(team)
     (wins.count.to_f * 100 / games.count).round(2)
   end
 
   def loss_percentage(team,game_team_array)
     games = game_team_array
-    loss = lost_games(team)
+    loss = lost_game_teams(team)
     (loss.count.to_f * 100 / games.count).round(2)
   end
 end

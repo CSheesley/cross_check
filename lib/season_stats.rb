@@ -1,26 +1,53 @@
 module SeasonStats
 
-  def biggest_bust
+  def biggest_bust(season)
     # max (preseason win %) - (regular win %) => decrease
     #FOR GIVEN SEASON
     #string of team name
   end
 
 
-  def biggest_suprise
+  def biggest_suprise(season)
+    list = find_games_by_season(season)
+    teams = []
+    list.each do |game|
+      teams << game.away_team_id
+      teams << game.home_team_id
+    end
+    teams.uniq!
+    surprise = teams.max_by do |team|
+      # binding.pry
+      # win_pct =
+    end
+    surprise
+
     #max (regular win %) - (preseason win %) => increase
     #FOR GIVEN SEASON
     #string of team name
   end
 
 
-  def winningest_coach
+  def winningest_coach(season)
+    list = find_game_teams_by_season(season)
+    best = list.max_by do |game_team|
+      games = won_games(game_team.team_id).count
+    end
+
+
+
+    best.head_coach
+
     #coach of best win % for SEASON
     #string of coach name
   end
 
 
-  def worst_coach
+  def worst_coach(season)
+    list = find_game_teams_by_season(season)
+    worst = list.min_by do |game_team|
+      games = won_games(game_team.team_id).count
+    end
+    worst.head_coach
     #coach of worst win % for SEASON
     #string of coach name
   end
@@ -49,14 +76,9 @@ module SeasonStats
   end
 
 
-  def find_games_by_season(season)
-    @game_teams.repo.find_all do |game_team|
-      game_id_to_season(game_team.game_id) == season
-    end
-  end
 
   def find_most_or_least_for_season(season, attribute, most_or_least)
-    list = find_games_by_season(season)
+    list = find_game_teams_by_season(season)
     team = nil
     most = 0
     sum = 0
@@ -92,7 +114,7 @@ module SeasonStats
         team_id_swap(team)
       end
     else
-      if attribute = "hits"
+      if attribute == "hits"
         list.each do |game_team|
           games = get_all_game_teams_for_team(game_team.team_id)
           sum = games.sum do |game|
@@ -144,7 +166,7 @@ module SeasonStats
 
 
   def power_play_goal_percentage(season)
-    list = find_games_by_season(season)
+    list = find_game_teams_by_season(season)
     pp_goals = list.reduce(0) do |sum, game_team|
       sum += game_team.power_play_goals
     end
