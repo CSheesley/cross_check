@@ -81,7 +81,6 @@ module List
   def get_all_games(team)
     if team.class == String
       team = team_id_swap(team)
-      # binding.pry
     end
     @games.repo.find_all do |game|
       game.away_team_id == team || game.home_team_id == team
@@ -128,7 +127,7 @@ module List
 
   def won_game_teams(team)
     games = get_all_game_teams_for_team(team)
-    games.reject do |game|
+    x = games.reject do |game|
       game.won? == false
     end
   end
@@ -146,11 +145,9 @@ module List
       game_team.game_id
     end
     all_games = get_all_games(team)
-
     all_games.find_all do |game|
       game_ids.include?(game.game_id)
     end
-    # binding.pry
   end
 
   def lost_games(team)
