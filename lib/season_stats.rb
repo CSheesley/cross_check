@@ -105,11 +105,12 @@ module SeasonStats
           goals = games.sum do |game|
             game.goals
           end
-          ratio = shots / goals.to_f
+          ratio = goals / shots.to_f
           if ratio > most
-            least = ratio
+            most = ratio
             team = game_team.team_id
           end
+          # binding.pry
         end
         team_id_swap(team)
       end
@@ -135,7 +136,7 @@ module SeasonStats
           goals = games.sum do |game|
             game.goals
           end
-          ratio = shots / goals.to_f
+          ratio = goals / shots.to_f
           if ratio < least
             least = ratio
             team = game_team.team_id
