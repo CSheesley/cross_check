@@ -4,7 +4,7 @@ require './lib/season_stats'
 require "./lib/list_mod"
 
 class StatTracker
-  # include TeamStats
+  include TeamStats
   include LeagueStats
   include SeasonStats
   include List

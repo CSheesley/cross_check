@@ -52,7 +52,7 @@ module TeamStats
 
   def game_team_games_by_year(team_id) #helper
     all_games_played(team_id).group_by do |game_team|
-      game_team.game_id.to_s.slice(0,4) #game_id_to_year method
+      game_team.game_id.to_s.slice(0,4)  #game_id_to_year method
     end
   end
 
@@ -64,7 +64,7 @@ module TeamStats
     games_per_year
   end
 
-  #trouble incorporating
+  # trouble incorporating
   # def game_id_to_year #helper
   #   game_id.to_s.slice(0,4)
   # end
@@ -81,7 +81,7 @@ module TeamStats
   # def annual_win_percentage(team_id) #helper
   #   (win_count_per_year(team_id)[year]/game_count_per_year(team_id)[year])
   # end
-#
+
   def best_season(team_id)
     seasons = win_percentage_by_season(team_id).to_a
     seasons.max_by do |year_percent|
@@ -104,16 +104,20 @@ module TeamStats
       percentages.inject(0.0) {|sum, percentage| sum + percentage} / percentages.count
   end
 
-#   def most_goals_scored(team_id)
-#     all_games_payed(team_id).max do |game|
-#       game.goals
-#   end
-#
-#   def fewest_goals_scored(team_id)
-#     all_games_payed(team_id).min do |game|
-#       game.goals
-#   end
-#
+  def most_goals_scored(team_id)
+    all_goals = all_games_played(team_id).map do |game|
+      game.goals
+    end
+    all_goals.max
+  end
+
+  def fewest_goals_scored(team_id)
+    all_goals = all_games_played(team_id).map do |game|
+      game.goals
+    end
+    all_goals.min
+  end
+
 #   def favorite_opponent(team_id)
 #     team played the most times?
 #   end

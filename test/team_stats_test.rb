@@ -41,17 +41,17 @@ class TeamStatsTest < Minitest::Test
     assert_equal 25.0, @stat_tracker.average_win_percentage(17)
   end
 
-  # def test_teams_highest_and_lowest_number_of_goals_in_a_single_game_is_shown
-  #   # expected = Integer
-  #   assert_equal 4, @stat_tracker.most_goals_scored(17)
-  #   assert_equal 1, @stat_tracker.fewest_goals_scored(17)
-  # end
-  #
+  def test_teams_highest_and_lowest_number_of_goals_in_a_single_game_is_shown
+    # expected = Integ
+    assert_equal 4, @stat_tracker.most_goals_scored(17)
+    assert_equal 0, @stat_tracker.fewest_goals_scored(17)
+  end
+
   # def test_teams_favorite_opponents_name_is_shown
   #   expected = String
   #   assert_equal "Blackhawks", @stat_tracker.favorite_opponent(17)
   # end
-  #
+
   # def test_teams_rivals_name_is_shown
   #   expected = String
   #   assert_equal "Blackhawks", @stat_tracker.rival(17)
