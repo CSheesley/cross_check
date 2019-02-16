@@ -6,7 +6,8 @@ class Team
     :short_name, 
     :team_name, 
     :abbreviation,
-    :link 
+    :link,
+    :parent 
 
   def initialize(team_info, parent)
     @team_id      = team_info[:team_id].to_i

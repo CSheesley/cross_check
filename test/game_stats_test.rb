@@ -1,41 +1,58 @@
 require "./test/test_helper"
+require 'pry'
 
-class StatTracker < Minitest::Test 
+class GameStatsTest < Minitest::Test
+
   def setup
-    def setup
-      @game_path = './data/game_fixture.csv'
-      @team_path = './data/team_info.csv'
-      @game_teams_path = './data/game_team_stats_fixture.csv'
-      @locations = {
-        games: @game_path,
-        teams: @team_path,
-        game_teams: @game_teams_path
-        }
-      @st = StatTracker.from_csv(@locations)
-    end
-  end 
-
-  def test_stat_tracker_can_return_lowest_and_highest_total_scores
-    #do we want array if mult same scores or just one score? lowest score has mult 
-    assert_equal 1, @stat_tracker.lowest_total_score
-    assert_equal 10, @stat_tracker.highest_total_score
+    @game_path = './data/game_fixture.csv'
+    @team_path = './data/team_info.csv'
+    @game_teams_path = './data/game_team_stats_fixture.csv'
+    @locations = {games: @game_path,
+      teams: @team_path,
+      game_teams: @game_teams_path}
+    @st = StatTracker.from_csv(@locations)
   end
 
-  def test_stat_tracker_can_return_total_score #helper method, possibly to module 
+  def test_stat_tracker_can_return_lowest_and_highest_total_scores
+    assert_equal 1, @st.lowest_total_score
+    assert_equal 10, @st.highest_total_score
+  end
+
+  def test_stat_tracker_can_return_away_team_scores
+   skip
+    expected = []
+    
+    assert_equal expected, @st.away_team_scores
+  end 
+
+  def test_stat_tracker_can_return_home_team_scores
     skip
-    assert_equal 3, @stat_tracker.total_score(2012030321) #arg = game_id
+    expected = 0
+    assert_equal expected, @st.home_team_scores
+  end 
+
+  def test_stat_tracker_can_return_total_scores
+    #helper method, possibly to module 
+    expected = [5, 5, 7, 9, 10, 4, 7, 4, 1, 7, 7, 3, 1, 5, 3, 6, 4, 5, 7, 5, 5, 9, 4, 3, 7, 5, 3, 3, 2, 7]
+
+    assert_equal expected, @st.total_scores
+  end 
+
+  def test_stat_tracker_can_return_away_home_teams_score_abolute_difference   
+    #helper method for biggest_blowout 
+    expected = [1, 5, 1, 1, 2, 4, 1, 2, 1, 1, 1, 1, 1, 5, 1, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 3]
+   
+    assert_equal expected, @st.absolute_diff_teams_score
   end 
 
   def test_stat_tracker_can_return_biggest_blowout
-    skip
-    # this one also has mult teams with 5 pt diff, array? 
-    assert_equal 5, @stat_tracker.biggest_blowout
+    assert_equal 5, @st.biggest_blowout
   end
 
   def test_stat_tracker_can_return_home_and_visitor_team_percentage_wins
     skip
-    #total_home_wins/total_games = 20/30 = 66.67%
-    #total visitor wins/total_games = (30-20)/30 = 33.33%
+    #total_home_wins/total_games = 19/30 = 
+    #total visitor wins/total_games = (30-19)/30 = 33.33%
     #do we add percentage sign?? 
 
     assert_equal 66.67, @stat_tracker.percentage_home_wins
@@ -43,14 +60,17 @@ class StatTracker < Minitest::Test
   end
 
   def test_it_can_return_total_games_played
-    skip
-    assert_equal 30, @stat_tracker.total_games
+    assert_equal 30, @st.total_games
   end 
 
-  def test_stat_tracker_can_return_count_of_games_by_season
+  def test_it_can_return_total_home_team_wins
     skip
-    expected = { 20014 => 6 }
-    assert_equal expected, @stat_tracker.count_of_games_by_season(20142015)
+    assert_equal 19, @st.total_home_wins
+  end
+
+  def test_stat_tracker_can_return_count_of_games_by_season
+    expected = { 20142015 => 6 }
+    assert_equal expected, @st.count_of_games_by_season(20142015)
   end
 
   def test_stat_tracker_can_return_average_goals_per_game_all_seasons
@@ -60,12 +80,14 @@ class StatTracker < Minitest::Test
   end
 
   def test_start_tracker_can_return_total_goals_all_seaons
+    skip
     assert_equal 153, @stat_tracker.total_goals_all_seasons 
   end 
 
   def test_stat_tracker_can_return_average_goals_by_season
     skip
-    Expected = hash
-    assert_equal Expected, @stat_tracker.average_goals_by_season
+    expected = { 20162017 => 5.75 }
+    assert_equal expected, @stat_tracker.average_goals_by_season(20162017)
   end
-end
+end 
+
