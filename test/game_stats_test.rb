@@ -1,4 +1,5 @@
 require "./test/test_helper"
+require 'pry'
 
 class GameStatsTest < Minitest::Test
 
@@ -50,8 +51,8 @@ class GameStatsTest < Minitest::Test
 
   def test_stat_tracker_can_return_home_and_visitor_team_percentage_wins
     skip
-    #total_home_wins/total_games = 20/30 = 66.67%
-    #total visitor wins/total_games = (30-20)/30 = 33.33%
+    #total_home_wins/total_games = 19/30 = 
+    #total visitor wins/total_games = (30-19)/30 = 33.33%
     #do we add percentage sign?? 
 
     assert_equal 66.67, @stat_tracker.percentage_home_wins
@@ -59,14 +60,17 @@ class GameStatsTest < Minitest::Test
   end
 
   def test_it_can_return_total_games_played
-    skip
-    assert_equal 30, @stat_tracker.total_games
+    assert_equal 30, @st.total_games
   end 
 
-  def test_stat_tracker_can_return_count_of_games_by_season
+  def test_it_can_return_total_home_team_wins
     skip
+    assert_equal 19, @st.total_home_wins
+  end
+
+  def test_stat_tracker_can_return_count_of_games_by_season
     expected = { 20142015 => 6 }
-    assert_equal expected, @stat_tracker.count_of_games_by_season(20142015)
+    assert_equal expected, @st.count_of_games_by_season(20142015)
   end
 
   def test_stat_tracker_can_return_average_goals_per_game_all_seasons
