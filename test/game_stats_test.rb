@@ -38,11 +38,11 @@ class GameStatsTest < Minitest::Test
     assert_equal expected, @st.total_scores
   end 
 
-  def test_stat_tracker_can_return_away_home_teams_score_abolute_difference   
+  def test_stat_tracker_can_return_teams_score_difference_for_each_game 
     #helper method for biggest_blowout 
-    expected = [1, 5, 1, 1, 2, 4, 1, 2, 1, 1, 1, 1, 1, 5, 1, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 3]
+    expected = [1, -5, 1, 1, -2, -4, 1, -2, -1, -1, -1, -1, -1, 5, -1, -2, -2, 1, -1, -1, -1, 1, 2, 1, -1, 1, -1, 1, -2, -3]
    
-    assert_equal expected, @st.absolute_diff_teams_score
+    assert_equal expected, @st.teams_score_difference 
   end 
 
   def test_stat_tracker_can_return_biggest_blowout
@@ -50,22 +50,16 @@ class GameStatsTest < Minitest::Test
   end
 
   def test_stat_tracker_can_return_home_and_visitor_team_percentage_wins
-    skip
-    #total_home_wins/total_games = 19/30 = 
-    #total visitor wins/total_games = (30-19)/30 = 33.33%
-    #do we add percentage sign?? 
-
-    assert_equal 66.67, @stat_tracker.percentage_home_wins
-    assert_equal 33.33, @stat_tracker.percentage_visitor_wins
+    assert_equal 0.63, @st.percentage_home_wins
+    assert_equal 0.37, @st.percentage_visitor_wins
   end
 
   def test_it_can_return_total_games_played
     assert_equal 30, @st.total_games
   end 
 
-  def test_it_can_return_total_home_team_wins
-    skip
-    assert_equal 19, @st.total_home_wins
+  def test_it_can_return_total_visitor_wins
+    assert_equal 11, @st.total_visitor_wins
   end
 
   def test_stat_tracker_can_return_count_of_games_by_season
@@ -90,4 +84,3 @@ class GameStatsTest < Minitest::Test
     assert_equal expected, @stat_tracker.average_goals_by_season(20162017)
   end
 end 
-
