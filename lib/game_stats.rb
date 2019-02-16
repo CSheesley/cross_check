@@ -16,44 +16,34 @@ module GameStats
   end 
 
   def biggest_blowout
-    absolute_diff_teams_score.max
+    teams_score_difference.max.abs
   end
 
-  def absolute_diff_teams_score
-    diff = @games.repo.map do |game|
-      (game.away_goals - game.home_goals).abs
-    end
+  def teams_score_difference
+    @games.repo.map do |game|
+      (game.away_goals - game.home_goals)
+    end 
   end 
 
-  def total_score(game_id)
-    
+  def percentage_home_wins
+    (1 - percentage_visitor_wins.to_f).round(2)
   end
 
-  def biggest_blowout
-    #max_buy(each game(@home_score - @away_score)) abs diff
-    #integer
+  def percentage_visitor_wins
+    (total_visitor_wins/total_games.to_f).round(2)
   end
-
-  # def percentage_home_wins
-    
-  # end
-
-  # def percentage_visitor_wins
-  #   #(100 - percentage_home_wins)
-  #   #float, round(2)
-  # end
-
 
   def total_games
     @games.repo.map do |game|
       game.game_id
-    end.length
+    end.size
   end 
 
-  # def total_home_wins
-    
-    
-  # end 
+  def total_visitor_wins
+    teams_score_difference.select do |score_diff|
+      score_diff > 0 
+    end.size
+  end 
 
   def count_of_games_by_season(season) #to go module?
     games_for_season = @games.repo.select do |game|
