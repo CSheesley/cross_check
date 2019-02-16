@@ -24,6 +24,7 @@ class TeamStatsTest < Minitest::Test
   # end
 
   def test_all_games_played_can_be_gathered #helper
+    binding.pry
     assert_equal 6, @stat_tracker.all_games_played(17).count
   end
 
@@ -47,11 +48,11 @@ class TeamStatsTest < Minitest::Test
     assert_equal 0, @stat_tracker.fewest_goals_scored(17)
   end
 
-  # def test_teams_favorite_opponents_name_is_shown
-  #   expected = String
-  #   assert_equal "Blackhawks", @stat_tracker.favorite_opponent(17)
-  # end
-  #
+  def test_teams_favorite_opponents_name_is_shown
+    expected = String
+    assert_equal "Blackhawks", @stat_tracker.favorite_opponent(17)
+  end
+
   # def test_teams_rivals_name_is_shown
   #   expected = String
   #   assert_equal "Blackhawks", @stat_tracker.rival(17)
