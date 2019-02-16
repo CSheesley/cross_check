@@ -25,6 +25,15 @@ module GameStats
     end
   end 
 
+  def total_score(game_id)
+    
+  end
+
+  def biggest_blowout
+    #max_buy(each game(@home_score - @away_score)) abs diff
+    #integer
+  end
+
   # def percentage_home_wins
     
   # end
@@ -61,11 +70,11 @@ module GameStats
   end
 
   def total_goals_all_seasons
-    #(all home team goals + all away team goals) / total games 
-  end 
+    #(all home team goals + all away team goals) / total games
+  end
 
   def average_goals_by_season(season)
     #season.total_goals/season.total_games
     #hash with season_names as keys and a float.round(2) representing average number of goals in a game for that season as a value (spec says key? double check with Amy/Brian)
   end
-end
+end 
