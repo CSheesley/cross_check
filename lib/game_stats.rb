@@ -45,10 +45,14 @@ module GameStats
     end.size
   end 
 
-  def count_of_games_by_season(season) 
-    season_games_count = {}
-    season_games_count[season] = games_by_season(season)
-    season_games_count
+  def count_of_games_by_season
+    games_by_season = @games.repo.group_by do |game| 
+      game.season
+    end 
+    games_by_season.each do |season, games|
+      games_by_season[season] = games.count
+    end
+    games_by_season
   end
 
   def average_goals_per_game
@@ -70,11 +74,8 @@ module GameStats
   end
 
   def total_goals_by_season(season)
-  end 
-
-  def games_by_season(season) 
-    games_for_season = @games.repo.select do |game|
-      game.season == season
-    end.size
+    # away_goals_by_season = @games.repo.select do |game|
+    #   game.season == season 
+    # end 
   end 
 end 
