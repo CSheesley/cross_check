@@ -9,15 +9,11 @@ module SeasonStats
     end
     teams.uniq!
     bust = teams.min_by do |team|
-      # binding.pry
       reg = (won_games(team) & regular_games(team)).count / regular_games(team).count.to_f * 100
       post = (won_games(team) & postseason_games(team)).count / postseason_games(team).count.to_f * 100
       post - reg
     end
     team_id_swap(bust)
-    # max (preseason win %) - (regular win %) => decrease
-    #FOR GIVEN SEASON
-    #string of team name
   end
 
 
@@ -30,64 +26,45 @@ module SeasonStats
     end
     teams.uniq!
     surprise = teams.max_by do |team|
-      # binding.pry
       reg = (won_games(team) & regular_games(team)).count / regular_games(team).count.to_f * 100
       post = (won_games(team) & postseason_games(team)).count / postseason_games(team).count.to_f * 100
       post - reg
     end
     team_id_swap(surprise)
-    #max (regular win %) - (preseason win %) => increase
-    #FOR GIVEN SEASON
-    #string of team name
   end
 
 
   def winningest_coach(season)
     list = find_game_teams_by_season(season)
     best = list.max_by do |game_team|
-      games = won_games(game_team.team_id).count
+      won_games(game_team.team_id).count
     end
-
-
-
     best.head_coach
-
-    #coach of best win % for SEASON
-    #string of coach name
   end
 
 
   def worst_coach(season)
     list = find_game_teams_by_season(season)
     worst = list.min_by do |game_team|
-      games = won_games(game_team.team_id).count
+      won_games(game_team.team_id).count
     end
     worst.head_coach
-    #coach of worst win % for SEASON
-    #string of coach name
   end
 
 
 
   def most_accurate_team(season)
     find_most_or_least_for_season(season, "accuracy", "most")
-    # min_by ratio of shots on goal to goals shots:goals
-    #string of team name
   end
 
 
   def least_accurate_team(season)
     find_most_or_least_for_season(season, "accuracy", "least")
-    # max_by ratio of shots on goal to goals shots:goals
-    #string of team name
   end
 
 
   def most_hits(season)
     find_most_or_least_for_season(season, "hits", "most")
-    #team with most hits
-    #IN GIVEN SEASON
-    #string of team name
   end
 
 
@@ -165,9 +142,6 @@ module SeasonStats
 
   def least_hits(season)
     find_most_or_least_for_season(season,"hits","least")
-    #team with fewest hits
-    #IN GIVEN SEASON
-    #string of team name
   end
 
 

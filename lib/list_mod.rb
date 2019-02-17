@@ -135,7 +135,7 @@ module List
   def lost_game_teams(team)
     games = get_all_game_teams_for_team(team)
     won = won_game_teams(team)
-    lost = games - won
+    games - won
   end
 
 
@@ -153,7 +153,7 @@ module List
   def lost_games(team)
     games = get_all_games(team)
     won = won_games(team)
-    lost = games - won
+    games - won
   end
 
 
