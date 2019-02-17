@@ -97,32 +97,37 @@ class TeamStatsTest < Minitest::Test
     assert_equal 5, @st.worst_loss(17) #using game_team_stats_fixture.csv
   end
 
-  # def test_teams_head_to_head_record_is_shown_versus_a_specific_opponent
-  #   @game_path = './data/game_fixture_opponent_testing.csv'
-  #   @team_path = './data/team_info.csv'
-  #   @game_teams_path = './data/game_team_stats_fixture_opponent_testing.csv'
-  #   @locations = {games: @game_path,
-  #     teams: @team_path,
-  #     game_teams: @game_teams_path}
-  #
-  #   @st = StatTracker.from_csv(@locations)
-  #   # expected = Hash
-  #   assert_equal Hash, @st.head_to_head(17).class
-  # end
+  def test_teams_head_to_head_record_is_shown_versus_a_specific_opponent
+    @game_path = './data/game_fixture_opponent_testing.csv'
+    @team_path = './data/team_info.csv'
+    @game_teams_path = './data/game_team_stats_fixture_opponent_testing.csv'
+    @locations = {games: @game_path,
+      teams: @team_path,
+      game_teams: @game_teams_path}
 
-#   def test_all_wins_can_be_grouped_by_opponent
-#     @game_path = './data/game_fixture_opponent_testing.csv'
-#     @team_path = './data/team_info.csv'
-#     @game_teams_path = './data/game_team_stats_fixture_opponent_testing.csv'
-#     @locations = {games: @game_path,
-#       teams: @team_path,
-#       game_teams: @game_teams_path}
-#
-#     @st = StatTracker.from_csv(@locations)
-#     # expected = Hash
-# # binding.pry
-#     assert_equal Hash, @st.all_wins_listed_vs_opponent(17)
-#   end
+    @st = StatTracker.from_csv(@locations)
+    expected = ({"Predators"=>0.67, "Maple Leafs"=>0.5})
+
+    assert_equal expected, @st.head_to_head(17)
+  end
+
+  def test_all_wins_and_all_games_can_be_grouped_by_opponent
+    @game_path = './data/game_fixture_opponent_testing.csv'
+    @team_path = './data/team_info.csv'
+    @game_teams_path = './data/game_team_stats_fixture_opponent_testing.csv'
+    @locations = {games: @game_path,
+      teams: @team_path,
+      game_teams: @game_teams_path}
+
+    @st = StatTracker.from_csv(@locations)
+    expected_1 = ({"Predators"=>2, "Maple Leafs"=>1})
+    expected_2 = ({"Predators"=>3, "Maple Leafs"=>2})
+
+    assert_equal expected_1, @st.all_wins_vs_opponent(17)
+    # binding.pry
+    assert_equal expected_2, @st.all_games_vs_opponent(17)
+  end
+
 
   # def test_teams_seasonal_summary_is_shown_for_each_season_it_has_played
   #   # each season, a hash with two keys (:preseason, :regular_season)

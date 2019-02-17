@@ -73,7 +73,7 @@ module TeamStats
   def win_percentage_by_season(team_id) #helper
     season_win_percentage = {}
     all_seasons(team_id).each do |year|
-      season_win_percentage[year] = ((win_count_per_year(team_id)[year].to_f/ game_count_per_year(team_id)[year]) * 100)
+      season_win_percentage[year] = ((win_count_per_year(team_id)[year].to_f / game_count_per_year(team_id)[year]) * 100)
     end
     season_win_percentage
   end
@@ -167,41 +167,41 @@ def all_losses_by_team(team_id) #helper
     end
 end
 
-#   def head_to_head(team_id)
-# win percentage vs all teams, hash form
-# opponent_win_percentage = {}
-# all_seasons(team_id).each do |year|
-#   opponent_win_percentage[team_id.team_id_swap(team_id)] = ((all_wins_vs_opponent(team_id)/ all_games_vs_opponent(team_id)) * 100)
-#   module required for team_id_swap?
+def head_to_head(team_id)
+  win_percentage_by_team = {}
+  all_wins_vs_opponent(team_id).each do |team_name, wins|
+    win_percentage_by_team[team_name] = ((wins.to_f / all_games_vs_opponent(team_id)[team_name]).round(2))
+  end
+  win_percentage_by_team
+end
+
+# def win_percentage_by_season(team_id) #helper
+#   season_win_percentage = {}
+#   all_seasons(team_id).each do |year|
+#     season_win_percentage[year] = ((win_count_per_year(team_id)[year].to_f / game_count_per_year(team_id)[year]) * 100)
+#   end
+#   season_win_percentage
 # end
-# season_win_percentage
-#
-#
+
+
+
 
 def all_wins_vs_opponent(team_id) #helper
   win_game_ids(team_id)
-   win_games = @games.repo.find_all do |game| #break into helper
+   @game_ids = @games.repo.find_all do |game| #break into helper
      win_game_ids(team_id).include?(game.game_id)
      end
-      all_teams = []
-      win_games.each do |win|
-        all_teams << win.away_team_id << win.home_team_id
-      end
-      count_by_team_name = {}
-      opponents = all_teams.reject { |team| team == team_id }
-      opponents.each do |team|
-        count_by_team_name[team] = opponents.count(team)
-        binding.pry
-      end
-      count_by_team_name
-  binding.pry
-  #group by then covert id to name and array to count?
-  #repeat for all_games_vs_opponent
+    populate_list
+    count_by_team_name(team_id)
 end
 
 def all_games_vs_opponent(team_id)
+    @game_ids = @games.repo.find_all do |game| #break into helper
+      all_game_ids_by_team(team_id).include?(game.game_id)
+      end
+    populate_list
+    count_by_team_name(team_id)
 end
-
 
 def win_game_ids(team_id)
   all_wins_by_team(team_id).map do |win| #break into a helper
@@ -209,8 +209,21 @@ def win_game_ids(team_id)
   end
 end
 
+def populate_list #helper
+  @all_teams = []
+  @game_ids.each do |game|
+    @all_teams << game.away_team_id << game.home_team_id
+  end
+end
 
-
+def count_by_team_name(team_id) #helper
+  count_by_team_name = {}
+  opponents = @all_teams.reject { |team| team == team_id }
+  opponents.each do |team|
+    count_by_team_name[team_id_swap(team)] = opponents.count(team)
+  end
+  count_by_team_name
+end
 
 
 
