@@ -1,0 +1,6 @@
+"game_id","season","type","date_time","away_team_id","home_team_id","away_goals","home_goals","outcome","home_rink_side_start","venue","venue_link","venue_time_zone_id","venue_time_zone_offset","venue_time_zone_tz"
+"2012030221","2011012","P",2013-05-11,"17","18",1,4,"away win REG","left","Honda Center","/api/v1/venues/null","America/Los_Angeles",-7,"PDT"
+"2012030222","2011012","P",2013-05-11,"17","18",5,0,"away win REG","left","Honda Center","/api/v1/venues/null","America/Los_Angeles",-7,"PDT"
+"2012030223","2012013","P",2013-05-11,"18","17",4,1,"away win REG","left","Honda Center","/api/v1/venues/null","America/Los_Angeles",-7,"PDT"
+"2012030224","2012013","P",2013-05-11,"10","17",0,2,"away win REG","left","Honda Center","/api/v1/venues/null","America/Los_Angeles",-7,"PDT"
+"2012030225","2012013","P",2013-05-11,"17","10",1,4,"away win REG","left","Honda Center","/api/v1/venues/null","America/Los_Angeles",-7,"PDT"
