@@ -46,11 +46,8 @@ module GameStats
   end 
 
   def count_of_games_by_season(season) 
-    games_for_season = @games.repo.select do |game|
-      game.season == season
-    end
     season_games_count = {}
-    season_games_count[season] = games_for_season.size
+    season_games_count[season] = games_by_season(season)
     season_games_count
   end
 
@@ -69,7 +66,15 @@ module GameStats
   end
 
   def average_goals_by_season(season)
-    #season.total_goals/season.total_games
-    #hash with season_names as keys and a float.round(2) representing average number of goals in a game for that season as a value (spec says key? double check with Amy/Brian)
+    
   end
+
+  def total_goals_by_season(season)
+  end 
+
+  def games_by_season(season) 
+    games_for_season = @games.repo.select do |game|
+      game.season == season
+    end.size
+  end 
 end 
