@@ -5,7 +5,7 @@ class GameTeamTest < Minitest::Test
     @game_team = GameTeam.new({
       game_id: "2012030221",
       team_id: "3",
-      home_or_away: "away",
+      hoa: "away",
       won: "FALSE",
       settled_in: "OT",
       head_coach: "John Tortorella",
@@ -13,9 +13,9 @@ class GameTeamTest < Minitest::Test
       shots: "35",
       hits: "44",
       pim: "8",
-      power_play_chances: "3",
-      power_play_goals: "0",
-      face_off_win_percentage: 44.8,
+      powerplayopportunities: "3",
+      powerplaygoals: "0",
+      faceoffwinpercentage: 44.8,
       giveaways: "17",
       takeaways: "7"
       }, "GameTeam")
