@@ -51,9 +51,15 @@ module GameStats
     end 
     games_by_season.each do |season, games|
       games_by_season[season] = games.count
-    end
+    end 
     games_by_season
   end
+
+  # def games_by_season
+  #   @games.repo.group_by do |game| 
+  #     game.season
+  #   end 
+  # end 
 
   def average_goals_per_game
     (total_goals_all_seasons/total_games.to_f).round(2)
@@ -69,13 +75,13 @@ module GameStats
     total_away_goals + total_home_goals
   end
 
-  def average_goals_by_season(season)
-    
-  end
-
-  def total_goals_by_season(season)
-    # away_goals_by_season = @games.repo.select do |game|
-    #   game.season == season 
+  def average_goals_by_season
+    # average_goals_by_season = {}
+    # games_by_season = @games.repo.group_by do |game| 
+    #   game.season
+    # end 
+    # games_by_season.each do |season, games|
+    #   average_goals_by_season[season] = 
     # end 
   end 
 end 
