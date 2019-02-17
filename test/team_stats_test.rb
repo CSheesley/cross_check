@@ -17,14 +17,33 @@ class TeamStatsTest < Minitest::Test
     assert_instance_of StatTracker, @stat_tracker
   end
 
-  # not working as expected...
+  # not working as expected... may need to remove @parent
+  # example below. Need all but @parent attribute
+  # @abbreviation="NJD",
+  # @franchise_id=23,
+  # @link="/api/v1/teams/1",
+  # @parent=#<TeamRepo:0x007f89b6968808 ...>,
+  # @short_name="New Jersey",
+  # @team_id=1,
+  # @team_name="Devils">,
   # def test_team_info_with_all_attributes_is_shown
   #   #expected = Hash
   #   assert_instance_of Hash, @stat_tracker.team_info(17)
   # end
 
   def test_all_games_played_can_be_gathered #helper
+    # binding.pry
     assert_equal 6, @stat_tracker.all_games_played(17).count
+  end
+
+  def test_all_wins_all_time_can_be_gathered_in_a_list
+    assert_instance_of Array, @stat_tracker.all_wins_by_team(17)
+    assert_equal 2, @stat_tracker.all_wins_by_team(17).count
+  end
+
+  def test_all_losses_all_time_can_be_gathered_in_a_list
+    assert_instance_of Array, @stat_tracker.all_losses_by_team(17)
+    assert_equal 4, @stat_tracker.all_losses_by_team(17).count
   end
 
   def test_all_seasons_played_by_a_team_can_be_added_to_a_list
@@ -33,6 +52,7 @@ class TeamStatsTest < Minitest::Test
 
   def test_teams_best_and_worst_season_based_on_win_percentage_can_be_shown
     #expected = Integer
+    #spec harness now says needs to convert to string "20122013"
     assert_equal 2012, @stat_tracker.best_season(17) #50%
     assert_equal 2011, @stat_tracker.worst_season(17) #0%
   end
@@ -78,13 +98,32 @@ class TeamStatsTest < Minitest::Test
   end
 
   # def test_teams_head_to_head_record_is_shown_versus_a_specific_opponent
+  #   @game_path = './data/game_fixture_opponent_testing.csv'
+  #   @team_path = './data/team_info.csv'
+  #   @game_teams_path = './data/game_team_stats_fixture_opponent_testing.csv'
+  #   @locations = {games: @game_path,
+  #     teams: @team_path,
+  #     game_teams: @game_teams_path}
+  #
+  #   @st = StatTracker.from_csv(@locations)
   #   # expected = Hash
-  #
-  #   assert_equal (team_id => ), @stat_tacker.head_to_head(17, 16) #two arguments
-  #   #head_to_head method not shown with an argument
-  #   #but may be a good idea if we specify by opponent
+  #   assert_equal Hash, @st.head_to_head(17).class
   # end
-  #
+
+#   def test_all_wins_can_be_grouped_by_opponent
+#     @game_path = './data/game_fixture_opponent_testing.csv'
+#     @team_path = './data/team_info.csv'
+#     @game_teams_path = './data/game_team_stats_fixture_opponent_testing.csv'
+#     @locations = {games: @game_path,
+#       teams: @team_path,
+#       game_teams: @game_teams_path}
+#
+#     @st = StatTracker.from_csv(@locations)
+#     # expected = Hash
+# # binding.pry
+#     assert_equal Hash, @st.all_wins_listed_vs_opponent(17)
+#   end
+
   # def test_teams_seasonal_summary_is_shown_for_each_season_it_has_played
   #   # each season, a hash with two keys (:preseason, :regular_season)
   #   # each key points to a hash with following keys => :win_percentage,
