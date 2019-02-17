@@ -7,7 +7,8 @@ module TeamStats
       end
       team
     end
-    # team_info should be a hash output with 6 key value pairs
+    # team_info should be a hash output with 6 key value pairs,
+    # currently has 7 including parent.
   end
 
   def all_games_played(team_id) #helper
@@ -105,17 +106,17 @@ module TeamStats
   end
 
   def most_goals_scored(team_id)
-    all_goals = all_games_played(team_id).map do |game|
-      game.goals
-    end
-    all_goals.max
+    all_goals(team_id).max
   end
 
   def fewest_goals_scored(team_id)
-    all_goals = all_games_played(team_id).map do |game|
+    all_goals(team_id).min
+  end
+
+  def all_goals(team_id)
+    all = all_games_played(team_id).map do |game|
       game.goals
     end
-    all_goals.min
   end
 
 #   def favorite_opponent(team_id)
@@ -129,11 +130,9 @@ module TeamStats
 # #GAME_CSV
 #
 def biggest_team_blowout(team_id)
-  win_game_ids = all_wins_by_team(team_id).map do |win|
-    win.game_id
-  end
+  win_game_ids(team_id)
    win_games = @games.repo.find_all do |game|
-     win_game_ids.include?(game.game_id)
+     win_game_ids(team_id).include?(game.game_id)
      end
       win_differential = []
       win_games.each do |win|
@@ -143,7 +142,7 @@ def biggest_team_blowout(team_id)
 end
 
 def worst_loss(team_id)
-  loss_game_ids = all_losses_by_team(team_id).map do |loss|
+  loss_game_ids = all_losses_by_team(team_id).map do |loss| #break into a helper
     loss.game_id
   end
    loss_games = @games.repo.find_all do |game|
@@ -169,14 +168,55 @@ def all_losses_by_team(team_id) #helper
 end
 
 #   def head_to_head(team_id)
-#     may need to take in an additional team_id argument?
-#     find all games between these two teams
-#     find win and loss count verse opponent
-#     return in a hash win/loss vs opponent
-#     ex? {wins: 20, losses: 15}
-#   end
+# win percentage vs all teams, hash form
+# opponent_win_percentage = {}
+# all_seasons(team_id).each do |year|
+#   opponent_win_percentage[team_id.team_id_swap(team_id)] = ((all_wins_vs_opponent(team_id)/ all_games_vs_opponent(team_id)) * 100)
+#   module required for team_id_swap?
+# end
+# season_win_percentage
 #
-#   def seasonal_summary(team_id)
+#
+
+def all_wins_vs_opponent(team_id) #helper
+  win_game_ids(team_id)
+   win_games = @games.repo.find_all do |game| #break into helper
+     win_game_ids(team_id).include?(game.game_id)
+     end
+      all_teams = []
+      win_games.each do |win|
+        all_teams << win.away_team_id << win.home_team_id
+      end
+      count_by_team_name = {}
+      opponents = all_teams.reject { |team| team == team_id }
+      opponents.each do |team|
+        count_by_team_name[team] = opponents.count(team)
+        binding.pry
+      end
+      count_by_team_name
+  binding.pry
+  #group by then covert id to name and array to count?
+  #repeat for all_games_vs_opponent
+end
+
+def all_games_vs_opponent(team_id)
+end
+
+
+def win_game_ids(team_id)
+  all_wins_by_team(team_id).map do |win| #break into a helper
+    win.game_id
+  end
+end
+
+
+
+
+
+
+
+
+# def seasonal_summary(team_id)
 #     may need a lot of total stat by year helpers?
 #
 #
