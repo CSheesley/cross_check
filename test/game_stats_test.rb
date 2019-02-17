@@ -63,8 +63,10 @@ class GameStatsTest < Minitest::Test
   end 
 
   def test_stat_tracker_can_return_average_goals_by_season
-    skip
     expected = { 20162017 => 5.75 }
-    assert_equal expected, @stat_tracker.average_goals_by_season(20162017)
+    assert_equal expected, @st.average_goals_by_season(20162017)
   end
+
+  def test_stat_tracker_can_return_total_goals_by_season
+    assert_equal 23, @st.total_goals_by_season(20162017)
 end 
