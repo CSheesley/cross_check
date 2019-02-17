@@ -50,6 +50,7 @@ class GameStatsTest < Minitest::Test
   end
 
   def test_stat_tracker_can_return_count_of_games_by_season
+    skip
     expected = { 
       20122013 => 19,
       20142015 => 6,
@@ -59,26 +60,25 @@ class GameStatsTest < Minitest::Test
     assert_equal expected, @st.count_of_games_by_season
   end
 
+  def test_stat_tracker_can_return_games_by_season 
+
+  end 
+
   def test_stat_tracker_can_return_average_goals_per_game_all_seasons
     assert_equal 5.10, @st.average_goals_per_game
   end
 
-  def test_start_tracker_can_return_total_goals_all_seaons
+  def test_start_tracker_can_return_total_goals_all_seasons
     assert_equal 153, @st.total_goals_all_seasons 
   end 
 
   def test_stat_tracker_can_return_average_goals_by_season
-    skip
-    expected = { 20162017 => 5.75 }
-    assert_equal expected, @st.average_goals_by_season(20162017)
+    expected = { 
+      20122013 => 5.00, 
+      20142015 => 3.83, 
+      20152016 => 7.00,
+      20162017 => 5.75, 
+    }
+    assert_equal expected, @st.average_goals_by_season
   end
-
-  def test_stat_tracker_can_return_total_goals_by_season
-    skip
-    assert_equal 23, @st.total_goals_by_season(20162017)
-  end 
-
-  def test_stat_tracker_can_return_games_by_season 
-    assert_equal 4, @st.games_by_season(20162017)
-  end 
 end 
