@@ -42,9 +42,9 @@ module TeamStats
 
   def win_percentage_by_season(team_id) #helper
     season_win_percentage = {}
-    all_seasons(team_id).each do |year|
-      season_win_percentage[year] =
-      ((win_count_per_year(team_id)[year].to_f / game_count_per_year(team_id)[year]))
+    all_seasons(team_id).each do |season|
+      season_win_percentage[season] =
+      ((win_count_per_year(team_id)[season].to_f / game_count_per_year(team_id)[season]))
     end
     season_win_percentage
   end
@@ -68,53 +68,40 @@ module TeamStats
   end
 
   def all_seasons(team_id) #helper
-    all_game_ids_by_team(team_id)
     years = all_game_ids_by_team(team_id).map do |game_id|
-      game_id.to_s.slice(0,4).to_i #game_id_to_year method
+      game_id_to_season(game_id)
     end
-    years.uniq
+    years.uniq!
+    years.sort
   end
 
   def game_team_wins_by_year(team_id) #helper
     all_wins_by_team(team_id).group_by do |game_team|
-      game_team.game_id.to_s.slice(0,4) #game_id_to_year method
+      game_id_to_season(game_team.game_id) #game_id_to_year method
     end
   end
 
   def win_count_per_year(team_id) #helper
     wins_per_year = {}
-    game_team_wins_by_year(team_id).each do |year, game_teams|
-      wins_per_year[year.to_i] = game_teams.count
+    game_team_wins_by_year(team_id).each do |season, game_teams|
+      wins_per_year[season] = game_teams.count
     end
     wins_per_year
   end
 
   def game_team_games_by_year(team_id) #helper
     all_games_played(team_id).group_by do |game_team|
-      game_team.game_id.to_s.slice(0,4)  #game_id_to_year method
+      game_id_to_season(game_team.game_id)
     end
   end
 
   def game_count_per_year(team_id) #helper
     games_per_year = {}
-    game_team_games_by_year(team_id).each do |year, game_teams|
-      games_per_year[year.to_i] = game_teams.count
+    game_team_games_by_year(team_id).each do |season, game_teams|
+      games_per_year[season] = game_teams.count
     end
     games_per_year
   end
-
-  # trouble incorporating
-  # def game_id_to_year #helper
-  #   game_id.to_s.slice(0,4)
-  # end
-
-  # def convert_season_to_season_span(year) #potential helper - needs to be built
-  #   year = year.first
-  #   @games.repo.find do |game|
-  #       year.to_s == game.season.to_s.slice(0,4)
-  #       return game.season.to_s
-  #     end
-  # end
 
   def most_goals_scored(team_id)
     all_goals(team_id).max
@@ -229,21 +216,30 @@ def count_by_team_name(team_id) #helper
   count_by_team_name
 end
 
-# def seasonal_summary(team_id)
-
-#     example output{
-#     2014:
-#       {{preseason: total_goals_scored,:total_goals_against,
-#         :average_goals_scored, :average_goals_against},
-#       {regular_season: total_goals_scored,:total_goals_against,
-#       :average_goals_scored, :average_goals_against }},
-#     2015:
-#       {{preseason: total_goals_scored,:total_goals_against,
-#         :average_goals_scored, :average_goals_against},
-#       {regular_season: total_goals_scored,:total_goals_against,
-#       :average_goals_scored, :average_goals_against }},
-#     }
-
-#   end
-#
+def seasonal_summary(team_id)
+  summary_hash ={}
+  seasons = all_seasons(team_id)
+  seasons.each do |season|
+    season_info = {preseason: {},
+                    regular_season: {}}
+    all_games = find_games_by_season(season) & get_all_games(team_id)
+    all_games.each do |game|
+      if game.type == "P"
+        season_info[:preseason][:win_percentage] = win_percentage(team_id,all_games)
+        season_info[:preseason][:total_goals_scored] = total_points_for_team(team_id)
+        season_info[:preseason][:total_goals_against] = total_points_against(team_id)
+        season_info[:preseason][:average_goals_scored] = (total_points_for_team(team_id).to_f / all_games.count).round(2)
+        season_info[:preseason][:average_goals_against] = (total_points_against(team_id).to_f / all_games.count).round(2)
+      else
+        season_info[:regular_season][:win_percentage] = win_percentage(team_id,all_games)
+        season_info[:regular_season][:total_goals_scored] = total_points_for_team(team_id)
+        season_info[:regular_season][:total_goals_against] = total_points_against(team_id)
+        season_info[:regular_season][:average_goals_scored] = (total_points_for_team(team_id).to_f / all_games.count).round(2)
+        season_info[:regular_season][:average_goals_against] = (total_points_against(team_id).to_f / all_games.count).round(2)
+      end
+    end
+    summary_hash[season] = season_info
+  end
+  summary_hash
+  end
 end

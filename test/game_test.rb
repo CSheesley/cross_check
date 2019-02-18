@@ -32,12 +32,12 @@ class GameTest < Minitest::Test
 
 
   def test_game_has_game_id
-    assert_equal 2012030167, @game.game_id
+    assert_equal "2012030167", @game.game_id
   end
 
 
   def test_game_has_season
-    assert_equal 20122013, @game.season
+    assert_equal "20122013", @game.season
   end
 
 
@@ -52,12 +52,12 @@ class GameTest < Minitest::Test
 
 
   def test_game_has_away_team_id
-    assert_equal 17, @game.away_team_id
+    assert_equal "17", @game.away_team_id
   end
 
 
   def test_game_has_home_team_id
-    assert_equal 24, @game.home_team_id
+    assert_equal "24", @game.home_team_id
   end
 
 

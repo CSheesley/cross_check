@@ -28,13 +28,12 @@ module List
   end
 
   def team_id_swap(input)
-    if input.class == Integer
+    if input.length < 3
       output = @teams.repo.find do |team|
         team.team_id == input
       end
       return output.team_name
     else
-      input.capitalize!
       output = @teams.repo.find do |team|
         team.team_name == input
       end
@@ -44,7 +43,7 @@ module List
 
 
   def get_all_game_teams_for_team(team)
-    team.class == String ? id = team_id_swap(team) : id = team
+    team.length > 2 ? id = team_id_swap(team) : id = team
     list = @game_teams.repo.find_all do |game_team|
       game_team.team_id == id
     end
@@ -79,7 +78,7 @@ module List
   end
 
   def get_all_games(team)
-    if team.class == String
+    if team.length > 2
       team = team_id_swap(team)
     end
     @games.repo.find_all do |game|
@@ -164,7 +163,7 @@ module List
     end
   end
 
-  def postseason_games(team)
+  def preseason_games(team)
     games = get_all_games(team)
     games.reject do |game|
       game.type == "R"
