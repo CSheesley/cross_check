@@ -1,15 +1,29 @@
-# Cross-Check
+#Cross-Check 
+###by **Triple "C"hamps** aka **The "C" Suites**
 
-Starter repository for the [Turing School](https://turing.io/) Cross-Check project.
+This project is created by a group of three classmates while students at Turing School of Software & Design in 2019.
 
-Proposed project work division: 
+##Objective##
+The project uses CSV data from the NHL to analyze team performance for specific seasons and across all seasons (e.g., best performances, worst performers, and stats for individual teams). The ultimate goal is to create an Object Oriented Program using TDD, SRP classes, and algorithmic thinking as a group. 
 
-Plan is for 2 people to work on an iteration, while the 3rd starts the next one alone with the rest to join after. 
-Each iteration will be refactored as it gets completed. 
+examples?
+
+##How To Use Cross-Check##
+How to install:
+How to start:
+How to run tests: 
+
+--------
+
+What the project does
+Why the project is useful
+How users can get started with the project
+Where users can get help with your project
+Who maintains and contributes to the project
 
 
-Iteration 1, Setup:                       Together
-Iteration 2, Game Stats:                  
-Iteration 3, League & Season Stats:        
-Iteration 4, Team Stats:                  
-Iteration 5, Season Stats             
+Step by step instructions to install/start the app
+Spend good time organizing and formatting it
+Examples are great
+Touch notes on everything from interacting with the app to how to install and run tests
+
