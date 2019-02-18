@@ -141,24 +141,25 @@ module TeamStats
   end
 
 def biggest_team_blowout(team_id)
-  win_game_ids(team_id)
-   @game_goals = @games.repo.find_all do |game|
-     win_game_ids(team_id).include?(game.game_id)
-     end
-  max_goal_differential
+  game_ids = win_game_ids(team_id)
+  max_goal_differential_from_games(game_ids)
 end
 
 def worst_loss(team_id)
-  loss_game_ids(team_id)
-   @game_goals = @games.repo.find_all do |game|
-     loss_game_ids(team_id).include?(game.game_id)
-     end
-  max_goal_differential
+  game_ids = loss_game_ids(team_id)
+  max_goal_differential_from_games(game_ids)
 end
 
-def max_goal_differential #helper
+def max_goal_differential_from_games(game_ids) #helper
+  game_goals = @games.repo.find_all do |game|
+    game_ids.include?(game.game_id)
+  end
+  max_goal_differential(game_goals)
+end
+
+def max_goal_differential(game_goals) #helper
   differential = []
-  @game_goals.each do |game|
+  game_goals.each do |game|
     differential << (game.away_goals - game.home_goals).abs
   end
   differential.max
@@ -167,13 +168,13 @@ end
 def all_wins_by_team(team_id) #helper
   all_games_played(team_id).find_all do |game_team|
     game_team.won?
-    end
+  end
 end
 
 def all_losses_by_team(team_id) #helper
   all_games_played(team_id).find_all do |game_team|
     game_team.won? == false
-    end
+  end
 end
 
 def win_game_ids(team_id) #helper
