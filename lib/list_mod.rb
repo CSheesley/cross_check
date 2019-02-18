@@ -1,17 +1,4 @@
 module List
-  def make_team_id_hash
-    hash = {}
-    @teams.repo.sort_by do |team|
-      team.team_id
-    end
-    @teams.repo.each do |team|
-      hash[team.team_id] = team.team_name
-    end
-    hash
-  end
-
-
-
 
   def array_of_teams
     list = array_of_team_ids
@@ -131,12 +118,6 @@ module List
     end
   end
 
-  def lost_game_teams(team)
-    games = get_all_game_teams_for_team(team)
-    won = won_game_teams(team)
-    games - won
-  end
-
 
   def won_games(team)
     won_game_teams = won_game_teams(team)
@@ -147,12 +128,6 @@ module List
     all_games.find_all do |game|
       game_ids.include?(game.game_id)
     end
-  end
-
-  def lost_games(team)
-    games = get_all_games(team)
-    won = won_games(team)
-    games - won
   end
 
 
@@ -177,9 +152,4 @@ module List
     (wins.count.to_f * 100 / games.count).round(2)
   end
 
-  def loss_percentage(team,game_team_array)
-    games = game_team_array
-    loss = lost_game_teams(team)
-    (loss.count.to_f * 100 / games.count).round(2)
-  end
 end
