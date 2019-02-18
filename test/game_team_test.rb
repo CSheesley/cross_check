@@ -26,8 +26,8 @@ class GameTeamTest < Minitest::Test
   end
 
   def test_game_team_has_a_game_id_and_team_id
-    assert_equal 2012030221, @game_team.game_id
-    assert_equal 3, @game_team.team_id
+    assert_equal "2012030221", @game_team.game_id
+    assert_equal "3", @game_team.team_id
   end
 
   def test_game_team_can_show_home_or_away_status

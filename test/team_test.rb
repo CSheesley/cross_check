@@ -2,10 +2,10 @@ require "./test/test_helper"
 
 class TeamTest < Minitest::Test
   def setup
-    team_info = {team_id: "6", 
-      franchise_id: "6", 
-      short_name: "Boston", 
-      team_name: "Bruins", 
+    team_info = {team_id: "6",
+      franchise_id: "6",
+      short_name: "Boston",
+      team_name: "Bruins",
       abbreviation: "BOS",
       link: "/api/v1/teams/6"}
 
@@ -17,11 +17,11 @@ class TeamTest < Minitest::Test
   end
 
   def test_team_has_team_id
-    assert_equal 6, @team.team_id
+    assert_equal "6", @team.team_id
   end
 
   def test_team_has_franchise_id
-    assert_equal 6, @team.franchise_id
+    assert_equal "6", @team.franchise_id
   end
 
   def test_team_has_short_name

@@ -16,8 +16,8 @@ class GameTeam
     :parent
 
   def initialize(info, parent)
-    @game_id = info[:game_id].to_i
-    @team_id = info[:team_id].to_i
+    @game_id = info[:game_id]
+    @team_id = info[:team_id]
     @home_or_away = info[:hoa]
     @won = info[:won]
     @settled_in = info[:settled_in]

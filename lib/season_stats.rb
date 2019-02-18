@@ -10,8 +10,8 @@ module SeasonStats
     teams.uniq!
     bust = teams.min_by do |team|
       reg = (won_games(team) & regular_games(team)).count / regular_games(team).count.to_f * 100
-      post = (won_games(team) & postseason_games(team)).count / postseason_games(team).count.to_f * 100
-      post - reg
+      pre = (won_games(team) & preseason_games(team)).count / preseason_games(team).count.to_f * 100
+      reg - pre
     end
     team_id_swap(bust)
   end
@@ -27,8 +27,8 @@ module SeasonStats
     teams.uniq!
     surprise = teams.max_by do |team|
       reg = (won_games(team) & regular_games(team)).count / regular_games(team).count.to_f * 100
-      post = (won_games(team) & postseason_games(team)).count / postseason_games(team).count.to_f * 100
-      post - reg
+      pre = (won_games(team) & preseason_games(team)).count / preseason_games(team).count.to_f * 100
+      reg - pre
     end
     team_id_swap(surprise)
   end
@@ -38,6 +38,7 @@ module SeasonStats
     list = find_game_teams_by_season(season)
     best = list.max_by do |game_team|
       won_games(game_team.team_id).count
+      # binding.pry
     end
     best.head_coach
   end
