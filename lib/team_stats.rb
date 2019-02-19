@@ -56,14 +56,14 @@ module TeamStats
     end
     list
   end
-  
-  def all_game_ids_by_team(team_id) #helper
-    all_game_ids = []
-    all_games_played(team_id).find_all do |game_team|
-      all_game_ids << game_team.game_id
-    end
-    all_game_ids
-  end
+
+  # def all_game_ids_by_team(team_id) #helper
+  #   all_game_ids = []
+  #   all_games_played(team_id).find_all do |game_team|
+  #     all_game_ids << game_team.game_id
+  #   end
+  #   all_game_ids
+  # end
 
   def all_seasons(team_id) #helper
     years = all_game_ids_by_team(team_id).map do |game_id|

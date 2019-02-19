@@ -1,14 +1,22 @@
-require './lib/league_stats'
-require './lib/team_stats'
-require './lib/season_stats'
-require './lib/list_mod'
-require './lib/game_stats'
+# require './lib/league_stats'
+# require './lib/team_stats'
+# require './lib/season_stats'
+# require './lib/list_mod'
+# require './lib/game_stats'
 
-# require_relative './league_stats'
-# require_relative './team_stats'
-# require_relative './season_stats'
-# require_relative './list_mod'
-# require_relative './game_stats'
+require_relative './game'
+require_relative './team'
+require_relative './game_team'
+require_relative './game_repo'
+require_relative './team_repo'
+require_relative './game_team_repo'
+require_relative './league_stats'
+require_relative './team_stats'
+require_relative './season_stats'
+require_relative './list_mod'
+require_relative './game_stats'
+
+require "csv"
 
 
 class StatTracker
@@ -19,6 +27,12 @@ class StatTracker
   include List
 
   attr_accessor :games, :game_teams, :teams
+  def initialize
+    @games = games
+    @teams = teams
+    @game_teams = game_teams
+
+  end
 
   def self.from_csv(locations)
     st            = StatTracker.new
@@ -27,4 +41,25 @@ class StatTracker
     st.teams      = TeamRepo.new(locations[:teams])
     st
   end
+
+  def hash_game_teams_by_team
+    @game_teams.repo.group_by do |game_team|
+      game_team.team_id
+    end
+  end
+
+  def hash_games_by_team
+    @games.repo.group_by do |game|
+      game.team_id
+    end
+  end
+
+  def hash_games_by_season
+    @games.repo.group_by do |game|
+      game.season
+    end
+  end
+
+  
+
 end
