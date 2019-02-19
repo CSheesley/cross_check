@@ -27,6 +27,12 @@ class StatTracker
   include List
 
   attr_accessor :games, :game_teams, :teams
+  def initialize
+    @games = games
+    @teams = teams
+    @game_teams = game_teams
+
+  end
 
   def self.from_csv(locations)
     st            = StatTracker.new
@@ -34,5 +40,17 @@ class StatTracker
     st.game_teams = GameTeamRepo.new(locations[:game_teams])
     st.teams      = TeamRepo.new(locations[:teams])
     st
+  end
+  def hash_game_teams_by_team
+    team_ids = @teams.repo.map do |team|
+      team.team_id
+    end
+    hash = {}
+    team_ids.each do |team_id|
+      hash[team_id] =
+        @game_teams.repo.find_all do |game_team|
+          game_team.team_id == team_id
+        end
+    end
   end
 end

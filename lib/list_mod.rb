@@ -64,25 +64,18 @@ module List
     end
   end
 
-  def get_all_games(team)
-    if team.length > 2
-      team = team_id_swap(team)
-    end
-    @games.repo.find_all do |game|
-      game.away_team_id == team || game.home_team_id == team
-    end
+  def get_all_game_teams(team)
+    hash_game_teams_by_team[team]
   end
 
 
   def total_points_for_team(team)
-    id = team_id_swap(team)
-    total = 0
-    @game_teams.repo.each do |game_team|
-      if game_team.team_id == id
-        total += game_team.goals
+    total = @game_teams.repo.inject(0) do |sum, game_team|
+      if game_team.team_id == team
+        binding.pry
+        sum + game_team.goals
       end
     end
-    total.to_f
   end
 
   def total_points_against(team)
