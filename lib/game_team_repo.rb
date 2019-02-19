@@ -1,11 +1,10 @@
-class GameTeamRepo < StatTracker
-  attr_reader :repo, :parent
+class GameTeamRepo
+  attr_reader :repo
 
-  def initialize(filename, parent)
+  def initialize(filename)
     contents = CSV.open filename, headers: true, header_converters: :symbol
     @repo = contents.map do |row|
-      GameTeam.new(row,self)
+      GameTeam.new(row)
     end
-    @parent = parent
   end
 end

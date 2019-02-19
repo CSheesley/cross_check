@@ -17,13 +17,9 @@ class GameTest < Minitest::Test
         venue_link: "/api/v1/venues/null",
         venue_time_zone_id: "America/Los_Angeles",
         venue_time_zone_offset: "-7",
-        venue_time_zone_tz: "PDT"},
-        "GameRepo")
+        venue_time_zone_tz: "PDT"})
   end
 
-  def test_game_knows_who_parent_is
-    assert_equal "GameRepo", @game.parent
-  end
 
 
   def test_game_exists

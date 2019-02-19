@@ -18,7 +18,7 @@ class GameTeamTest < Minitest::Test
       faceoffwinpercentage: 44.8,
       giveaways: "17",
       takeaways: "7"
-      }, "GameTeam")
+      })
   end
 
   def test_game_team_exists

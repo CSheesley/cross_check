@@ -1,11 +1,10 @@
-class TeamRepo 
-  attr_reader :repo, :parent
+class TeamRepo
+  attr_reader :repo
 
-  def initialize(filename, parent)
+  def initialize(filename)
     contents = CSV.open filename, headers: true, header_converters: :symbol
     @repo = contents.map do |row|
-      Team.new(row, self)
+      Team.new(row)
     end
-    @parent = parent
   end
 end

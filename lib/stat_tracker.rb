@@ -1,8 +1,15 @@
-require "./lib/league_stats"
+require './lib/league_stats'
 require './lib/team_stats'
 require './lib/season_stats'
-require "./lib/list_mod"
-require "./lib/game_stats"
+require './lib/list_mod'
+require './lib/game_stats'
+
+# require_relative './league_stats'
+# require_relative './team_stats'
+# require_relative './season_stats'
+# require_relative './list_mod'
+# require_relative './game_stats'
+
 
 class StatTracker
   include TeamStats
@@ -15,9 +22,9 @@ class StatTracker
 
   def self.from_csv(locations)
     st            = StatTracker.new
-    st.games      = GameRepo.new(locations[:games], self)
-    st.game_teams = GameTeamRepo.new(locations[:game_teams], self)
-    st.teams      = TeamRepo.new(locations[:teams], self)
+    st.games      = GameRepo.new(locations[:games])
+    st.game_teams = GameTeamRepo.new(locations[:game_teams])
+    st.teams      = TeamRepo.new(locations[:teams])
     st
   end
 end

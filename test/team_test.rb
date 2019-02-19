@@ -9,7 +9,7 @@ class TeamTest < Minitest::Test
       abbreviation: "BOS",
       link: "/api/v1/teams/6"}
 
-    @team = Team.new(team_info, StatTracker)
+    @team = Team.new(team_info)
   end
 
   def test_team_exists
