@@ -12,10 +12,9 @@ class GameTeam
     :power_play_goals,
     :face_off_win_percentage,
     :giveaways,
-    :takeaways,
-    :parent
+    :takeaways
 
-  def initialize(info, parent)
+  def initialize(info)
     @game_id = info[:game_id]
     @team_id = info[:team_id]
     @home_or_away = info[:hoa]
@@ -31,8 +30,6 @@ class GameTeam
     @face_off_win_percentage = info[:faceoffwinpercentage].to_f.round(2)
     @giveaways = info[:giveaways].to_i
     @takeaways = info[:takeaways].to_i
-
-    @parent = parent
   end
 
   def won?

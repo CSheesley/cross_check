@@ -1,11 +1,10 @@
 class GameRepo
-  attr_reader :repo, :parent
+  attr_reader :repo
 
-  def initialize(filename, parent)
+  def initialize(filename)
     contents = CSV.open filename, headers: true, header_converters: :symbol
     @repo = contents.map do |row|
-      Game.new(row,self)
+      Game.new(row)
     end
-    @parent = parent
   end
 end

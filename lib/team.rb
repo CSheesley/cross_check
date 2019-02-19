@@ -1,21 +1,17 @@
-require "./lib/team_repo"
-
 class Team
   attr_reader :team_id,
     :franchise_id,
     :short_name,
     :team_name,
     :abbreviation,
-    :link,
-    :parent
+    :link
 
-  def initialize(team_info, parent)
+  def initialize(team_info)
     @team_id      = team_info[:team_id]
     @franchise_id = team_info[:franchise_id]
     @short_name   = team_info[:short_name]
     @team_name    = team_info[:team_name]
     @abbreviation = team_info[:abbreviation]
     @link         = team_info[:link]
-    @parent       = parent
   end
 end
