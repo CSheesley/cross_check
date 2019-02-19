@@ -7,17 +7,12 @@ class GameTeamTest < Minitest::Test
       team_id: "3",
       hoa: "away",
       won: "FALSE",
-      settled_in: "OT",
       head_coach: "John Tortorella",
       goals: "2",
       shots: "35",
       hits: "44",
-      pim: "8",
       powerplayopportunities: "3",
       powerplaygoals: "0",
-      faceoffwinpercentage: 44.8,
-      giveaways: "17",
-      takeaways: "7"
       })
   end
 
@@ -38,9 +33,6 @@ class GameTeamTest < Minitest::Test
     assert_equal false, @game_team.won?
   end
 
-  def test_if_game_team_game_was_finished_in_regulation_or_overtime
-    assert_equal "OT", @game_team.settled_in
-  end
 
   def test_head_coach_of_game_team_is_shown
     assert_equal "John Tortorella", @game_team.head_coach
@@ -58,9 +50,6 @@ class GameTeamTest < Minitest::Test
     assert_equal 44, @game_team.hits
   end
 
-  def test_number_penalty_infraction_minutes_for_game_team_is_shown
-    assert_equal 8, @game_team.pim
-  end
 
   def test_number_of_power_play_opportunities_per_game_team_are_shown
     assert_equal 3, @game_team.power_play_chances
@@ -70,13 +59,5 @@ class GameTeamTest < Minitest::Test
     assert_equal 0, @game_team.power_play_goals
   end
 
-  def test_game_team_face_off_win_percentage_is_shown
-    assert_equal 44.8, @game_team.face_off_win_percentage
-  end
-
-  def test_number_of_game_team_giveways_and_takeaways_is_shown
-    assert_equal 17, @game_team.giveaways
-    assert_equal 7, @game_team.takeaways
-  end
 
 end
