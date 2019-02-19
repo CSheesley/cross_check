@@ -41,35 +41,33 @@ class TeamStatsTest < Minitest::Test
     assert_instance_of Array, @stat_tracker.all_losses_by_team("17")
     assert_equal 4, @stat_tracker.all_losses_by_team("17").count
   end
-  #
-  # def test_all_seasons_played_by_a_team_can_be_added_to_a_list #helper
-  #   assert_equal [2011, 2012], @stat_tracker.all_seasons("17")
-  # end
 
-  #NEW CSV
   def test_teams_best_and_worst_season_based_on_win_percentage_can_be_shown
-    game_path = "./data/game_stats_w_reg.csv"
+    game_path = './data/game_fixture_opponent_testing.csv'
     team_path = './data/team_info.csv'
-    game_teams_path = './data/game_team_stats_same_as_games.csv'
+    game_teams_path = './data/game_team_stats_fixture_opponent_testing.csv'
     locations = {games: game_path,
-                  teams: team_path,
-                  game_teams: game_teams_path}
+      teams: team_path,
+      game_teams: game_teams_path}
+
     st = StatTracker.from_csv(locations)
 
-    assert_equal "20122013", st.best_season("6") # => "20122013"
-    assert_equal "20122013", st.worst_season("6") # => "20112012"
+    assert_equal "20112012", st.best_season("17") # => 1.00
+    assert_equal "20122013", st.worst_season("17") # => 0.33
   end
 
-  #NEW CSV
   def test_teams_average_win_percentage_of_all_games_is_shown
-    game_path = "./data/game_stats_w_reg.csv"
+    game_path = './data/game_fixture_opponent_testing.csv'
     team_path = './data/team_info.csv'
-    game_teams_path = './data/game_team_stats_same_as_games.csv'
+    game_teams_path = './data/game_team_stats_fixture_opponent_testing.csv'
     locations = {games: game_path,
-                  teams: team_path,
-                  game_teams: game_teams_path}
+      teams: team_path,
+      game_teams: game_teams_path}
+
     st = StatTracker.from_csv(locations)
-    assert_equal 0.60, st.average_win_percentage("6")
+
+    st.average_win_percentage("17")
+    assert_equal 0.60, st.average_win_percentage("17")
   end
 
   def test_teams_highest_and_lowest_number_of_goals_in_a_single_game_is_shown
@@ -145,9 +143,11 @@ class TeamStatsTest < Minitest::Test
     team_path = './data/team_info.csv'
     game_teams_path = './data/game_team_stats_same_as_games.csv'
     locations = {games: game_path,
-                  teams: team_path,
-                  game_teams: game_teams_path}
+      teams: team_path,
+      game_teams: game_teams_path}
+
     st = StatTracker.from_csv(locations)
+
     assert_equal Hash, st.seasonal_summary("6").class
     assert_equal Hash, st.seasonal_summary("6")["20122013"].class
     assert_equal 2, st.seasonal_summary("6")["20122013"].count
