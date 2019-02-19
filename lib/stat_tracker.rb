@@ -41,16 +41,25 @@ class StatTracker
     st.teams      = TeamRepo.new(locations[:teams])
     st
   end
+
   def hash_game_teams_by_team
-    team_ids = @teams.repo.map do |team|
-      team.team_id
-    end
-    hash = {}
-    team_ids.each do |team_id|
-      hash[team_id] =
-        @game_teams.repo.find_all do |game_team|
-          game_team.team_id == team_id
-        end
+    @game_teams.repo.group_by do |game_team|
+      game_team.team_id
     end
   end
+
+  def hash_games_by_team
+    @games.repo.group_by do |game|
+      game.team_id
+    end
+  end
+
+  def hash_games_by_season
+    @games.repo.group_by do |game|
+      game.season
+    end
+  end
+
+  
+
 end
