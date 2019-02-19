@@ -152,4 +152,39 @@ module List
     (wins.count.to_f * 100 / games.count).round(2)
   end
 
+  def total_scores
+    @games.repo.map do |game|
+      game.away_goals + game.home_goals
+    end
+  end
+
+  def teams_score_difference
+    @games.repo.map do |game|
+      (game.away_goals - game.home_goals)
+    end
+  end
+
+  def total_games
+    @games.repo.map do |game|
+      game.game_id
+    end.size
+  end
+
+  def total_visitor_wins
+    teams_score_difference.select do |score_diff|
+      score_diff > 0
+    end.size
+  end
+
+  def total_goals_all_seasons
+    total_away_goals = @games.repo.sum do |game|
+      game.away_goals
+    end
+    total_home_goals = @games.repo.sum do |game|
+      game.home_goals
+    end
+    total_away_goals + total_home_goals
+  end
+
+
 end
