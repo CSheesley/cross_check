@@ -2,7 +2,7 @@ module TeamStats
 
   def team_info(team_id)
     get_team_info(team_id)
-    info_hash = {
+    {
       "team_id" => get_team_info(team_id).team_id,
       "franchise_id" => get_team_info(team_id).franchise_id,
       "short_name" => get_team_info(team_id).short_name,
@@ -112,7 +112,7 @@ module TeamStats
   end
 
   def all_goals(team_id) #helper
-    all = all_games_played(team_id).map do |game|
+    all_games_played(team_id).map do |game|
       game.goals
     end
   end
