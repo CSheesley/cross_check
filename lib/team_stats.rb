@@ -33,11 +33,9 @@ module TeamStats
   end
 
   def average_win_percentage(team_id)
-    percentages = []
-    win_percentage_by_season(team_id).each do |year, percent|
-      percentages << percent
-    end
-    percentages.inject(0.0) {|sum, percentage| sum + percentage} / percentages.count
+    total_wins = all_wins_by_team(team_id).count
+    total_games = all_games_played(team_id).count
+    (total_wins.to_f / total_games).round(2)
   end
 
   def win_percentage_by_season(team_id) #helper
@@ -58,7 +56,7 @@ module TeamStats
     end
     list
   end
-
+  
   def all_game_ids_by_team(team_id) #helper
     all_game_ids = []
     all_games_played(team_id).find_all do |game_team|
