@@ -25,21 +25,13 @@ class ListModTest < Minitest::Test
 
 
 
-  #
-  # def test_stat_tracker_can_find_total_points_for_team
-  #   assert_equal 28, @st.total_points_for_team("6")
-  # end
-  #
-  # def test_stat_tracker_can_find_total_points_against
-  #   skip
-  #   assert_equal 12, @st.total_points_against("Bruins")
-  # end
 
+  def test_stat_tracker_can_find_total_points_for_team
+    assert_equal 28, @st.total_points_for_team("6")
+  end
 
-
-  def test_stat_tracker_can_list_won_game_teams_for_team
-    assert_equal 8, @st.won_game_teams("6").count
-    assert_equal "2012030221", @st.won_game_teams("6").first.game_id
+  def test_stat_tracker_can_find_total_points_against
+    assert_equal 12, @st.total_points_against("Bruins")
   end
 
 
