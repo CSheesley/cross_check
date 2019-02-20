@@ -48,22 +48,26 @@ module TeamStats
   end
 
   def all_games_played(team_id) #helper
-    list = []
-    @game_teams.repo.find_all do |game_team|
-      if game_team.team_id == team_id
-        list << game_team
+    if @all_game_teams.nil?
+      list = []
+      game_teams.repo.find_all do |game_team|
+        if game_team.team_id == team_id
+          list << game_team
+        end
       end
+      @all_game_teams = list
+    else
+      @all_game_teams
     end
-    list
   end
 
-  # def all_game_ids_by_team(team_id) #helper
-  #   all_game_ids = []
-  #   all_games_played(team_id).find_all do |game_team|
-  #     all_game_ids << game_team.game_id
-  #   end
-  #   all_game_ids
-  # end
+  def all_game_ids_by_team(team_id) #helper
+    all_game_ids = []
+    all_games_played(team_id).find_all do |game_team|
+      all_game_ids << game_team.game_id
+    end
+    all_game_ids
+  end
 
   def all_seasons(team_id) #helper
     years = all_game_ids_by_team(team_id).map do |game_id|
@@ -214,13 +218,20 @@ def count_by_team_name(team_id) #helper
   count_by_team_name
 end
 
+def all_opponents_game_teams(team_id)
+  hash = all_games_played(team_id).group_by do |game_team|
+    game_team.team_id
+  end
+  hash
+end
+
 def seasonal_summary(team_id)
   summary_hash ={}
   seasons = all_seasons(team_id)
   seasons.each do |season|
     season_info = {preseason: {},
                     regular_season: {}}
-    all_games = find_games_by_season(season) & get_all_games(team_id)
+    all_games = find_games_by_season(season) & get_all_game_teams(team_id)
     all_games.each do |game|
       if game.type == "P"
         season_info[:preseason][:win_percentage] = win_percentage(team_id,all_games)

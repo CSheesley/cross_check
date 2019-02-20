@@ -30,18 +30,15 @@ module List
     end
   end
 
-  # def total_points_against(team)
-  #   team_id_swap(team)
-  #   game_teams = get_all_opponents_game_team_data(team)
-  #   total = 0
-  #   game_teams.each do |game_team|
-  #     total += game_team.goals
-  #   end
-  #   total.to_f
-  # end
-
-
-
+  def total_points_against(team)
+    team_id_swap(team)
+    game_teams = get_all_opponents_game_team_data(team)
+    total = 0
+    game_teams.each do |game_team|
+      total += game_team.goals
+    end
+    total.to_f
+  end
 
   def won_game_teams(team) #bananas
     game_teams = hash_game_teams_by_team[team]
