@@ -72,7 +72,6 @@ module List
   def total_points_for_team(team)
     total = @game_teams.repo.inject(0) do |sum, game_team|
       if game_team.team_id == team
-        binding.pry
         sum + game_team.goals
       end
     end
