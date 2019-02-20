@@ -1,4 +1,5 @@
 module SeasonStats
+  #takes 2.62 seconds
   def teams_in_season(season) #bananas
     season = hash_games_by_season[season]
     teams = []
@@ -54,7 +55,7 @@ module SeasonStats
 
 
 
-  def season_winningest_hash(season)
+  def season_winningest_hash(season) #bananas helper
     teams = teams_in_season(season)
     games = hash_games_by_season[season]
     pct_hash = {}
@@ -109,95 +110,93 @@ module SeasonStats
 
 
 
-  def most_accurate_team(season)
+  def most_accurate_team(season) #bananas
     find_most_or_least_for_season(season, "accuracy", "most")
   end
 
 
-  def least_accurate_team(season)
+  def least_accurate_team(season) #bananas
     find_most_or_least_for_season(season, "accuracy", "least")
   end
 
 
-  def most_hits(season)
+  def most_hits(season) #bananas
     find_most_or_least_for_season(season, "hits", "most")
   end
 
 
 
-  def find_most_or_least_for_season(season, attribute, most_or_least)
-    list = find_game_teams_by_season(season)
-    team = nil
+  def least_hits(season) #bananas
+    find_most_or_least_for_season(season,"hits","least")
+  end
+
+
+  def find_most_or_least_for_season(season, attribute, most_or_least) #bananas helper
+    game_teams = (all_game_teams_for_season(season).values).flatten
+    by_team = game_teams.group_by do |game_team|
+      game_team.team_id
+    end
+    return_team = nil
     most = 0
     sum = 0
     least = 5000 #what should I put here
     if most_or_least == "most"
       if attribute == "hits"
-        list.each do |game_team|
-          games = get_all_game_teams_for_team(game_team.team_id)
-          sum = games.sum do |game|
-            game.hits
+        by_team.each do |team,game_teams|
+          sum = game_teams.sum do |game_team|
+            game_team.hits
           end
           if sum > most
             most = sum
-            team = game_team.team_id
+            return_team = team
           end
         end
-        team_id_swap(team)
+        team_id_swap(return_team)
       elsif attribute == "accuracy"
-        list.each do |game_team|
-          games = get_all_game_teams_for_team(game_team.team_id)
-          shots = games.sum do |game|
-            game.shots
+        by_team.each do |team,game_teams|
+          shots = game_teams.sum do |game_team|
+            game_team.shots
           end
-          goals = games.sum do |game|
-            game.goals
+          goals = game_teams.sum do |game_team|
+            game_team.goals
           end
           ratio = goals / shots.to_f
           if ratio > most
             most = ratio
-            team = game_team.team_id
+            return_team = team
           end
-          # binding.pry
         end
-        team_id_swap(team)
+        team_id_swap(return_team)
       end
     else
       if attribute == "hits"
-        list.each do |game_team|
-          games = get_all_game_teams_for_team(game_team.team_id)
-          sum = games.sum do |game|
-            game.hits
+        by_team.each do |team,game_teams|
+          sum = game_teams.sum do |game_team|
+            game_team.hits
           end
           if sum < least
             least = sum
-            team = game_team.team_id
+            return_team = team
           end
         end
-        team_id_swap(team)
+        team_id_swap(return_team)
       elsif attribute == "accuracy"
-        list.each do |game_team|
-          games = get_all_game_teams_for_team(game_team.team_id)
-          shots = games.sum do |game|
-            game.shots
+        by_team.each do |team,game_teams|
+          shots = game_teams.sum do |game_team|
+            game_team.shots
           end
-          goals = games.sum do |game|
-            game.goals
+          goals = game_teams.sum do |game_team|
+            game_team.goals
           end
           ratio = goals / shots.to_f
           if ratio < least
             least = ratio
-            team = game_team.team_id
+            return_team = team
           end
         end
-        team_id_swap(team)
+        team_id_swap(return_team)
       end
     end
-  end
-
-
-  def least_hits(season)
-    find_most_or_least_for_season(season,"hits","least")
   end
 
 
@@ -212,15 +211,15 @@ module SeasonStats
 
 
   def power_play_goal_percentage(season)
-    list = find_game_teams_by_season(season)
-    pp_goals = list.reduce(0) do |sum, game_team|
+    game_teams = (all_game_teams_for_season(season).values).flatten
+    pp_goals = game_teams.reduce(0) do |sum, game_team|
       sum += game_team.power_play_goals
     end
     pp_goals = pp_goals.to_f
-    total_goals = list.reduce(0) do |sum, game_team|
+    total_goals = game_teams.reduce(0) do |sum, game_team|
       sum += (game_team.goals)
     end
-    (100 * pp_goals / total_goals).round(2)
+    (pp_goals / total_goals).round(2)
   end
 
 end
