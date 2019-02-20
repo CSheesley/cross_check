@@ -13,19 +13,19 @@ module List
   end
 
 
-  def get_all_opponents_game_team_data(team) #bananas
-    game_ids = hash_game_teams_by_team[team].map do |game_team|
-      game_team.game_id
-    end
-    opponents = hash_game_teams_by_team.reject do |team_id, game_teams|
-      team_id == team
-    end
-    game_teams = opponents.values
-    game_teams.flatten!
-    x = game_teams.find_all do |game_team|
-      game_ids.include?(game_team.game_id)
-    end
-  end
+  # def get_all_opponents_game_team_data(team) #bananas
+  #   game_ids = hash_game_teams_by_team[team].map do |game_team|
+  #     game_team.game_id
+  #   end
+  #   opponents = hash_game_teams_by_team.reject do |team_id, game_teams|
+  #     team_id == team
+  #   end
+  #   game_teams = opponents.values
+  #   game_teams.flatten!
+  #   x = game_teams.find_all do |game_team|
+  #     game_ids.include?(game_team.game_id)
+  #   end
+  # end
 
 
   def total_points_for_team(team) #bananas
@@ -35,22 +35,15 @@ module List
     end
   end
 
-  def total_points_against(team)
-    team_id_swap(team)
-    game_teams = get_all_opponents_game_team_data(team)
-    total = 0
-    game_teams.each do |game_team|
-      total += game_team.goals
-    end
-    total.to_f
-  end
-
-  def won_game_teams(team) #bananas
-    game_teams = hash_game_teams_by_team[team]
-    game_teams.reject do |game_team|
-      game_team.won? == false
-    end
-  end
+  # def total_points_against(team)
+  #   team_id_swap(team)
+  #   game_teams = get_all_opponents_game_team_data(team)
+  #   total = 0
+  #   game_teams.each do |game_team|
+  #     total += game_team.goals
+  #   end
+  #   total.to_f
+  # end
 
 
   def won_games(team) #bananas
@@ -59,18 +52,6 @@ module List
     won_games = won_home + won_away
   end
 
-
-  # def regular_games_by_season(season) #bananas
-  #   season_games = hash_games_by_season[season]
-  #   regular = season_games.find_all do |game|
-  #     game.type == "R"
-  #   end
-  #   regular
-  # end
-
-  # def preseason_games_by_season(season) #bananas
-  #   hash_games_by_season.values.flatten - regular_games_by_season(season)
-  # end
 
 
   def win_percentage(team) #bananas

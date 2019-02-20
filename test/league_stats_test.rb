@@ -24,8 +24,8 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_league_stats_can_return_best_and_worst_defenses
-    assert_equal "Bruins", @st.best_defense
-    assert_equal "Rangers", @st.worst_defense
+    assert_equal "Blackhawks", @st.best_defense
+    assert_equal "Islanders", @st.worst_defense
   end
 
   def test_league_stats_can_return_lowest_and_highest_scoring_visitor_teams
