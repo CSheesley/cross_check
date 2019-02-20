@@ -3,9 +3,9 @@ require "./test/test_helper"
 class TeamTest < Minitest::Test
   def setup
     team_info = {team_id: "6",
-      franchise_id: "6",
-      short_name: "Boston",
-      team_name: "Bruins",
+      franchiseId: "6",
+      shortName: "Boston",
+      teamName: "Bruins",
       abbreviation: "BOS",
       link: "/api/v1/teams/6"}
 

@@ -1,149 +1,193 @@
 module LeagueStats
 
   def count_of_teams
-    list = array_of_teams
-    list.count
-    # @teams.repo.count
+    @teams.repo.count
   end
 
 
-  def best_offense
-    list = array_of_teams
-    team = list.max_by do |team_name| #for each team_name in hash
+  def best_offense #bananas
+    teams = hash_game_teams_by_team.keys
+    best = teams.max_by do |team|
       highest_avg = 0
-      total_points = total_points_for_team(team_name)
-      total_games = get_all_game_teams_for_team(team_name).count
-      if get_all_game_teams_for_team(team_name).count > 0
+      total_points = total_points_for_team(team)
+      total_games = hash_game_teams_by_team[team].count
+      if total_games > 0
         highest_avg = total_points / total_games
       end
       highest_avg
     end
-    team
+    team_id_swap(best)
   end
 
-  def worst_offense
-    list = array_of_teams
-    team = list.min_by do |team_name|
-      highest_avg = 0
-      total_points = total_points_for_team(team_name)
-      total_games = get_all_game_teams_for_team(team_name).count
-      if get_all_game_teams_for_team(team_name).count > 0
-        highest_avg = total_points / total_games
-      end
-      highest_avg
-    end
-    team
-  end
-
-  def best_defense
-    list = array_of_teams
-    team = list.min_by do |team_name|
-      lowest_avg = nil
-      total_points = total_points_against(team_name)
-      total_games = get_all_game_teams_for_team(team_name).count
-      if get_all_game_teams_for_team(team_name).count > 0
+  def worst_offense #bananas
+    teams = hash_game_teams_by_team.keys
+    worst = teams.min_by do |team|
+      lowest_avg = 0
+      total_points = total_points_for_team(team)
+      total_games = hash_game_teams_by_team[team].count
+      if total_games > 0
         lowest_avg = total_points / total_games
       end
       lowest_avg
     end
-    team
+    team_id_swap(worst)
   end
 
-  def worst_defense
-    list = array_of_teams
-    team = list.max_by do |team_name|
-      highest_avg = nil
-      total_points = total_points_against(team_name)
-      total_games = get_all_game_teams_for_team(team_name).count
-      if get_all_game_teams_for_team(team_name).count > 0
-        highest_avg = total_points / total_games
+  def best_defense #bananas
+    teams = hash_game_teams_by_team.keys
+    best = nil
+    lowest = 100
+    teams.each do |team|
+      game_teams = get_all_opponents_game_team_data(team)
+      total_points = game_teams.inject(0) do |sum, game_team|
+        sum + game_team.goals
       end
-      highest_avg
+      total_games = game_teams.count
+      if (total_points.to_f / total_games).round(2) < lowest
+        lowest = (total_points.to_f / total_games).round(2)
+        best = team
+      end
     end
-    team
+    team_id_swap(best)
   end
 
-  def highest_scoring_visitor
-    list = array_of_teams
-    team = list.max_by do |team_name|
-      total_away_goals = 0
-      aways = get_all_game_teams_for_team(team_name).reject do |game|
-        game.home_or_away == "home"
+  def worst_defense #bananas
+    teams = hash_game_teams_by_team.keys
+    worst = nil
+    highest = 0
+    teams.each do |team|
+      game_teams = get_all_opponents_game_team_data(team)
+      total_points = game_teams.inject(0) do |sum, game_team|
+        sum + game_team.goals
       end
-      aways.each do |game|
-        total_away_goals += game.goals
+      total_games = game_teams.count
+      if (total_points.to_f / total_games).round(2) > highest
+        highest = (total_points.to_f / total_games).round(2)
+        worst = team
       end
-      total_away_goals
     end
-    team
+    team_id_swap(worst)
   end
 
-  def lowest_scoring_visitor
-    list = array_of_teams
-    team = list.min_by do |team_name|
-      total_away_goals = 0
-      aways = get_all_game_teams_for_team(team_name).reject do |game|
-        game.home_or_away == "home"
-      end
-      aways.each do |game|
-        total_away_goals += game.goals
-      end
-      total_away_goals
+  def average_away_goals_per_team #bananas helper
+    avg_hash = {}
+    hash_away_games_by_team.each do |team,games|
+      sum = games.sum { |game| game.away_goals}
+      avg_hash[team] = (sum.to_f / games.count).round(2)
     end
-    team
+    avg_hash
   end
 
-  def highest_scoring_home_team
-    list = array_of_teams
-    list.max_by do |team_name|
-      total_home_goals = 0
-      homes = get_all_game_teams_for_team(team_name).reject do |game|
-        game.home_or_away == "away"
+  def average_home_goals_per_team #bananas helper
+    avg_hash = {}
+    hash_home_games_by_team.each do |team,games|
+      sum = games.sum { |game| game.away_goals}
+      avg_hash[team] = (sum.to_f / games.count).round(2)
+    end
+    avg_hash
+  end
+
+  def average_goals(where,most_least) #bananas helper
+    if where == "away" && most_least == "most"
+      hash = average_away_goals_per_team
+      highest_avg = 0
+      best = nil
+      hash.each do |team,average|
+        if average > highest_avg
+          highest_avg = average
+          best = team
+        end
       end
-      homes.each do |game|
-        total_home_goals += game.goals
+      team_id_swap(best)
+    elsif where == "away" && most_least == "least"
+      hash = average_away_goals_per_team
+      lowest_avg = 50
+      worst = nil
+      hash.each do |team,average|
+        if average < lowest_avg
+          lowest_avg = average
+          worst = team
+        end
       end
-      total_home_goals
+      team_id_swap(worst)
+    elsif where == "home" && most_least == "least"
+      hash = average_home_goals_per_team
+      lowest_avg = 50
+      worst = nil
+      hash.each do |team,average|
+        if average < lowest_avg
+          lowest_avg = average
+          worst = team
+        end
+      end
+      team_id_swap(worst)
+    else
+      hash = average_home_goals_per_team
+      highest_avg = 0
+      best = nil
+      hash.each do |team,average|
+        if average > highest_avg
+          highest_avg = average
+          best = team
+        end
+      end
+      team_id_swap(best)
     end
   end
 
-  def lowest_scoring_home_team
-    list = array_of_teams
-    list.min_by do |team_name|
-      total_home_goals = 0
-      homes = get_all_game_teams_for_team(team_name).reject do |game|
-        game.home_or_away == "away"
-      end
-      homes.each do |game|
-        total_home_goals += game.goals
-      end
-      total_home_goals
-    end
+  def highest_scoring_visitor #bananas
+    average_goals("away","most")
+  end
+
+  def lowest_scoring_visitor #bananas
+        average_goals("away","least")
+  end
+
+  def highest_scoring_home_team #bananas
+        average_goals("home","most")
+  end
+
+  def lowest_scoring_home_team #bananas
+    average_goals("home","least")
   end
 
 
   def winningest_team
-    list = array_of_teams
-    list.max_by do |team_name|
-      win_percentage(team_name,get_all_game_teams_for_team(team_name))
+    teams = hash_game_teams_by_team.keys
+    best = teams.max_by do |team|
+      win_percentage(team)
+    end
+    team_id_swap(best)
+
+  end
+
+  def won_home_games(team) #bananas helper
+    hash_home_games_by_team[team].find_all do |game|
+      game.outcome.include?("home")
     end
   end
 
-  def best_fans
-    list = array_of_teams
-    list.max_by do |team|
-        home_wins = get_team_home_games(team) & won_game_teams(team)
-      away_wins = get_team_away_games(team) & won_game_teams(team)
-      home_wins.count - away_wins.count
+  def won_away_games(team) #bananas helper
+    hash_away_games_by_team[team].find_all do |game|
+      game.outcome.include?("away")
     end
   end
 
-  def worst_fans
-    list = array_of_teams
-    list.find_all do |team|
-      home_wins = (get_team_home_games(team) & won_game_teams(team)).count.to_f * 100 / get_team_home_games(team).count
-      away_wins = (get_team_home_games(team) & won_game_teams(team)).count.to_f * 100 / get_team_home_games(team).count
-      home_wins < away_wins
+  def best_fans #bananas
+    teams = hash_game_teams_by_team.keys
+    best = teams.max_by do |team|
+      won_home_games(team).count - won_away_games(team).count
+    end
+    team_id_swap(best)
+  end
+
+  def worst_fans #bananas
+    teams = hash_game_teams_by_team.keys
+    worst = teams.find_all do |team|
+      (won_away_games(team).count - won_home_games(team).count) > 0
+    end
+    worst.map do |team|
+      team_id_swap(team)
     end
   end
 end
