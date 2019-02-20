@@ -49,7 +49,7 @@ module List
   def won_games(team) #bananas
     won_home = won_home_games(team)
     won_away = won_away_games(team)
-    won_games = won_home + won_away
+    won_home + won_away
   end
 
 
@@ -70,7 +70,7 @@ module List
 
   def teams_score_difference
     @games.repo.map do |game|
-      (game.away_goals - game.home_goals)
+      (game.away_goals - game.home_goals).abs
     end
   end
 
