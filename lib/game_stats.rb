@@ -10,7 +10,10 @@ module GameStats
   end
 
   def biggest_blowout
-    teams_score_difference.max.abs
+    abs_diff = teams_score_difference.map do |diff|
+      diff.abs
+    end
+    abs_diff.max
   end
 
   def percentage_home_wins
@@ -27,9 +30,9 @@ module GameStats
     count_of_games_by_season
   end
 
-  def games_by_season #HELPER method, Carrie may have this helper method in stattracker already 
+  def games_by_season #HELPER method, Carrie may have this helper method in stattracker already
     @games.repo.group_by { |game| game.season }
-  end 
+  end
 
   def average_goals_per_game
     (total_goals_all_seasons/total_games.to_f).round(2)
