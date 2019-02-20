@@ -1,5 +1,5 @@
 module LeagueStats
-  # take 11.15 sec (mostly best/worst defense)
+  # takes 2.25 sec - all passing
   def count_of_teams
     @teams.repo.count
   end
@@ -33,39 +33,49 @@ module LeagueStats
     team_id_swap(worst)
   end
 
-  def best_defense #bananas # takes 6.35 sec
-    teams = hash_game_teams_by_team.keys
-    best = nil
-    lowest = 100
-    teams.each do |team|
-      game_teams = get_all_opponents_game_team_data(team)
-      total_points = game_teams.inject(0) do |sum, game_team|
-        sum + game_team.goals
-      end
-      total_games = game_teams.count
-      if (total_points.to_f / total_games).round(2) < lowest
-        lowest = (total_points.to_f / total_games).round(2)
-        best = team
-      end
+  def best_defense #bananas
+    home_against_pts_hash = {}
+    hash_home_games_by_team.each do |team,games|
+      home_against_pts_hash[team] = [games.sum do |game|
+        game.away_goals
+      end, games.count]
     end
+    away_against_pts_hash = {}
+    hash_away_games_by_team.each do |team,games|
+      away_against_pts_hash[team] = [games.sum do |game|
+        game.home_goals
+      end, games.count]
+    end
+    total = {}
+    home_against_pts_hash.each do |team,array|
+      points = (array.first + away_against_pts_hash[team].first).to_f
+      games = (array.last + away_against_pts_hash[team].last).to_f
+      total[team] = points / games
+    end
+    best = total.key(total.values.min)
     team_id_swap(best)
   end
 
-  def worst_defense #bananas takes 5.31 sec
-    teams = hash_game_teams_by_team.keys
-    worst = nil
-    highest = 0
-    teams.each do |team|
-      game_teams = get_all_opponents_game_team_data(team)
-      total_points = game_teams.inject(0) do |sum, game_team|
-        sum + game_team.goals
-      end
-      total_games = game_teams.count
-      if (total_points.to_f / total_games).round(2) > highest
-        highest = (total_points.to_f / total_games).round(2)
-        worst = team
-      end
+  def worst_defense #bananas
+    home_against_pts_hash = {}
+    hash_home_games_by_team.each do |team,games|
+      home_against_pts_hash[team] = [games.sum do |game|
+        game.away_goals
+      end, games.count]
     end
+    away_against_pts_hash = {}
+    hash_away_games_by_team.each do |team,games|
+      away_against_pts_hash[team] = [games.sum do |game|
+        game.home_goals
+      end, games.count]
+    end
+    total = {}
+    home_against_pts_hash.each do |team,array|
+      points = (array.first + away_against_pts_hash[team].first).to_f
+      games = (array.last + away_against_pts_hash[team].last).to_f
+      total[team] = points / games
+    end
+    worst = total.key(total.values.max)
     team_id_swap(worst)
   end
 

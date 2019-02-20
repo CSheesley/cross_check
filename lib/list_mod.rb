@@ -1,5 +1,10 @@
 module List
 
+  def all_games_for_team(team)
+    hash_home_games_by_team[team] + hash_away_games_by_team[team]
+  end
+
+
   def team_id_swap(input)
     desired_team = @teams.repo.find do |team|
       team.team_id == input
@@ -55,17 +60,17 @@ module List
   end
 
 
-  def regular_games_by_season(season) #bananas
-    season_games = hash_games_by_season[season]
-    regular = season_games.find_all do |game|
-      game.type == "R"
-    end
-    regular
-  end
+  # def regular_games_by_season(season) #bananas
+  #   season_games = hash_games_by_season[season]
+  #   regular = season_games.find_all do |game|
+  #     game.type == "R"
+  #   end
+  #   regular
+  # end
 
-  def preseason_games_by_season(season) #bananas
-    hash_games_by_season.values.flatten - regular_games_by_season(season)
-  end
+  # def preseason_games_by_season(season) #bananas
+  #   hash_games_by_season.values.flatten - regular_games_by_season(season)
+  # end
 
 
   def win_percentage(team) #bananas
