@@ -1,19 +1,5 @@
 module List
 
-  def array_of_teams
-    list = array_of_team_ids
-    list.map do |team|
-      team_id_swap(team)
-    end
-  end
-
-  def array_of_team_ids
-    list = @game_teams.repo.map do |game_team|
-      game_team.team_id
-    end
-    list.uniq!
-  end
-
   def team_id_swap(input)
     desired_team = @teams.repo.find do |team|
       team.team_id == input
@@ -37,23 +23,6 @@ module List
   end
 
 
-
-  def find_game_teams_by_season(season)
-    @game_teams.repo.find_all do |game_team|
-      game_id_to_season(game_team.game_id) == season
-    end
-  end
-
-
-  def find_games_by_season(season)
-    @games.repo.find_all do |game|
-      game.season == season
-    end
-  end
-
-
-
-
   def total_points_for_team(team) #bananas
     game_teams = hash_game_teams_by_team[team]
     game_teams.inject(0) do |sum, game_team|
@@ -61,15 +30,15 @@ module List
     end
   end
 
-  def total_points_against(team)
-    team_id_swap(team)
-    game_teams = get_all_opponents_game_team_data(team)
-    total = 0
-    game_teams.each do |game_team|
-      total += game_team.goals
-    end
-    total.to_f
-  end
+  # def total_points_against(team)
+  #   team_id_swap(team)
+  #   game_teams = get_all_opponents_game_team_data(team)
+  #   total = 0
+  #   game_teams.each do |game_team|
+  #     total += game_team.goals
+  #   end
+  #   total.to_f
+  # end
 
 
 

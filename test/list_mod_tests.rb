@@ -12,16 +12,6 @@ class ListModTest < Minitest::Test
   end
 
 
-  def test_stat_tracker_can_make_list_of_teams
-    skip
-    assert_equal ["Rangers", "Bruins", "Penguins", "Red Wings", "Blackhawks"], @st.array_of_teams
-  end
-
-  def test_stat_tracker_can_make_list_of_team_ids
-    skip
-    assert_equal [3, 6, 5, 17, 16], @st.array_of_team_ids
-  end
-
   def test_stat_tracker_can_swap_team_and_team_id
     assert_equal "Bruins", @st.team_id_swap("6")
   end
@@ -34,34 +24,16 @@ class ListModTest < Minitest::Test
   end
 
 
-  def test_stat_tracker_can_list_all_game_teams_for_season
-    skip
-    game_path = "./data/game_stats_w_reg.csv"
-    team_path = './data/team_info.csv'
-    game_teams_path = 'data/game_team_stats_same_as_games.csv'
-    locations = {games: game_path,
-                  teams: team_path,
-                  game_teams: game_teams_path}
-    st = StatTracker.from_csv(locations)
-    assert_equal 10, st.find_game_teams_by_season(20122013).count
-    assert_instance_of GameTeam, st.find_game_teams_by_season(20122013).first
-  end
 
-  def test_stat_tracker_can_list_all_games_for_season
-    skip
-    assert_equal 19, @st.find_games_by_season(20122013).count
-    assert_instance_of Game, @st.find_games_by_season(20122013).first
-  end
-
-
-  def test_stat_tracker_can_find_total_points_for_team
-    assert_equal 28, @st.total_points_for_team("6")
-  end
-
-  def test_stat_tracker_can_find_total_points_against
-    skip
-    assert_equal 12, @st.total_points_against("Bruins")
-  end
+  #
+  # def test_stat_tracker_can_find_total_points_for_team
+  #   assert_equal 28, @st.total_points_for_team("6")
+  # end
+  #
+  # def test_stat_tracker_can_find_total_points_against
+  #   skip
+  #   assert_equal 12, @st.total_points_against("Bruins")
+  # end
 
 
 
