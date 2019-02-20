@@ -1,11 +1,11 @@
 module List
 
-  def all_games_for_team(team)
+  def all_games_for_team(team) #bananas
     hash_home_games_by_team[team] + hash_away_games_by_team[team]
   end
 
 
-  def team_id_swap(input)
+  def team_id_swap(input) #bananas
     desired_team = @teams.repo.find do |team|
       team.team_id == input
     end

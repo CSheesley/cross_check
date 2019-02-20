@@ -84,14 +84,6 @@ module SeasonStats
     pct_hash.key(pct_hash.values.max)
   end
 
-  def all_game_teams_for_season(season) #bananas helper
-    hash = @game_teams.repo.group_by do |game_team|
-      game_team.game_id[0...4]
-    end
-    hash.keep_if do |game_id,game_teams|
-      game_id[0...4] == season[0...4]
-    end
-  end
 
   def worst_coach(season) #bananas
     hash = all_game_teams_for_season(season)
@@ -109,7 +101,6 @@ module SeasonStats
   end
 
 
-
   def most_accurate_team(season) #bananas
     find_most_or_least_for_season(season, "accuracy", "most")
   end
@@ -125,89 +116,9 @@ module SeasonStats
   end
 
 
-
   def least_hits(season) #bananas
     find_most_or_least_for_season(season,"hits","least")
   end
-
-
-  def find_most_or_least_for_season(season, attribute, most_or_least) #bananas helper
-    game_teams = (all_game_teams_for_season(season).values).flatten
-    by_team = game_teams.group_by do |game_team|
-      game_team.team_id
-    end
-    return_team = nil
-    most = 0
-    sum = 0
-    least = 5000 #what should I put here
-    if most_or_least == "most"
-      if attribute == "hits"
-        by_team.each do |team,game_teams|
-          sum = game_teams.sum do |game_team|
-            game_team.hits
-          end
-          if sum > most
-            most = sum
-            return_team = team
-          end
-        end
-        team_id_swap(return_team)
-      elsif attribute == "accuracy"
-        by_team.each do |team,game_teams|
-          shots = game_teams.sum do |game_team|
-            game_team.shots
-          end
-          goals = game_teams.sum do |game_team|
-            game_team.goals
-          end
-          ratio = goals / shots.to_f
-          if ratio > most
-            most = ratio
-            return_team = team
-          end
-        end
-        team_id_swap(return_team)
-      end
-    else
-      if attribute == "hits"
-        by_team.each do |team,game_teams|
-          sum = game_teams.sum do |game_team|
-            game_team.hits
-          end
-          if sum < least
-            least = sum
-            return_team = team
-          end
-        end
-        team_id_swap(return_team)
-      elsif attribute == "accuracy"
-        by_team.each do |team,game_teams|
-          shots = game_teams.sum do |game_team|
-            game_team.shots
-          end
-          goals = game_teams.sum do |game_team|
-            game_team.goals
-          end
-          ratio = goals / shots.to_f
-          if ratio < least
-            least = ratio
-            return_team = team
-          end
-        end
-        team_id_swap(return_team)
-      end
-    end
-  end
-
-
-
-  def game_id_to_season(game_id)
-    game_team = @games.repo.find do |game|
-      game.game_id == game_id
-    end
-    game_team.season
-  end
-
 
 
   def power_play_goal_percentage(season)
@@ -222,4 +133,83 @@ module SeasonStats
     (pp_goals / total_goals).round(2)
   end
 
+
+
+
+  def game_id_to_season(game_id) #helper
+    game_team = @games.repo.find do |game|
+      game.game_id == game_id
+    end
+    game_team.season
+  end
+
+  def all_game_teams_for_season(season) #bananas helper
+    hash = @game_teams.repo.group_by do |game_team|
+      game_team.game_id[0...4]
+    end
+    hash.keep_if do |game_id,game_teams|
+      game_id[0...4] == season[0...4]
+    end
+  end
+  
+  ##### moved to module
+  def find_most_or_least_for_season(season, attribute, most_or_least) #bananas helper
+    game_teams = (all_game_teams_for_season(season).values).flatten
+    by_team = game_teams.group_by do |game_team|
+      game_team.team_id
+    end
+    return_hash = {}
+    return_team = nil
+    sum = 0
+    if most_or_least == "most"
+      if attribute == "hits"
+        by_team.each do |team,game_teams|
+          sum = game_teams.sum do |game_team|
+            game_team.hits
+          end
+          return_hash[team] = sum
+        end
+        return_team = return_hash.key(return_hash.values.max)
+        team_id_swap(return_team)
+      elsif attribute == "accuracy"
+        by_team.each do |team,game_teams|
+          shots = game_teams.sum do |game_team|
+            game_team.shots
+          end
+          goals = game_teams.sum do |game_team|
+            game_team.goals
+          end
+          ratio = goals / shots.to_f
+          return_hash[team] = ratio
+        end
+        return_team = return_hash.key(return_hash.values.max)
+        team_id_swap(return_team)
+      end
+    else
+      if attribute == "hits"
+        by_team.each do |team,game_teams|
+          sum = game_teams.sum do |game_team|
+            game_team.hits
+          end
+          return_hash[team] = sum
+        end
+        return_team = return_hash.key(return_hash.values.min)
+        team_id_swap(return_team)
+      elsif attribute == "accuracy"
+        by_team.each do |team,game_teams|
+          shots = game_teams.sum do |game_team|
+            game_team.shots
+          end
+          goals = game_teams.sum do |game_team|
+            game_team.goals
+          end
+          ratio = goals / shots.to_f
+          return_hash[team] = ratio
+        end
+        return_team = return_hash.key(return_hash.values.min)
+        team_id_swap(return_team)
+      end
+    end
+  end
+  ###### moved to module ^
 end
