@@ -3,6 +3,8 @@
 # require './lib/season_stats'
 # require './lib/list_mod'
 # require './lib/game_stats'
+# require './lib/season_most_least'
+# require './lib/avg_goals'
 
 require_relative './game'
 require_relative './team'
@@ -14,9 +16,12 @@ require_relative './league_stats'
 require_relative './team_stats'
 require_relative './season_stats'
 require_relative './list_mod'
+require_relative './season_most_least'
+require_relative './avg_goals'
 require_relative './game_stats'
 
 require "csv"
+require "pry"
 
 
 class StatTracker
@@ -25,6 +30,8 @@ class StatTracker
   include SeasonStats
   include GameStats
   include List
+  include SeasonMostLeast
+  include AvgGoals
 
   attr_accessor :games, :game_teams, :teams
   def initialize
@@ -48,16 +55,23 @@ class StatTracker
     end
   end
 
-  def hash_games_by_team
+  def hash_home_games_by_team
     @games.repo.group_by do |game|
-      game.team_id
+      game.home_team_id
     end
   end
+
+  def hash_away_games_by_team
+    @games.repo.group_by do |game|
+      game.away_team_id
+    end
+  end
+
+
 
   def hash_games_by_season
     @games.repo.group_by do |game|
       game.season
     end
   end
-
 end

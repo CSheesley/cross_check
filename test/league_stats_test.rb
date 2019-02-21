@@ -24,8 +24,8 @@ class LeagueStatsTest < Minitest::Test
   end
 
   def test_league_stats_can_return_best_and_worst_defenses
-    assert_equal "Bruins", @st.best_defense
-    assert_equal "Rangers", @st.worst_defense
+    assert_equal "Blackhawks", @st.best_defense
+    assert_equal "Islanders", @st.worst_defense
   end
 
   def test_league_stats_can_return_lowest_and_highest_scoring_visitor_teams
@@ -35,7 +35,7 @@ class LeagueStatsTest < Minitest::Test
 
   def test_league_stats_can_return_lowest_and_highest_scoring_home_teams
     assert_equal "Islanders", @st.highest_scoring_home_team
-    assert_equal "Penguins", @st.lowest_scoring_home_team
+    assert_equal "Capitals", @st.lowest_scoring_home_team
   end
 
   def test_league_stats_can_return_winningest_team
@@ -50,7 +50,7 @@ class LeagueStatsTest < Minitest::Test
                   teams: team_path,
                   game_teams: game_teams_path}
     st = StatTracker.from_csv(locations)
-    assert_equal "Bruins", st.best_fans
+    assert_equal "Rangers", st.best_fans
     assert_equal [], st.worst_fans
   end
 end
