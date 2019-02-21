@@ -1,7 +1,6 @@
 require "./test/test_helper"
 
 class StatTrackerTest < Minitest::Test
-
   def setup
     @game_path = './data/game_fixture.csv'
     @team_path = './data/team_info.csv'
@@ -17,7 +16,6 @@ class StatTrackerTest < Minitest::Test
     assert_instance_of StatTracker, stat_tracker
   end
 
-
   def test_stat_tracker_reads_csv
     @st = StatTracker.from_csv(@locations)
     assert_instance_of StatTracker, @st
@@ -29,5 +27,4 @@ class StatTrackerTest < Minitest::Test
     assert_equal 30, @st.games.repo.count
     assert_equal 3, @st.games.repo.first.away_goals
   end
-
 end

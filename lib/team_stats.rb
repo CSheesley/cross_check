@@ -1,5 +1,4 @@
 module TeamStats
-
   def team_info(team_id)
     get_team_info(team_id)
     {
@@ -10,12 +9,6 @@ module TeamStats
       "abbreviation" => get_team_info(team_id).abbreviation,
       "link" => get_team_info(team_id).link
     }
-  end
-
-  def get_team_info(team_id) #helper
-    @teams.repo.find do |team|
-      team.team_id == team_id
-    end
   end
 
   def best_season(team_id)
@@ -74,48 +67,8 @@ module TeamStats
     win_percentage_by_team
   end
 
-  def seasonal_summary_p(team_id,season)
-    all_games = hash_games_by_season[season] & all_games_for_team(team_id)
-    pre = all_games.find_all do |game|
-      game.type == "P"
-    end
-    hash = {}
-    if pre.count > 0
-      hash[:win_percentage] = team_win_pct_by_season(team_id,pre).round(2)
-      hash[:total_goals_scored] = team_scored_by_season(team_id,pre)
-      hash[:total_goals_against] = team_opp_scored_by_season(team_id,pre)
-      hash[:average_goals_scored] = (team_scored_by_season(team_id,pre).to_f / pre.count).round(2)
-      hash[:average_goals_against] = (team_opp_scored_by_season(team_id,pre).to_f / pre.count).round(2)
-    else
-      hash[:win_percentage] = 0
-      hash[:total_goals_scored] = 0
-      hash[:total_goals_against] = 0
-      hash[:average_goals_scored] = 0.0
-      hash[:average_goals_against] = 0.0
-    end
-    hash
-  end
-
-  def seasonal_summary_r(team_id,season)
-    all_games = hash_games_by_season[season] & all_games_for_team(team_id)
-    reg = all_games.find_all do |game|
-      game.type == "R"
-    end
-    hash = {}
-    if reg.count > 0
-      hash[:win_percentage] = team_win_pct_by_season(team_id,reg).round(2)
-      hash[:total_goals_scored] = team_scored_by_season(team_id,reg)
-      hash[:total_goals_against] = team_opp_scored_by_season(team_id,reg)
-      hash[:average_goals_scored] = (team_scored_by_season(team_id,reg).to_f / reg.count).round(2)
-      hash[:average_goals_against] = (team_opp_scored_by_season(team_id,reg).to_f / reg.count).round(2)
-    end
-    hash
-  end
-
-
   def seasonal_summary(team_id)
     summary_hash ={}
-
     seasons = all_seasons(team_id)
     seasons.each do |season|
       season_info = {preseason: {},
@@ -126,5 +79,4 @@ module TeamStats
     end
     summary_hash
   end
-
 end

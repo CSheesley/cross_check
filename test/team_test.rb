@@ -4,9 +4,9 @@ class TeamTest < Minitest::Test
   def setup
     team_info = {
       team_id: "6",
-      franchiseId: "6",
-      shortName: "Boston",
-      teamName: "Bruins",
+      franchiseid: "6",
+      shortname: "Boston",
+      teamname: "Bruins",
       abbreviation: "BOS",
       link: "/api/v1/teams/6"
     }

@@ -27,7 +27,6 @@ class SeasonStatsTest < Minitest::Test
     assert_equal "Rangers", @st.least_accurate_team("20122013")
   end
 
-
   def test_can_find_most_in_season
     assert_equal "Rangers", @st.find_most_or_least_for_season("20122013", "hits", "most")
     assert_equal "Bruins", @st.find_most_or_least_for_season("20122013", "accuracy", "most")
@@ -38,13 +37,10 @@ class SeasonStatsTest < Minitest::Test
     assert_equal "Rangers", @st.find_most_or_least_for_season("20122013","accuracy", "least")
   end
 
-
   def test_most_and_least_hitting_teams_of_season_are_shown
     assert_equal "Rangers", @st.most_hits("20122013")
     assert_equal "Bruins", @st.least_hits("20122013")
   end
-
-
 
   def test_percentage_of_power_play_goals_for_season
     assert_equal 0.21, @st.power_play_goal_percentage("20122013")

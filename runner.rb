@@ -1,10 +1,21 @@
+require './lib/game'
+require './lib/team'
+require './lib/game_team'
+require './lib/game_repo'
+require './lib/team_repo'
+require './lib/game_team_repo'
+require './lib/league_stats'
+require './lib/team_stats'
+require './lib/season_stats'
+require './lib/list_mod'
+require './lib/season_most_least'
+require './lib/avg_goals'
+require './lib/game_stats'
+require './lib/hash_module'
+require './lib/summary_module'
+require './lib/season_module'
 require './lib/stat_tracker'
-require "./lib/game"
-require "./lib/game_repo"
-require "./lib/team"
-# require "./lib/team_repo"
-require "./lib/game_team"
-# require "./lib/game_team_repo"
+
 require "csv"
 require "pry"
 
@@ -19,6 +30,4 @@ locations = {
 }
 
 stat_tracker = StatTracker.from_csv(locations)
-#this stat tracker is the instance of StatTracker that is instantiated by running the ::from_csv method
-
 binding.pry

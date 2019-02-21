@@ -19,7 +19,6 @@ class GameStatsTest < Minitest::Test
   end
 
   def test_stat_tracker_can_return_total_scores
-    #helper method, possibly to module
     expected = [5, 5, 7, 9, 10, 4, 7, 4, 1, 7, 7, 3, 1, 5, 3, 6, 4, 5, 7, 5, 5, 9, 4, 3, 7, 5, 3, 3, 2, 7]
 
     assert_equal expected, @st.total_scores
@@ -75,7 +74,7 @@ class GameStatsTest < Minitest::Test
       "20142015" => 3.83,
       "20152016" => 7.00
     }
-    
+
     assert_equal expected, @st.average_goals_by_season
   end
 end
