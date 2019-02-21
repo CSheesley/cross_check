@@ -7,6 +7,7 @@ require './lib/season_most_least'
 require './lib/avg_goals'
 require './lib/hash_module'
 require './lib/summary_module'
+require './lib/season_module'
 
 # require_relative './game'
 # require_relative './team'
@@ -23,6 +24,7 @@ require './lib/summary_module'
 # require_relative './game_stats'
 # require_relative './hash_module'
 # require_relative './summary_module'
+# require_relative './season_module'
 
 require 'csv'
 require 'pry'
@@ -38,6 +40,7 @@ class StatTracker
   include AvgGoals
   include HashModule
   include Summary
+  include Season
 
   attr_accessor :games, :game_teams, :teams
   def initialize
