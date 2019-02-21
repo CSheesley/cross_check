@@ -48,17 +48,7 @@ module TeamStats
   end
 
   def all_games_played(team_id) #helper
-    if @all_game_teams.nil?
-      list = []
-      game_teams.repo.find_all do |game_team|
-        if game_team.team_id == team_id
-          list << game_team
-        end
-      end
-      @all_game_teams = list
-    else
-      @all_game_teams
-    end
+    hash_game_teams_by_team[team_id]
   end
 
   def all_game_ids_by_team(team_id) #helper
@@ -180,43 +170,59 @@ end
 
 def head_to_head(team_id)
   win_percentage_by_team = {}
-  all_wins_vs_opponent(team_id).each do |team_name, wins|
-    win_percentage_by_team[team_name] = ((wins.to_f / all_games_vs_opponent(team_id)[team_name]).round(2))
+  all_wins_vs_opponent(team_id).each do |team, wins|
+    win_percentage_by_team[team_id_swap(team)] = ((wins / all_games_vs_opponent(team_id)[team]).round(2))
   end
   win_percentage_by_team
 end
 
 def all_wins_vs_opponent(team_id) #helper
-   @game_ids = @games.repo.find_all do |game| #break into helper
-    win_game_ids(team_id).include?(game.game_id)
-     end
-    populate_list
-    count_by_team_name(team_id)
+   game_ids = won_games(team_id)
+
+   all_teams = []
+   game_ids.each do |game|
+     all_teams << game.away_team_id << game.home_team_id
+   end
+
+   count_by_team_id = {}
+   opponents = all_teams.reject { |team| team == team_id }
+   opponents.each do |team|
+     count_by_team_id[team] = opponents.count(team).to_f
+   end
+   count_by_team_id
 end
 
 def all_games_vs_opponent(team_id) #helper
-    @game_ids = @games.repo.find_all do |game| #break into helper
-    all_game_ids_by_team(team_id).include?(game.game_id)
-      end
-    populate_list
-    count_by_team_name(team_id)
-end
+  game_ids = all_games_for_team(team_id)
 
-def populate_list #helper
-  @all_teams = []
-  @game_ids.each do |game|
-    @all_teams << game.away_team_id << game.home_team_id
+  all_teams = []
+  game_ids.each do |game|
+    all_teams << game.away_team_id << game.home_team_id
   end
-end
 
-def count_by_team_name(team_id) #helper
-  count_by_team_name = {}
-  opponents = @all_teams.reject { |team| team == team_id }
+  count_by_team_id = {}
+  opponents = all_teams.reject { |team| team == team_id }
   opponents.each do |team|
-    count_by_team_name[team_id_swap(team)] = opponents.count(team)
+    count_by_team_id[team] = opponents.count(team).to_f
   end
-  count_by_team_name
+  count_by_team_id
 end
+
+# def populate_list #helper
+#   @all_teams = []
+#   @game_ids.each do |game|
+#     @all_teams << game.away_team_id << game.home_team_id
+#   end
+# end
+#
+# def count_by_team_id(team_id) #helper
+#   count_by_team_id = {}
+#   opponents = @all_teams.reject { |team| team == team_id }
+#   opponents.each do |team|
+#     count_by_team_id[team_id_swap(team)] = opponents.count(team)
+#   end
+#   count_by_team_id
+# end
 
 def all_opponents_game_teams(team_id)
   hash = all_games_played(team_id).group_by do |game_team|
