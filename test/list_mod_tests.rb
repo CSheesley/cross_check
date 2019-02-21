@@ -16,15 +16,10 @@ class ListModTest < Minitest::Test
     assert_equal "Bruins", @st.team_id_swap("6")
   end
 
-
-
   def test_stat_tracker_can_list_all_opponent_game_teams
     assert_equal 9, @st.get_all_opponents_game_team_data("6").count
     assert_equal "2012030221", @st.get_all_opponents_game_team_data("6").first.game_id
   end
-
-
-
 
   def test_stat_tracker_can_find_total_points_for_team
     assert_equal 28, @st.total_points_for_team("6")
@@ -33,7 +28,6 @@ class ListModTest < Minitest::Test
   def test_stat_tracker_can_find_total_points_against
     assert_equal 12, @st.total_points_against("Bruins")
   end
-
 
   def test_stat_tracker_can_list_won_games_for_team
     game_path = "./data/game_stats_w_reg.csv"
@@ -46,8 +40,6 @@ class ListModTest < Minitest::Test
     assert_equal 3, st.won_games("6").count
     assert_equal "2012030221", st.won_games("6").first.game_id
   end
-
-
 
   def test_stat_tracker_can_list_regular_games
     game_path = "./data/game_stats_w_reg.csv"
@@ -72,7 +64,6 @@ class ListModTest < Minitest::Test
     assert_equal 3, st.preseason_games_by_season("20122013").count
     assert_equal "2012030221", st.preseason_games_by_season("20122013").first.game_id
   end
-
 
   def test_stat_tracker_can_calculate_win_percentage
     assert_equal 0.20, @st.win_percentage("3")

@@ -82,4 +82,8 @@ module List
       game.outcome.include?("away")
     end
   end
+
+  def games_by_season
+    @games.repo.group_by { |game| game.season }
+  end
 end

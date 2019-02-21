@@ -9,8 +9,8 @@ module SeasonMostLeast
     sum = 0
     if most_or_least == "most"
       if attribute == "hits"
-        by_team.each do |team,game_teams|
-          sum = game_teams.sum do |game_team|
+        by_team.each do |team,game_teams2|
+          sum = game_teams2.sum do |game_team|
             game_team.hits
           end
           return_hash[team] = sum
@@ -18,11 +18,11 @@ module SeasonMostLeast
         return_team = return_hash.key(return_hash.values.max)
         team_id_swap(return_team)
       elsif attribute == "accuracy"
-        by_team.each do |team,game_teams|
-          shots = game_teams.sum do |game_team|
+        by_team.each do |team,game_teams2|
+          shots = game_teams2.sum do |game_team|
             game_team.shots
           end
-          goals = game_teams.sum do |game_team|
+          goals = game_teams2.sum do |game_team|
             game_team.goals
           end
           ratio = goals / shots.to_f
@@ -33,8 +33,8 @@ module SeasonMostLeast
       end
     else
       if attribute == "hits"
-        by_team.each do |team,game_teams|
-          sum = game_teams.sum do |game_team|
+        by_team.each do |team,game_teams2|
+          sum = game_teams2.sum do |game_team|
             game_team.hits
           end
           return_hash[team] = sum
@@ -42,11 +42,11 @@ module SeasonMostLeast
         return_team = return_hash.key(return_hash.values.min)
         team_id_swap(return_team)
       elsif attribute == "accuracy"
-        by_team.each do |team,game_teams|
-          shots = game_teams.sum do |game_team|
+        by_team.each do |team,game_teams2|
+          shots = game_teams2.sum do |game_team|
             game_team.shots
           end
-          goals = game_teams.sum do |game_team|
+          goals = game_teams2.sum do |game_team|
             game_team.goals
           end
           ratio = goals / shots.to_f

@@ -11,11 +11,8 @@ class LeagueStatsTest < Minitest::Test
     @st = StatTracker.from_csv(@locations)
   end
 
-
-
   def test_league_stats_has_teams_and_can_count_teams
     assert_equal 33, @st.count_of_teams
-    #with fixture file version of method
   end
 
   def test_league_stats_can_return_best_and_worst_offenses

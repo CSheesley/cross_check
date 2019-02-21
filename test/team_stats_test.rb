@@ -28,16 +28,16 @@ class TeamStatsTest < Minitest::Test
     assert_equal expected, @stat_tracker.team_info("17")
   end
 
-  def test_all_games_played_can_be_gathered #helper
+  def test_all_games_played_can_be_gathered
     assert_equal 6, @stat_tracker.all_games_played("17").count
   end
 
-  def test_all_wins_all_time_can_be_gathered_in_a_list #helper
+  def test_all_wins_all_time_can_be_gathered_in_a_list
     assert_instance_of Array, @stat_tracker.all_wins_by_team("17")
     assert_equal 2, @stat_tracker.all_wins_by_team("17").count
   end
 
-  def test_all_losses_all_time_can_be_gathered_in_a_list #helper
+  def test_all_losses_all_time_can_be_gathered_in_a_list
     assert_instance_of Array, @stat_tracker.all_losses_by_team("17")
     assert_equal 4, @stat_tracker.all_losses_by_team("17").count
   end
@@ -52,8 +52,8 @@ class TeamStatsTest < Minitest::Test
 
     st = StatTracker.from_csv(locations)
 
-    assert_equal "20112012", st.best_season("17") # => 1.00
-    assert_equal "20122013", st.worst_season("17") # => 0.33
+    assert_equal "20112012", st.best_season("17")
+    assert_equal "20122013", st.worst_season("17")
   end
 
   def test_teams_average_win_percentage_of_all_games_is_shown
@@ -75,7 +75,7 @@ class TeamStatsTest < Minitest::Test
     assert_equal 0, @stat_tracker.fewest_goals_scored("17")
   end
 
-  def test_all_wins_and_losses_for_a_team_can_be_shown #helper
+  def test_all_wins_and_losses_for_a_team_can_be_shown
     assert_equal 2, @stat_tracker.all_wins_by_team("17").count
     assert_equal 4, @stat_tracker.all_losses_by_team("17").count
   end
@@ -152,5 +152,4 @@ class TeamStatsTest < Minitest::Test
     assert_equal Hash, st.seasonal_summary("6")["20122013"].class
     assert_equal 2, st.seasonal_summary("6")["20122013"].count
   end
-
 end
