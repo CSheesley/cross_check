@@ -117,8 +117,8 @@ class TeamStatsTest < Minitest::Test
       game_teams: game_teams_path}
 
     st = StatTracker.from_csv(locations)
-    expected_1 = ({"Predators"=>2, "Maple Leafs"=>1})
-    expected_2 = ({"Predators"=>3, "Maple Leafs"=>2})
+    expected_1 = ({"18"=>2.0, "10"=>1.0})
+    expected_2 = ({"18"=>3.0, "10"=>2.0})
 
     assert_equal expected_1, st.all_wins_vs_opponent("17")
     assert_equal expected_2, st.all_games_vs_opponent("17")
