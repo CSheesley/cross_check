@@ -21,13 +21,11 @@ module GameStats
 
   def count_of_games_by_season
     count_of_games_by_season = {}
-    games_by_season.each { |season, games| count_of_games_by_season[season] = games.count }
+    hash_games_by_season.each do |season, games| 
+      count_of_games_by_season[season] = games.count 
+    end 
     count_of_games_by_season
   end
-
-  def games_by_season #HELPER method, Carrie may have this helper method in stattracker already 
-    @games.repo.group_by { |game| game.season }
-  end 
 
   def average_goals_per_game
     (total_goals_all_seasons/total_games.to_f).round(2)
@@ -35,7 +33,7 @@ module GameStats
 
   def average_goals_by_season
     average_goals_by_season = {}
-    games_by_season.each do |season, games|
+    hash_games_by_season.each do |season, games|
       goals = games.sum do |game|
         (game.away_goals + game.home_goals)
       end
