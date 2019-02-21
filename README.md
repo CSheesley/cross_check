@@ -12,6 +12,4 @@ The project uses CSV data from the NHL to analyze team performance for specific 
 ## Testing
 `$ git clone https://github.com/turingschool-examples/cross_check_spec_harness.git`
 
-Setup and run rspec per directions from README in cross_check_spec_harness or via this <a href="https://github.com/turingschool-examples/cross_check_spec_harness">link</a>. 
-
-
+Setup and run rspec per directions from README in cross_check_spec_harness or via this <a href="https://github.com/turingschool-examples/cross_check_spec_harness">link</a>.
