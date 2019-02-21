@@ -3,7 +3,6 @@ require "./test/test_helper"
 class TeamRepoTest < MiniTest::Test
   def setup
     @team_repo = TeamRepo.new('./data/team_info.csv')
-
   end
 
   def test_team_repo_exists

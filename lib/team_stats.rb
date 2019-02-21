@@ -208,22 +208,6 @@ def all_games_vs_opponent(team_id) #helper
   count_by_team_id
 end
 
-# def populate_list #helper
-#   @all_teams = []
-#   @game_ids.each do |game|
-#     @all_teams << game.away_team_id << game.home_team_id
-#   end
-# end
-#
-# def count_by_team_id(team_id) #helper
-#   count_by_team_id = {}
-#   opponents = @all_teams.reject { |team| team == team_id }
-#   opponents.each do |team|
-#     count_by_team_id[team_id_swap(team)] = opponents.count(team)
-#   end
-#   count_by_team_id
-# end
-
 def all_opponents_game_teams(team_id)
   hash = all_games_played(team_id).group_by do |game_team|
     game_team.team_id

@@ -1,16 +1,16 @@
 require "./test/test_helper"
-require 'pry'
 
 class GameStatsTest < Minitest::Test
-
   def setup
-    @game_path = './data/game_fixture.csv'
-    @team_path = './data/team_info.csv'
+    @game_path       = './data/game_fixture.csv'
+    @team_path       = './data/team_info.csv'
     @game_teams_path = './data/game_team_stats_fixture.csv'
-    @locations = {games: @game_path,
+    @locations       = {
+      games: @game_path,
       teams: @team_path,
-      game_teams: @game_teams_path}
-    @st = StatTracker.from_csv(@locations)
+      game_teams: @game_teams_path
+    }
+    @st             = StatTracker.from_csv(@locations)
   end
 
   def test_stat_tracker_can_return_lowest_and_highest_total_scores
@@ -56,6 +56,7 @@ class GameStatsTest < Minitest::Test
       "20152016" => 1,
       "20162017" => 4
     }
+
     assert_equal expected, @st.count_of_games_by_season
   end
 
@@ -74,6 +75,7 @@ class GameStatsTest < Minitest::Test
       "20142015" => 3.83,
       "20152016" => 7.00
     }
+    
     assert_equal expected, @st.average_goals_by_season
   end
 end

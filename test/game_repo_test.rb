@@ -5,11 +5,9 @@ class GameRepoTest < MiniTest::Test
     @game_repo = GameRepo.new('./data/game_fixture.csv')
   end
 
-
   def test_game_repo_exists
     assert_instance_of GameRepo, @game_repo
   end
-
 
   def test_game_repo_has_games
     assert_equal 30, @game_repo.repo.count
