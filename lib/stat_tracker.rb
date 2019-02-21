@@ -60,6 +60,4 @@ class StatTracker
     end
   end
 
-  
-
 end

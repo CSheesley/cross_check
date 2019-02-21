@@ -190,33 +190,56 @@ def all_wins_vs_opponent(team_id) #helper
    @game_ids = @games.repo.find_all do |game| #break into helper
     win_game_ids(team_id).include?(game.game_id)
      end
-    populate_list
+     all_teams = []
+     game_ids.each do |game|
+       all_teams << game.away_team_id << game.home_team_id
+     end
+     all_teams
     count_by_team_name(team_id)
 end
 
 def all_games_vs_opponent(team_id) #helper
-    @game_ids = @games.repo.find_all do |game| #break into helper
+    game_ids = @games.repo.find_all do |game| #break into helper
     all_game_ids_by_team(team_id).include?(game.game_id)
       end
-    populate_list
-    count_by_team_name(team_id)
+      
+    all_teams = []
+    game_ids.each do |game|
+      all_teams << game.away_team_id << game.home_team_id
+    end
+    all_teams
+
+    count_by_team_name = {}
+    all_teams = []
+    game_ids.each do |game|
+      all_teams << game.away_team_id << game.home_team_id
+    end
+    opponents = all_teams.reject { |team| team == team_id }
+    opponents.each do |team|
+      count_by_team_name[team_id_swap(team)] = opponents.count(team)
+    end
 end
 
-def populate_list #helper
-  @all_teams = []
-  @game_ids.each do |game|
-    @all_teams << game.away_team_id << game.home_team_id
-  end
-end
+# def populate_list #helper
+#   all_teams = []
+#   @game_ids.each do |game|
+#     all_teams << game.away_team_id << game.home_team_id
+#   end
+#   all_teams
+# end`
 
-def count_by_team_name(team_id) #helper
-  count_by_team_name = {}
-  opponents = @all_teams.reject { |team| team == team_id }
-  opponents.each do |team|
-    count_by_team_name[team_id_swap(team)] = opponents.count(team)
-  end
-  count_by_team_name
-end
+# def count_by_team_name(team_id) #helper
+#   count_by_team_name = {}
+#   all_teams = []
+#   game_ids.each do |game|
+#     all_teams << game.away_team_id << game.home_team_id
+#   end
+#   opponents = all_teams.reject { |team| team == team_id }
+#   opponents.each do |team|
+#     count_by_team_name[team_id_swap(team)] = opponents.count(team)
+#   end
+#   count_by_team_name
+# end
 
 def all_opponents_game_teams(team_id)
   hash = all_games_played(team_id).group_by do |game_team|
