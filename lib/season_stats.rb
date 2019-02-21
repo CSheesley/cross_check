@@ -10,46 +10,49 @@ module SeasonStats
     teams.uniq!
   end
 
+  def create_reg_pre_hash(game_hash,team)
+    hash = Hash.new {|hash,key| hash[key] = 0}
+    reg_games = all_games_for_team(team) & game_hash["R"]
+    pre_games = all_games_for_team(team) & game_hash["P"]
+    total_reg = reg_games.count
+    total_pre = pre_games.count
+    won_reg = (game_hash["R"] & won_games(team)).count.to_f
+    won_pre = (game_hash["P"] & won_games(team)).count.to_f
+    hash[:reg_win_pct] = won_reg / total_reg
+    hash[:pre_win_pct] = won_pre / total_pre
+    hash
+  end
+
   def reg_pre_diff_hash(season) #bananas helper
-    teams = teams_in_season(season)
     reg_v_pre = hash_games_by_season[season].group_by do |game|
       game.type
     end
-    total_reg_games = {}
+    teams = teams_in_season(season)
+    hash = {}
     teams.each do |team|
-      total_reg_games[team] = (reg_v_pre["R"] & all_games_for_team(team)).count.to_f
+      hash[team] = create_reg_pre_hash(reg_v_pre,team)
     end
-    total_pre_games = {}
-    teams.each do |team|
-      total_pre_games[team] = (reg_v_pre["P"] & all_games_for_team(team)).count.to_f
-    end
-    reg_hash = {}
-    teams.each do |team|
-      reg_hash[team] = (reg_v_pre["R"] & won_games(team)).count
-    end
-    pre_hash = {}
-    teams.each do |team|
-      pre_hash[team] = (reg_v_pre["P"] & won_games(team)).count
-    end
-    diff_hash = {}
-    teams.each do |team|
-      diff_hash[team] = (pre_hash[team]/total_pre_games[team] - reg_hash[team]/total_reg_games[team])
-    end
-    diff_hash.delete_if do |team,diff|
-      diff.nan?
-    end
+    hash
   end
 
   def biggest_bust(season) #bananas
     diff_hash = reg_pre_diff_hash(season)
-    bust = diff_hash.key(diff_hash.values.max)
-    team_id_swap(bust)
+    h = {}
+    diff_hash.each do |team,pcts|
+      h[team] = pcts[:reg_win_pct] - pcts[:pre_win_pct]
+    end
+    surprise = h.key(h.values.min)
+    team_id_swap(surprise)
   end
 
 
   def biggest_surprise(season) #bananas
     diff_hash = reg_pre_diff_hash(season)
-    surprise = diff_hash.key(diff_hash.values.min)
+    h = {}
+    diff_hash.each do |team,pcts|
+      h[team] = pcts[:reg_win_pct] - pcts[:pre_win_pct]
+    end
+    surprise = h.key(h.values.max)
     team_id_swap(surprise)
   end
 

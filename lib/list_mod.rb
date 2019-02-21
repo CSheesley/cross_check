@@ -13,19 +13,20 @@ module List
   end
 
 
-  # def get_all_opponents_game_team_data(team) #bananas
-  #   game_ids = hash_game_teams_by_team[team].map do |game_team|
-  #     game_team.game_id
-  #   end
-  #   opponents = hash_game_teams_by_team.reject do |team_id, game_teams|
-  #     team_id == team
-  #   end
-  #   game_teams = opponents.values
-  #   game_teams.flatten!
-  #   x = game_teams.find_all do |game_team|
-  #     game_ids.include?(game_team.game_id)
-  #   end
-  # end
+  def get_all_opponents_game_team_data(team) #bananas
+    game_ids = hash_game_teams_by_team[team].map do |game_team|
+      game_team.game_id
+    end
+    opponents = hash_game_teams_by_team.reject do |team_id, game_teams|
+      team_id == team
+    end
+    game_teams = opponents.values
+    game_teams.flatten!
+    game_teams.find_all do |game_team|
+      game_ids.include?(game_team.game_id)
+    end
+    binding.pry
+  end
 
 
   def total_points_for_team(team) #bananas
@@ -70,7 +71,7 @@ module List
 
   def teams_score_difference
     @games.repo.map do |game|
-      (game.away_goals - game.home_goals).abs
+      (game.away_goals - game.home_goals)
     end
   end
 
