@@ -1,6 +1,4 @@
-require "./test/test_helper"
 class GameTeamTest < Minitest::Test
-
   def setup
     @game_team = GameTeam.new({
       game_id: "2012030221",
@@ -33,7 +31,6 @@ class GameTeamTest < Minitest::Test
     assert_equal false, @game_team.won?
   end
 
-
   def test_head_coach_of_game_team_is_shown
     assert_equal "John Tortorella", @game_team.head_coach
   end
@@ -50,7 +47,6 @@ class GameTeamTest < Minitest::Test
     assert_equal 44, @game_team.hits
   end
 
-
   def test_number_of_power_play_opportunities_per_game_team_are_shown
     assert_equal 3, @game_team.power_play_chances
   end
@@ -58,6 +54,4 @@ class GameTeamTest < Minitest::Test
   def test_number_of_game_team_power_play_goals_are_shown
     assert_equal 0, @game_team.power_play_goals
   end
-
-
 end
