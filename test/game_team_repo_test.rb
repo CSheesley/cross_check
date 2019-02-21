@@ -1,5 +1,3 @@
-require "./test/test_helper"
-
 class GameTeamRepoTest < MiniTest::Test
   def setup
     @game_team_repo = GameTeamRepo.new('./data/game_team_stats_fixture.csv')
