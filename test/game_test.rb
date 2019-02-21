@@ -1,5 +1,3 @@
-require "./test/test_helper"
-
 class GameTest < Minitest::Test
   def setup
     @game = Game.new(
