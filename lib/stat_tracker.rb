@@ -18,7 +18,6 @@ require_relative './game_stats'
 
 require "csv"
 
-
 class StatTracker
   include TeamStats
   include LeagueStats
@@ -27,11 +26,11 @@ class StatTracker
   include List
 
   attr_accessor :games, :game_teams, :teams
-  def initialize
-    @games = games
-    @teams = teams
-    @game_teams = game_teams
 
+  def initialize
+    @games      = games
+    @teams      = teams
+    @game_teams = game_teams
   end
 
   def self.from_csv(locations)
@@ -43,23 +42,14 @@ class StatTracker
   end
 
   def hash_game_teams_by_team
-    @game_teams.repo.group_by do |game_team|
-      game_team.team_id
-    end
+    @game_teams.repo.group_by { |game_team| game_team.team_id }
   end
 
   def hash_games_by_team
-    @games.repo.group_by do |game|
-      game.team_id
-    end
+    @games.repo.group_by { |game| game.team_id }
   end
 
   def hash_games_by_season
-    @games.repo.group_by do |game|
-      game.season
-    end
+    @games.repo.group_by { |game| game.season }
   end
-
-  
-
 end
