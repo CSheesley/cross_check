@@ -74,7 +74,4 @@ class StatTracker
       game.season
     end
   end
-
-
-
 end
