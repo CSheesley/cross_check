@@ -1,5 +1,3 @@
-require "./test/test_helper"
-
 class GameStatsTest < Minitest::Test
   def setup
     @game_path       = './data/game_fixture.csv'
