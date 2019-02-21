@@ -1,5 +1,3 @@
-require "./test/test_helper"
-
 class LeagueStatsTest < Minitest::Test
   def setup
     @game_path = './data/game_fixture.csv'
@@ -10,8 +8,6 @@ class LeagueStatsTest < Minitest::Test
                   game_teams: @game_teams_path}
     @st = StatTracker.from_csv(@locations)
   end
-
-
 
   def test_league_stats_has_teams_and_can_count_teams
     assert_equal 33, @st.count_of_teams
