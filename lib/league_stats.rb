@@ -4,7 +4,6 @@ module LeagueStats
     @teams.repo.count
   end
 
-
   def best_offense #bananas
     teams = hash_game_teams_by_team.keys
     best = teams.max_by do |team|
@@ -150,7 +149,6 @@ module LeagueStats
   def lowest_scoring_home_team #bananas
     average_goals("home","least")
   end
-
 
   def winningest_team
     teams = hash_game_teams_by_team.keys

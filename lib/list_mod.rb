@@ -7,7 +7,6 @@ module List
     desired_team.team_name
   end
 
-
   def get_all_opponents_game_team_data(team) #bananas
     game_ids = hash_game_teams_by_team[team].map do |game_team|
       game_team.game_id
@@ -21,7 +20,6 @@ module List
       game_ids.include?(game_team.game_id)
     end
   end
-
 
   def total_points_for_team(team) #bananas
     game_teams = hash_game_teams_by_team[team]
@@ -47,13 +45,11 @@ module List
     end
   end
 
-
   def won_games(team) #bananas
     won_home = won_home_games(team)
     won_away = won_away_games(team)
     won_games = won_home + won_away
   end
-
 
   def regular_games_by_season(season) #bananas
     season_games = hash_games_by_season[season]
@@ -66,7 +62,6 @@ module List
   def preseason_games_by_season(season) #bananas
     hash_games_by_season.values.flatten - regular_games_by_season(season)
   end
-
 
   def win_percentage(team) #bananas
     game_teams = hash_game_teams_by_team[team]
@@ -109,6 +104,4 @@ module List
     end
     total_away_goals + total_home_goals
   end
-
-
 end
