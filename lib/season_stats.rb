@@ -16,7 +16,6 @@ module SeasonStats
     team_id_swap(bust)
   end
 
-
   def biggest_suprise(season)
     list = find_games_by_season(season)
     teams = []
@@ -33,16 +32,13 @@ module SeasonStats
     team_id_swap(surprise)
   end
 
-
   def winningest_coach(season)
     list = find_game_teams_by_season(season)
     best = list.max_by do |game_team|
       won_games(game_team.team_id).count
-      # binding.pry
     end
     best.head_coach
   end
-
 
   def worst_coach(season)
     list = find_game_teams_by_season(season)
@@ -52,23 +48,17 @@ module SeasonStats
     worst.head_coach
   end
 
-
-
   def most_accurate_team(season)
     find_most_or_least_for_season(season, "accuracy", "most")
   end
-
 
   def least_accurate_team(season)
     find_most_or_least_for_season(season, "accuracy", "least")
   end
 
-
   def most_hits(season)
     find_most_or_least_for_season(season, "hits", "most")
   end
-
-
 
   def find_most_or_least_for_season(season, attribute, most_or_least)
     list = find_game_teams_by_season(season)
@@ -103,7 +93,6 @@ module SeasonStats
             most = ratio
             team = game_team.team_id
           end
-          # binding.pry
         end
         team_id_swap(team)
       end
@@ -140,12 +129,9 @@ module SeasonStats
     end
   end
 
-
   def least_hits(season)
     find_most_or_least_for_season(season,"hits","least")
   end
-
-
 
   def game_id_to_season(game_id)
     game_team = @games.repo.find do |game|
@@ -153,8 +139,6 @@ module SeasonStats
     end
     game_team.season
   end
-
-
 
   def power_play_goal_percentage(season)
     list = find_game_teams_by_season(season)
@@ -167,5 +151,4 @@ module SeasonStats
     end
     (100 * pp_goals / total_goals).round(2)
   end
-
 end
