@@ -3,8 +3,6 @@ class GameTeamRepo
 
   def initialize(filename)
     contents = CSV.open filename, headers: true, header_converters: :symbol
-    @repo = contents.map do |row|
-      GameTeam.new(row)
-    end
+    @repo = contents.map { |row| GameTeam.new(row) }
   end
 end
