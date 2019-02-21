@@ -18,8 +18,10 @@ module SeasonStats
     total_pre = pre_games.count
     won_reg = (game_hash["R"] & won_games(team)).count.to_f
     won_pre = (game_hash["P"] & won_games(team)).count.to_f
-    hash[:reg_win_pct] = won_reg / total_reg
-    hash[:pre_win_pct] = won_pre / total_pre
+    if total_pre > 0
+      hash[:reg_win_pct] = won_reg / total_reg
+      hash[:pre_win_pct] = won_pre / total_pre
+    end
     hash
   end
 
