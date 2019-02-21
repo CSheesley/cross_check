@@ -152,5 +152,4 @@ class TeamStatsTest < Minitest::Test
     assert_equal Hash, st.seasonal_summary("6")["20122013"].class
     assert_equal 2, st.seasonal_summary("6")["20122013"].count
   end
-
 end
