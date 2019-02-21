@@ -25,7 +25,6 @@ module List
     game_teams.find_all do |game_team|
       game_ids.include?(game_team.game_id)
     end
-    binding.pry
   end
 
 
@@ -36,14 +35,21 @@ module List
     end
   end
 
-  # def total_points_against(team)
-  #   team_id_swap(team)
-  #   game_teams = get_all_opponents_game_team_data(team)
-  #   total = 0
-  #   game_teams.each do |game_team|
-  #     total += game_team.goals
+  # def total_points_against(team,season)
+  #   home_games = hash_home_games_by_team[team].find_all do |game|
+  #     game.game_id[0...4] == season[0...4]
   #   end
-  #   total.to_f
+  #   away_games = hash_away_games_by_team[team].find_all do |game|
+  #     game.game_id[0...4] == season[0...4]
+  #   end
+  #
+  #   away_points = home_games.sum do |game|
+  #     game.away_goals
+  #   end
+  #   home_points = away_games.sum do |game|
+  #     game.home_goals
+  #   end
+  #   away_points + home_points
   # end
 
 
@@ -218,6 +224,7 @@ module List
     season_win_percentage
   end
 
+
   def all_games_played(team_id) #helper
     hash_game_teams_by_team[team_id]
   end
@@ -238,5 +245,42 @@ module List
     years.sort
   end
 
+
+
+  def team_win_pct_by_season(team_id,game_array)
+    all_home = game_array & hash_home_games_by_team[team_id]
+    won_home = all_home.find_all do |game|
+      game.outcome.include?("home")
+    end
+    all_away = game_array & hash_away_games_by_team[team_id]
+    won_away = all_away.find_all do |game|
+      game.outcome.include?("away")
+    end
+    (won_home.count + won_away.count).to_f / (all_home.count + all_away.count)
+  end
+
+  def team_scored_by_season(team_id,game_array)
+    all_home = game_array & hash_home_games_by_team[team_id]
+    home_pts = all_home.sum do |game|
+      game.home_goals
+    end
+    all_away = game_array & hash_away_games_by_team[team_id]
+    away_pts = all_away.sum do |game|
+      game.away_goals
+    end
+    home_pts + away_pts
+  end
+
+  def team_opp_scored_by_season(team_id,game_array)
+    all_home = game_array & hash_home_games_by_team[team_id]
+    home_pts = all_home.sum do |game|
+      game.away_goals
+    end
+    all_away = game_array & hash_away_games_by_team[team_id]
+    away_pts = all_away.sum do |game|
+      game.home_goals
+    end
+    home_pts + away_pts
+  end
 
 end
