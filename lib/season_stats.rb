@@ -11,7 +11,7 @@ module SeasonStats
   end
 
   def create_reg_pre_hash(game_hash,team)
-    hash = Hash.new {|hash,key| hash[key] = 0}
+    h = Hash.new {|hash,key| hash[key] = 0}
     reg_games = all_games_for_team(team) & game_hash["R"]
     pre_games = all_games_for_team(team) & game_hash["P"]
     total_reg = reg_games.count
@@ -19,10 +19,10 @@ module SeasonStats
     won_reg = (game_hash["R"] & won_games(team)).count.to_f
     won_pre = (game_hash["P"] & won_games(team)).count.to_f
     if total_pre > 0
-      hash[:reg_win_pct] = won_reg / total_reg
-      hash[:pre_win_pct] = won_pre / total_pre
+      h[:reg_win_pct] = won_reg / total_reg
+      h[:pre_win_pct] = won_pre / total_pre
     end
-    hash
+    h
   end
 
   def reg_pre_diff_hash(season) #bananas helper
@@ -57,21 +57,6 @@ module SeasonStats
     surprise = h.key(h.values.max)
     team_id_swap(surprise)
   end
-
-
-
-  def season_winningest_hash(season) #bananas helper
-    teams = teams_in_season(season)
-    games = hash_games_by_season[season]
-    pct_hash = {}
-    teams.each do |team|
-      total = (games.find_all {|game| game.away_team_id == team || game.home_team_id == team}).count
-      won = (games & won_games(team)).count.to_f
-      pct_hash[team] = won / total
-    end
-    pct_hash
-  end
-
 
 
   def winningest_coach(season) #bananas
